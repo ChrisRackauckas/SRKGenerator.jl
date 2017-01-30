@@ -107,6 +107,17 @@ function g_maker(x,tmp,eV,counterSteps,counterSteps2,outfile,count)
   nothing
 end
 
+function g_ineq_maker(x,tmp,eV,counterSteps,counterSteps2,outfile,count)
+  A0,A1,B0,B1,α,β1,β2,β3,β4 = translate(x)
+  c0 = A0*eV
+  c1 = A1*eV
+  tmp[1:4] .= c0 .- 1
+  tmp[5:8] .= -(c0 .- 1)
+  tmp[9:12] .= c1 .- 1
+  tmp[13:16] .= -(c1 .- 1)
+  nothing
+end
+
 #Dg = ForwardDiff.jacobian(g)
 #∇f = ForwardDiff.gradient(f)
 
