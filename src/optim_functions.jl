@@ -112,9 +112,9 @@ function g_ineq_maker(x,tmp,eV,counterSteps,counterSteps2,outfile,count)
   c0 = A0*eV
   c1 = A1*eV
   tmp[1:4] .= c0 .- 1
-  tmp[5:8] .= -(c0 .- 1)
+  tmp[5:8] .= -(c0)
   tmp[9:12] .= c1 .- 1
-  tmp[13:16] .= -(c1 .- 1)
+  tmp[13:16] .= -(c1)
   nothing
 end
 
