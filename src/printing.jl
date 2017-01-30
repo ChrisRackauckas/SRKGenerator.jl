@@ -18,3 +18,20 @@ function MathematicaReplaceSet(x)
   println(lhs)
   return lhs
 end
+
+
+function printForJulia(x)
+  A0,A1,B0,B1,α,β1,β2,β3,β4 = translate(x)
+  resString = """
+  A0 = [$(join(string.(A0), ","))]
+  A1 = [$(join(string.(A1), ","))]
+  B0 = [$(join(string.(B0), ","))]
+  B1 = [$(join(string.(B1), ","))]
+  α  = [$(join(string.(α), ","))]
+  β1 = [$(join(string.(β1), ","))]
+  β2 = [$(join(string.(β2), ","))]
+  β3 = [$(join(string.(β3), ","))]
+  β4 = [$(join(string.(β4), ","))]
+  """
+  return resString
+end

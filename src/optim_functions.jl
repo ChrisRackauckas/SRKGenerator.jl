@@ -1,4 +1,4 @@
-function f(x)
+function f_maker(x,ans,integrationFuncs,cudaCores,numCards,g_coefs,g_iarr,g_jarr,sizei,sizej,equalDiv,startIdx,g_tmp,totArea,counterSteps,counterSteps2,outfile,gpuEnabled,count)
   A0,A1,B0,B1,α,β1,β2,β3,β4 = translate(x)
   coefs,powz,poww = getCoefficients(A0,A1,B0,B1,α,β1,β2,β3,β4)
   if gpuEnabled # Commented out parts for multiple graphics cards
@@ -32,26 +32,14 @@ function f(x)
     end
   end
   res = sum(ans)*totArea
-  count+=1
-  if mod(count,counterSteps)==0
+  count[1]=count[1]+1
+  if mod(count[1],counterSteps)==0
     prints = count÷counterSteps
-    println("f_$prints($x)")
+    println("f_$(prints[1])($x)")
     println("$res")
-    #println(whos())
-    #println(whos(Base))
-    #=
-    for name in setdiff(names(Base, true), names(Base))
-         try
-             s = Base.summarysize(getfield(Base, name))
-             if s > 10000000
-                 println(name, " ", s)
-             end
-         end
-     end
-    =#
     flush(STDOUT)
   end
-  if mod(count,counterSteps2)==0
+  if mod(count[1],counterSteps2)==0
     mathx = translateToMathematica(x)
     println(mathx)
     flush(STDOUT)
@@ -61,7 +49,7 @@ function f(x)
       saveStr = """
 
       ------------------------------------------------------------------------
-      f_$prints($x)
+      f_$(prints[1])($x)
 
       $res
 
@@ -77,48 +65,46 @@ function f(x)
   return res
 end
 
-function g(x)
+function g_maker(x,tmp,eV,counterSteps,counterSteps2,outfile,count)
   A0,A1,B0,B1,α,β1,β2,β3,β4 = translate(x)
-  eV = [1;1;1;1]
-  ans = zeros(eltype(x),26)
-  ans[1] = sum(α)-1
-  ans[2] = sum(β1)-1
-  ans[3] = sum(β2)
-  ans[4] = sum(β3)
-  ans[5] = sum(β4)
-  ans[6] = (β1'*B1*eV)[1]
-  ans[7] = (transpose(β2)*B1*eV-1)[1]
-  ans[9] = (transpose(β3)*B1*eV)[1]
-  ans[10]= (transpose(β4)*B1*eV)[1]
-  ans[11]= (transpose(α)*A0*eV-1/2)[1]
-  ans[12]= (transpose(α)*B0*eV-1)[1]
-  ans[13]= (transpose(α)*(B0*eV).^2-3/2)[1]
-  ans[14]= (transpose(β1)*A1*eV-1)[1]
-  ans[15]= (transpose(β2)*A1*eV)[1]
-  ans[16]= (transpose(β3)*A1*eV+1)[1]
-  ans[17]= (transpose(β4)*A1*eV)[1]
-  ans[18]= (transpose(β1)*(B1*eV).^2-1)[1]
-  ans[19]= (transpose(β2)*(B1*eV).^2)[1]
-  ans[20]= (transpose(β3)*(B1*eV).^2+1)[1]
-  ans[21]= (transpose(β4)*(B1*eV).^2-2)[1]
-  ans[22]=(transpose(β1)*(B1*(B1*eV))-0)[1]
-  ans[23]=(transpose(β2)*(B1*(B1*eV))-0)[1]
-  ans[24]=(transpose(β3)*(B1*(B1*eV))-0)[1]
-  ans[25]=(transpose(β4)*(B1*(B1*eV))-1)[1]
-  ans[26]=((1//2)*transpose(β1)*(A1*(B0*eV))+(1//3)*transpose(β3)*(A1*(B0*eV)))[1]
-  if mod(count,counterSteps)==0
-    maxErr = maximum(ans)
+  tmp[1] = sum(α)-1
+  tmp[2] = sum(β1)-1
+  tmp[3] = sum(β2)
+  tmp[4] = sum(β3)
+  tmp[5] = sum(β4)
+  tmp[6] = (β1'*B1*eV)[1]
+  tmp[7] = (transpose(β2)*B1*eV-1)[1]
+  tmp[9] = (transpose(β3)*B1*eV)[1]
+  tmp[10]= (transpose(β4)*B1*eV)[1]
+  tmp[11]= (transpose(α)*A0*eV-1/2)[1]
+  tmp[12]= (transpose(α)*B0*eV-1)[1]
+  tmp[13]= (transpose(α)*(B0*eV).^2-3/2)[1]
+  tmp[14]= (transpose(β1)*A1*eV-1)[1]
+  tmp[15]= (transpose(β2)*A1*eV)[1]
+  tmp[16]= (transpose(β3)*A1*eV+1)[1]
+  tmp[17]= (transpose(β4)*A1*eV)[1]
+  tmp[18]= (transpose(β1)*(B1*eV).^2-1)[1]
+  tmp[19]= (transpose(β2)*(B1*eV).^2)[1]
+  tmp[20]= (transpose(β3)*(B1*eV).^2+1)[1]
+  tmp[21]= (transpose(β4)*(B1*eV).^2-2)[1]
+  tmp[22]=(transpose(β1)*(B1*(B1*eV))-0)[1]
+  tmp[23]=(transpose(β2)*(B1*(B1*eV))-0)[1]
+  tmp[24]=(transpose(β3)*(B1*(B1*eV))-0)[1]
+  tmp[25]=(transpose(β4)*(B1*(B1*eV))-1)[1]
+  tmp[26]=((1//2)*transpose(β1)*(A1*(B0*eV))+(1//3)*transpose(β3)*(A1*(B0*eV)))[1]
+  if mod(count[1],counterSteps)==0
+    maxErr = maximum(tmp)
     println("Max g: $maxErr")
     flush(STDOUT)
   end
-  if mod(count,counterSteps2)==0
+  if mod(count[1],counterSteps2)==0
     if outfile != ""
-      maxErr = maximum(ans)
+      maxErr = maximum(tmp)
       write(outfile,"Max g: $maxErr")
       flush(outfile)
     end
   end
-  return ans
+  nothing
 end
 
 #Dg = ForwardDiff.jacobian(g)
@@ -130,14 +116,15 @@ function eval_g(result,x,grad)
     grad[:]=Dg(x)
   end
   =#
-  result[:]=g(x)
+  g(x,result)
 end
 
-function eval_f(x,grad)
+
+#function eval_f(x,grad)
   #=
   if length(grad)>0
     grad[:]=∇f(x)
   end
   =#
-  return(f(x))
-end
+#  return(f(x))
+#end
