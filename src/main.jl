@@ -2,9 +2,10 @@ function srk_optimize(alg,dx,mev,populationSize,imin,imax,jmin,jmax,len,NLoptRan
                     initCon = ones(44),tol = 1e-2,ftol = 1e-15,tol2 = 1e-5,
                     counterSteps=Int(1e5),counterSteps2=Int(1e6),
                     initStepSize=[],gpuEnabled=true,ptx_str  = "integration.ptx",
-                    cudaCores = 1664,initStepSize2=1e-6,outfile="")
+                    cudaCores = 1664,initStepSize2=1e-6,outfile="",constrain_c = true)
   ##Parameters
   N = 26
+  N2= 16
   M = 44
   count = [0]
   timeNow = now()
@@ -54,13 +55,16 @@ function srk_optimize(alg,dx,mev,populationSize,imin,imax,jmin,jmax,len,NLoptRan
 
   eval_f = (x,grad) -> f_maker(x,ans,integrationFuncs,cudaCores,numCards,g_coefs,g_iarr,g_jarr,sizei,sizej,equalDiv,startIdx,g_tmp,totArea,counterSteps,counterSteps2,outfile,gpuEnabled,count)
   eval_g = (tmp,x,grad) -> g_maker(x,tmp,eV,counterSteps,counterSteps2,outfile,count)
-
+  eval_g_ineq = (tmp,x,grad) -> g_ineq_maker(x,tmp,eV,counterSteps,counterSteps2,outfile,count)
   opt = Opt(alg,M) #:LD_SLSQP, :LN_COBYLA (semi), :GN_ISRES support equality constraints
   lower_bounds!(opt,x_L)
   upper_bounds!(opt,x_U)
   max_objective!(opt, eval_f)
   maxeval!(opt::Opt, mev::Integer)
   equality_constraint!(opt,eval_g,tol*ones(N))
+  if constrain_c
+    inequality_constraint!(opt,eval_g_ineq,tol*ones(N2))
+  end
   ftol_abs!(opt,ftol)
   xtol_abs!(opt,ftol)
   if initStepSize != []
