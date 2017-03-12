@@ -25,4 +25,4 @@ if host == "ChrisRackTV"
   cudaCores=[2560]
 end
 
-resString = srk_optimize(:GN_ISRES,1/100,Int(1e8),10000,-12,1,-1,88,5,6,gpuEnabled = true,cudaCores=cudaCores,ptx_str=ptx_str)
+resString = srk_optimize(:GN_ISRES,1/100,Int(1e8),10000,-12,1,-1,89,5,6,gpuEnabled = true,cudaCores=cudaCores,ptx_str=ptx_str)
