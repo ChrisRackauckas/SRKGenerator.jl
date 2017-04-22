@@ -1,4 +1,5 @@
-function srk_optimize(alg,dx,mev,populationSize,imin,imax,jmin,jmax,len,NLoptRandSeed;
+function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
+                    NLoptRandSeed = 0,parameter_minmax=5,max_eval=Int(1e8),
                     initCon = ones(44),tol = 1e-2,ftol = 1e-15,tol2 = 1e-5,
                     counterSteps=Int(1e5),counterSteps2=Int(1e6),
                     initStepSize=[],gpuEnabled=true,ptx_str  = "integration.ptx",
@@ -13,8 +14,8 @@ function srk_optimize(alg,dx,mev,populationSize,imin,imax,jmin,jmax,len,NLoptRan
   outfile = open(joinpath(Pkg.dir("SRKGenerator"),"output","Opti$timeNow.txt"), "w")
 
   ## Script Start
-  x_L = -len*ones(M)
-  x_U =  len*ones(M)
+  x_L = -parameter_minmax*ones(M)
+  x_U =  parameter_minmax*ones(M)
   g_L = -tol*ones(N)
   g_U =  tol*ones(N)
   sizei = length(imin:dx:imax)
@@ -60,7 +61,7 @@ function srk_optimize(alg,dx,mev,populationSize,imin,imax,jmin,jmax,len,NLoptRan
   lower_bounds!(opt,x_L)
   upper_bounds!(opt,x_U)
   max_objective!(opt, eval_f)
-  maxeval!(opt::Opt, mev::Integer)
+  maxeval!(opt::Opt, max_eval::Integer)
   equality_constraint!(opt,eval_g,tol*ones(N))
   if constrain_c
     inequality_constraint!(opt,eval_g_ineq,tol*ones(N2))
@@ -70,7 +71,7 @@ function srk_optimize(alg,dx,mev,populationSize,imin,imax,jmin,jmax,len,NLoptRan
   if initStepSize != []
     initial_step!(opt,initStepSize)
   end
-  population!(opt,populationSize)
+  population!(opt,pop_size)
   NLopt.srand(NLoptRandSeed)
 
   minf,minx,ret = optimize(opt,initCon)
@@ -78,8 +79,8 @@ function srk_optimize(alg,dx,mev,populationSize,imin,imax,jmin,jmax,len,NLoptRan
 
 
   -----------------Final Result------------------
-  Options: alg=$alg,dx=$dx,mev=$mev,popSize=$populationSize
-  imin=$imin,jmin=$jmin,imax=$imax,jmax=$jmax,len=$len,randSeed=$NLoptRandSeed
+  Options: alg=$alg,dx=$dx,max_eval=$max_eval,popSize=$pop_size
+  imin=$imin,jmin=$jmin,imax=$imax,jmax=$jmax,parameter_minmax=$parameter_minmax,randSeed=$NLoptRandSeed
   """
   println(resString)
   if gpuEnabled
