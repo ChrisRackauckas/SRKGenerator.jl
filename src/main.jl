@@ -88,11 +88,13 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
   write(outfile,setupString)
   flush(outfile)
 
-  minf,minx,ret = optimize(opt,initCon)
-  mathx = translateToMathematica(minx)
+  minf,maxx,ret = optimize(opt,initCon)
+  eval_g(tmp,maxx,0)
+  maxErr = maximum(tmp)
+  mathx = translateToMathematica(maxx)
   println(mathx)
   flush(STDOUT)
-  julString = printForJulia(minx)
+  julString = printForJulia(maxx)
   resString = """
 
 
@@ -104,6 +106,8 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
   $(count[1]) steps
 
   Completed with minf : $minf
+
+  Constraints at $maxErr
 
   $julString
 
