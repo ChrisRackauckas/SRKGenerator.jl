@@ -78,19 +78,25 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
   NLopt.srand(NLoptRandSeed)
 
   minf,minx,ret = optimize(opt,initCon)
-  mathx = translateToMathematica(x)
+  mathx = translateToMathematica(minx)
   println(mathx)
   flush(STDOUT)
   julString = printForJulia(x)
   resString = """
 
-  Completed with minf : $minf
+
 
   -----------------Final Result------------------
   Options: alg=$alg,dx=$dx,max_eval=$max_eval,popSize=$pop_size
   imin=$imin,jmin=$jmin,imax=$imax,jmax=$jmax,parameter_minmax=$parameter_minmax,randSeed=$NLoptRandSeed
 
+  $(count[1]) steps
+
+  Completed with minf : $minf
+
   $julString
+
+  $mathx
 
   """
   println(resString)
