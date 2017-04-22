@@ -83,6 +83,7 @@ eval_g_ineq = (tmp,x,grad) -> SRKGenerator.g_ineq_maker(x,tmp,eV,counterSteps,co
 
 f3 = eval_f(x,0)
 
+#=
 ### Now test some gradients
 
 f = (x) -> SRKGenerator.cpu_f(x,dx,imin,imax,jmin,jmax)
@@ -98,3 +99,4 @@ Calculus.gradient(f,x)
 gpu_f = (x) -> eval_f(x,0)
 
 Calculus.gradient(gpu_f,x)
+=#
