@@ -14,6 +14,9 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
   outfile = open(joinpath(Pkg.dir("SRKGenerator"),"output","Opti$timeNow.txt"), "w")
 
   ## Script Start
+  coef_ans = Vector{Float32}(36)
+  powz = Vector{Int8}(36)
+  poww = Vector{Int8}(36)
   x_L = -parameter_minmax*ones(M)
   x_U =  parameter_minmax*ones(M)
   g_L = -tol*ones(N)
@@ -54,7 +57,7 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
 
   eV = [1;1;1;1]
 
-  eval_f = (x,grad) -> f_maker(x,ans,integrationFuncs,cudaCores,numCards,g_coefs,g_iarr,g_jarr,sizei,sizej,equalDiv,startIdx,g_tmp,totArea,counterSteps,counterSteps2,outfile,gpuEnabled,count)
+  eval_f = (x,grad) -> f_maker(x,ans,coef_ans,powz,poww,integrationFuncs,cudaCores,numCards,g_coefs,g_iarr,g_jarr,sizei,sizej,equalDiv,startIdx,g_tmp,totArea,counterSteps,counterSteps2,outfile,gpuEnabled,count)
   eval_g = (tmp,x,grad) -> g_maker(x,tmp,eV,counterSteps,counterSteps2,outfile,count)
   eval_g_ineq = (tmp,x,grad) -> g_ineq_maker(x,tmp,eV,counterSteps,counterSteps2,outfile,count)
   opt = Opt(alg,M) #:LD_SLSQP, :LN_COBYLA (semi), :GN_ISRES support equality constraints
@@ -75,12 +78,20 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
   NLopt.srand(NLoptRandSeed)
 
   minf,minx,ret = optimize(opt,initCon)
+  mathx = translateToMathematica(x)
+  println(mathx)
+  flush(STDOUT)
+  julString = printForJulia(x)
   resString = """
 
+  Completed with minf : $minf
 
   -----------------Final Result------------------
   Options: alg=$alg,dx=$dx,max_eval=$max_eval,popSize=$pop_size
   imin=$imin,jmin=$jmin,imax=$imax,jmax=$jmax,parameter_minmax=$parameter_minmax,randSeed=$NLoptRandSeed
+
+  $julString
+
   """
   println(resString)
   if gpuEnabled

@@ -27,20 +27,22 @@ function threaded_f(x,dx,imin,imax,jmin,jmax)
   sizei = length(imin:dx:imax)
   sizej = length(jmin:dx:jmax)
   totArea = (imax-imin)*(jmax-jmin)/(sizei*sizej)
-  tmp = 0
+  tmps = Vector{Int}(Threads.nthreads())
+  tmps .= 0
   Threads.@threads for i = imin:dx:imax
     isq2 = i*i; isq3 = i*isq2; isq4 = isq2*isq2; isq5 = i*isq4
     isq6 = isq4*isq2; isq7 = i*isq6; isq8 = isq4*isq4
     for j=jmin:dx:jmax
       jsq2 = j*j; jsq3= j*jsq2; jsq4 = jsq2*jsq2;
       jsq5 = j*jsq4; jsq6 = jsq2*jsq4; jsq7 = j*jsq6; jsq8 = jsq4*jsq4
-      @inbounds tmp += abs(coefs[1]*(jsq2) + coefs[2]*(jsq3) + coefs[3]*(jsq4) + coefs[4]*(jsq5) + coefs[5]*jsq6 + coefs[6]*jsq7 + coefs[7]*jsq8 + coefs[8]*(i) + coefs[9]*(i)*(jsq2) +
+      @inbounds tmps[Threads.threadid()] += abs(coefs[1]*(jsq2) + coefs[2]*(jsq3) + coefs[3]*(jsq4) + coefs[4]*(jsq5) + coefs[5]*jsq6 + coefs[6]*jsq7 + coefs[7]*jsq8 + coefs[8]*(i) + coefs[9]*(i)*(jsq2) +
       coefs[10]*i*jsq3 + coefs[11]*(i)*(jsq4) + coefs[12]*i*jsq5 + coefs[13]*(i)*(jsq6) + coefs[14]*i*jsq7 + coefs[15]*(isq2) + coefs[16]*(isq2)*(jsq2) + coefs[17]*isq2*jsq3 +
       coefs[18]*(isq2)*(jsq4) + coefs[19]*isq2*jsq5 + coefs[20]*(isq2)*(jsq6) + coefs[21]*(isq3) + coefs[22]*(isq3)*(jsq2) + coefs[23]*isq3*jsq3 + coefs[24]*(isq3)*(jsq4) + coefs[25]*isq3*jsq5 +
       coefs[26]*(isq4) + coefs[27]*(isq4)*(jsq2) + coefs[28]*isq4*jsq3 + coefs[29]*(isq4)*(jsq4) + coefs[30]*(isq5) + coefs[31]*(isq5)*(jsq2) + coefs[32]*isq5*jsq3+ coefs[33]*(isq6) +
       coefs[34]*(isq6)*(jsq2) + coefs[35]*(isq7) + coefs[36]*(isq8))<1
     end
   end
+  tmp = sum(tmps)
   res = tmp*totArea
 end
 
@@ -68,9 +70,9 @@ function parallel_f(x,dx,imin,imax,jmin,jmax)
   res = sum(ans)*totArea
 end
 
-function f_maker(x,ans,integrationFuncs,cudaCores,numCards,g_coefs,g_iarr,g_jarr,sizei,sizej,equalDiv,startIdx,g_tmp,totArea,counterSteps,counterSteps2,outfile,gpuEnabled,count)
+function f_maker(x,ans,coefs,powz,poww,integrationFuncs,cudaCores,numCards,g_coefs,g_iarr,g_jarr,sizei,sizej,equalDiv,startIdx,g_tmp,totArea,counterSteps,counterSteps2,outfile,gpuEnabled,count)
   A0,A1,B0,B1,α,β1,β2,β3,β4 = translate(x)
-  coefs,powz,poww = getCoefficients(A0,A1,B0,B1,α,β1,β2,β3,β4)
+  getCoefficients!(coefs,powz,poww,A0,A1,B0,B1,α,β1,β2,β3,β4)
   if gpuEnabled # Commented out parts for multiple graphics cards
   #  @sync begin
       for i = 1:numCards

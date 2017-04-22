@@ -3,7 +3,11 @@ function getCoefficients(A0,A1,B0,B1,α,β1,β2,β3,β4)
   ans = Vector{Float32}(36)
   powz = Vector{Int8}(36)
   poww = Vector{Int8}(36)
+  getCoefficients!(ans,powz,poww,A0,A1,B0,B1,α,β1,β2,β3,β4)
+  return ans,powz,poww
+end
 
+function getCoefficients!(ans,powz,poww,A0,A1,B0,B1,α,β1,β2,β3,β4)
   #0,1 is zero.
 
   powz[1] = 0
@@ -173,6 +177,4 @@ function getCoefficients(A0,A1,B0,B1,α,β1,β2,β3,β4)
   powz[36]= 8
   poww[36]= 0
   ans[36] = ﻿A0[2, 1]^2*A0[3, 2]^2*A0[4, 3]^2*α[4]^2
-
-  return ans,powz,poww
 end
