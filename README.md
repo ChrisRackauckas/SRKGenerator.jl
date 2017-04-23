@@ -31,7 +31,26 @@ Pkg.test("SRKGenerator")
 ```
 
 to run the test script. See `src/main.jl` for the generator function and its
-associated options.
+associated options. This method will make it re-precompile, so it's usually
+better to run the script directly:
+
+```julia
+include(joinpath(Pkg.dir("SRKGenerator"),"test","runtests.jl"))
+```
+
+A command line utility is setup so that one can do:
+
+```julia
+julia cudaCores imin jmax
+```
+
+For example, for a highly deterministically stable method:
+
+```julia
+julia runtests.jl 2496 -12 1
+```
+
+For batch scripts, see the `/scripts` directory.
 
 ## Generator Options
 

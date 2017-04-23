@@ -35,7 +35,7 @@ else
   ## Called from commandline. Assume Linux.
   ptx_str = joinpath(Pkg.dir("SRKGenerator"),"deps","integrationLinux.ptx")
   ## Arg Form:
-  cudaCores = ARGS[1]
+  cudaCores = [ARGS[1]]
   imin = ARGS[2]
   jmax = ARGS[3]; jmin = -jmax
 
