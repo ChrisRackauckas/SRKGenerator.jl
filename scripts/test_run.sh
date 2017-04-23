@@ -1,2 +1,2 @@
 #!/bin/bash
-sbatch slurm_run.sh -12 1
+sbatch scripts/slurm_run.sh -12 1
