@@ -42,6 +42,6 @@ else
 
 end
 
-resString = srk_optimize(:LN_AUGLAG_EQ,1/100,0,-imin,1,-jmax,jmax,
+resString = srk_optimize(:LN_AUGLAG_EQ,1/100,0,imin,1,-jmax,jmax,
                          NLoptRandSeed=rand(1:Int(1e8)),gpuEnabled = true,
                          cudaCores=cudaCores,ptx_str=ptx_str)

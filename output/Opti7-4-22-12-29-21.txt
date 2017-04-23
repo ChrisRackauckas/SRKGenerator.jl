@@ -1,5 +1,0 @@
-
------------------Setup------------------
-Options: alg=LN_AUGLAG_EQ,dx=0.01,max_eval=100000000,popSize=100000
-imin=12,jmin=-1,imax=1,jmax=1,
-parameter_minmax=5,randSeed=87205185

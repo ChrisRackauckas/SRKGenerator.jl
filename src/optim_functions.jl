@@ -164,9 +164,6 @@ function g_maker(x,tmp,eV,counterSteps,counterSteps2,outfile,count)
   tmp[25]=(transpose(β4)*(B1*(B1*eV))-1)[1]
   tmp[26]=((1//2)*transpose(β1)*(A1*(B0*eV))+(1//3)*transpose(β3)*(A1*(B0*eV)))[1]
   maxErr = maximum(tmp)
-  if maxErr > 1e10
-    error("Diverged")
-  end
   if mod(count[1],counterSteps)==0
     println("Max g: $maxErr")
     flush(STDOUT)

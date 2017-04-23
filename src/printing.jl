@@ -22,8 +22,9 @@ end
 
 function printForJulia(x)
   A0,A1,B0,B1,α,β1,β2,β3,β4 = translate(x)
-  c0 = A0*eV
-  c1 = A1*eV
+  eV = ones(4)
+  c0 = A0*ones(4)
+  c1 = A1*ones(4)
   resString = """
   x = [$(join(string.(x), ","))]
   c0 = [$(join(string.(c0), ","))]
