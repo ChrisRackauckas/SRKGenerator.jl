@@ -1,2 +1,2 @@
 #!/bin/bash
-sbatch juliaSlurmRun.sh -12 1
+sbatch slurm_run.sh -12 1
