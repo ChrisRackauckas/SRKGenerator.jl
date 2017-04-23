@@ -13,4 +13,4 @@
 #SBATCH -t 48:00:00
 module load cuda/8.0
 module load cmake
-/home/crackauc/julia-a2f713dea5/bin/julia /home/crackauc/.julia/v0.5/SRKGenerator/test/runtests.jl 2496 $1 $2
+/home/crackauc/julia-3c9d75391c/bin/julia /home/crackauc/.julia/v0.5/SRKGenerator/test/runtests.jl 2496 $1 $2
