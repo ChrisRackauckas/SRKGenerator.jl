@@ -5,8 +5,8 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
                     initStepSize=[],gpuEnabled=true,ptx_str  = "integration.ptx",
                     cudaCores = 1664,initStepSize2=1e-6,outfile="",constrain_c = true)
   ##Parameters
-  N = 26
-  N2= 16
+  N = 28
+  N2= 20
   M = 44
   count = [0]
   timeNow = now()
