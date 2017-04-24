@@ -1,6 +1,7 @@
 function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
                     NLoptRandSeed = 0,parameter_minmax=5,max_eval=Int(1e8),
-                    initCon = ones(44),tol = 1e-2,ftol = 1e-15,tol2 = 1e-5,
+                    initCon = parameter_minmax*(2rand(44)-1),
+                    tol = 1e-2,ftol = 1e-15,tol2 = 1e-5,
                     counterSteps=Int(1e5),counterSteps2=Int(1e6),
                     initStepSize=[],gpuEnabled=true,ptx_str  = "integration.ptx",
                     cudaCores = 1664,initStepSize2=1e-6,outfile="",constrain_c = true)
