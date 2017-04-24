@@ -1,0 +1,8 @@
+ERROR: LoadError: unknown function pointer ID
+ in _include_from_serialized(::String) at ./loading.jl:150
+ in _require_from_serialized(::Int64, ::Symbol, ::String, ::Bool) at ./loading.jl:187
+ in require(::Symbol) at ./loading.jl:423
+ in include_from_node1(::String) at ./loading.jl:488
+ in process_options(::Base.JLOptions) at ./client.jl:262
+ in _start() at ./client.jl:318
+while loading /home/crackauc/.julia/v0.5/SRKGenerator/test/runtests.jl, in expression starting on line 1
