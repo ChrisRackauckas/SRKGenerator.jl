@@ -1,0 +1,10 @@
+ERROR: LoadError: MethodError: no method matching -(::String)
+Closest candidates are:
+  -(!Matched::Bool, !Matched::Complex{Bool}) at complex.jl:138
+  -(!Matched::Bool, !Matched::Bool) at bool.jl:49
+  -(!Matched::Bool) at bool.jl:46
+  ...
+ in include_from_node1(::String) at ./loading.jl:488
+ in process_options(::Base.JLOptions) at ./client.jl:262
+ in _start() at ./client.jl:318
+while loading /home/crackauc/.julia/v0.5/SRKGenerator/test/runtests.jl, in expression starting on line 40

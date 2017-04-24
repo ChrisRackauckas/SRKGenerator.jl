@@ -11,6 +11,6 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=16G
 #SBATCH -t 48:00:00
-module load cuda/8.0
+module load cuda/7.0
 module load cmake
 /home/crackauc/julia-3c9d75391c/bin/julia -e 'Pkg.build("CUDArt")'

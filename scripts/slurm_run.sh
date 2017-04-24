@@ -10,7 +10,7 @@
 #SBATCH --mail-user=crackauc@uci.edu
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=16G
-#SBATCH -t 48:00:00
-module load cuda/8.0
+#SBATCH -t 6:00:00
+module load cuda/7.0
 module load cmake
 /home/crackauc/julia-3c9d75391c/bin/julia /home/crackauc/.julia/v0.5/SRKGenerator/test/runtests.jl 2496 $1 $2
