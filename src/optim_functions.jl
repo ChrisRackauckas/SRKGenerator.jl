@@ -165,8 +165,10 @@ function g_maker(x,tmp,eV,counterSteps,counterSteps2,outfile,count)
   tmp[24]=(transpose(β3)*(B1*(B1*eV))-0)[1]
   tmp[25]=(transpose(β4)*(B1*(B1*eV))-1)[1]
   tmp[26]=((1//2)*transpose(β1)*(A1*(B0*eV))+(1//3)*transpose(β3)*(A1*(B0*eV)))[1]
-  tmp[27]=c0[end]-1
-  tmp[28]=c1[end]-1
+  if !SOFT_C
+    tmp[27]=c0[end]-1
+    tmp[28]=c1[end]-1
+  end
   maxErr = maximum(tmp)
   if mod(count[1],counterSteps)==0
     println("Max g: $maxErr")
@@ -190,10 +192,12 @@ function g_ineq_maker(x,tmp,eV,counterSteps,counterSteps2,outfile,count)
   tmp[5:8] .= -(c0)
   tmp[9:12] .= c1 .- 1
   tmp[13:16] .= -(c1)
-  tmp[17] = c0[3] - c0[end]
-  tmp[18] = c0[2] - c0[3]
-  tmp[19] = c1[3] - c1[end]
-  tmp[20] = c1[2] - c1[3]
+  if !SOFT_C
+    tmp[17] = c0[3] - c0[end]
+    tmp[18] = c0[2] - c0[3]
+    tmp[19] = c1[3] - c1[end]
+    tmp[20] = c1[2] - c1[3]
+  end
   nothing
 end
 
