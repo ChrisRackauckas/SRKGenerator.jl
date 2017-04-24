@@ -8,6 +8,8 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
   ##Parameters
   N = 28
   N2= 20
+  N = SOFT_C ? 26 : 28
+  N2= SOFT_C ? 16 : 20
   M = 44
   count = [0]
   timeNow = now()
