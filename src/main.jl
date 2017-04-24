@@ -1,6 +1,7 @@
 function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
                     NLoptRandSeed = 0,parameter_minmax=5,max_eval=Int(1e8),
-                    initCon = parameter_minmax*(2rand(44)-1),
+                    rand_minmax = 3,
+                    initCon = rand_minmax*(2rand(44)-1),
                     tol = 1e-2,ftol = 1e-15,tol2 = 1e-5,
                     counterSteps=Int(1e5),counterSteps2=Int(1e6),
                     initStepSize=[],gpuEnabled=true,ptx_str  = "integration.ptx",
@@ -85,7 +86,8 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
   -----------------Setup------------------
   Options: alg=$alg,dx=$dx,max_eval=$max_eval,popSize=$pop_size
   imin=$imin,jmin=$jmin,imax=$imax,jmax=$jmax,
-  parameter_minmax=$parameter_minmax,randSeed=$NLoptRandSeed
+  parameter_minmax=$parameter_minmax,
+  randSeed=$NLoptRandSeed, rand_minmax=$rand_minmax
 
   Initial Condition:
 
@@ -108,7 +110,9 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
 
   -----------------Final Result------------------
   Options: alg=$alg,dx=$dx,max_eval=$max_eval,popSize=$pop_size
-  imin=$imin,jmin=$jmin,imax=$imax,jmax=$jmax,parameter_minmax=$parameter_minmax,randSeed=$NLoptRandSeed
+  imin=$imin,jmin=$jmin,imax=$imax,jmax=$jmax,
+  parameter_minmax=$parameter_minmax,
+  randSeed=$NLoptRandSeed,rand_minmax=$rand_minmax
 
   $(count[1]) steps
 

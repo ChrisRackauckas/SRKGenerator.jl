@@ -36,12 +36,14 @@ else
   ptx_str = joinpath(Pkg.dir("SRKGenerator"),"deps","integrationLinux.ptx")
   ## Arg Form:
   cudaCores = [parse(Int,ARGS[1])]
-  imin = parse(Int,ARGS[2])
-  jmax = parse(Int,ARGS[3]); jmin = -jmax
+  rand_minmax = parse(Int,ARGS[2])
+  imin = parse(Int,ARGS[3])
+  jmax = parse(Int,ARGS[4]); jmin = -jmax
 
 
 end
 
 resString = srk_optimize(:LN_AUGLAG_EQ,1/100,0,imin,1,-jmax,jmax,
+                         rand_minmax = 3,
                          NLoptRandSeed=rand(1:Int(1e8)),gpuEnabled = true,
                          cudaCores=cudaCores,ptx_str=ptx_str)
