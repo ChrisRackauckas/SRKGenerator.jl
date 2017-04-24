@@ -36,9 +36,8 @@ else
   ptx_str = joinpath(Pkg.dir("SRKGenerator"),"deps","integrationLinux.ptx")
   ## Arg Form:
   cudaCores = [parse(Int,ARGS[1])]
-  rand_minmax = parse(Int,ARGS[2])
-  imin = parse(Int,ARGS[3])
-  jmax = parse(Int,ARGS[4]); jmin = -jmax
+  imin = parse(Int,ARGS[2])
+  jmax = parse(Int,ARGS[3]); jmin = -jmax
 
 
 end
