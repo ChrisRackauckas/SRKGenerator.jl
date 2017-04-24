@@ -1,7 +1,0 @@
-ERROR: LoadError: ArgumentError: invalid base 10 digit '.' in "0.5"
- in tryparse_internal(::Type{Int64}, ::String, ::Int64, ::Int64, ::Int64, ::Bool) at ./parse.jl:88
- in parse(::Type{Int64}, ::String) at ./parse.jl:152
- in include_from_node1(::String) at ./loading.jl:488
- in process_options(::Base.JLOptions) at ./client.jl:262
- in _start() at ./client.jl:318
-while loading /home/crackauc/.julia/v0.5/SRKGenerator/test/runtests.jl, in expression starting on line 40
