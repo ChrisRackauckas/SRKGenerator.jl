@@ -86,6 +86,10 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
   Options: alg=$alg,dx=$dx,max_eval=$max_eval,popSize=$pop_size
   imin=$imin,jmin=$jmin,imax=$imax,jmax=$jmax,
   parameter_minmax=$parameter_minmax,randSeed=$NLoptRandSeed
+
+  Initial Condition:
+
+  $initCon
   """
   println(setupString)
   write(outfile,setupString)
