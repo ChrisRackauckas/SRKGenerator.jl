@@ -1,8 +1,0 @@
-ERROR: LoadError: MethodError: Cannot `convert` an object of type Array{String,1} to an object of type Int64
-This may have arisen from a call to the constructor Int64(...),
-since type constructors fall back to convert methods.
- in Int64(::Array{String,1}) at ./sysimg.jl:53
- in include_from_node1(::String) at ./loading.jl:488
- in process_options(::Base.JLOptions) at ./client.jl:262
- in _start() at ./client.jl:318
-while loading /home/crackauc/.julia/v0.5/SRKGenerator/test/runtests.jl, in expression starting on line 38

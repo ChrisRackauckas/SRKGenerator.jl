@@ -1,4 +1,0 @@
-INFO: Building CUDAdrv
-INFO: Found libcuda at /usr/lib64/libcuda.so
-INFO: CUDAdrv.jl has already been built for this CUDA library, no need to rebuild
-INFO: Building CUDArt
