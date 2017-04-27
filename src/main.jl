@@ -99,7 +99,7 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
 
   maxf,maxx,ret = optimize(opt,initCon)
 
-  tmp2 = Vector{Float32}(N)
+  tmp2 = Vector{Float64}(N)
   eval_g(tmp2,maxx,0)
   maxErr = maximum(tmp2)
   mathx = translateToMathematica(maxx)
