@@ -9,8 +9,8 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
   ##Parameters
   N = 28
   N2= 20
-  N = END_C ? 26 : 28
-  N2= INEQ_C ? 16 : 20
+  N = END_C ? 28 : 26
+  N2= INEQ_C ? 20 : 16
   M = 44
   count = [0]
   timeNow = now()
