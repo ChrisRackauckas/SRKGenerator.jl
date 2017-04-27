@@ -4,7 +4,8 @@ module SRKGenerator
 
 using NLopt, CUDArt
 
-const SOFT_C = true
+const END_C = true
+const INEQ_C = true
 
 include("getCoefs.jl")
 include("main.jl")

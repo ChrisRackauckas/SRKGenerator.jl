@@ -9,8 +9,8 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
   ##Parameters
   N = 28
   N2= 20
-  N = SOFT_C ? 26 : 28
-  N2= SOFT_C ? 16 : 20
+  N = END_C ? 26 : 28
+  N2= INEQ_C ? 16 : 20
   M = 44
   count = [0]
   timeNow = now()
@@ -87,7 +87,8 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
   Options: alg=$alg,dx=$dx,max_eval=$max_eval,popSize=$pop_size
   imin=$imin,jmin=$jmin,imax=$imax,jmax=$jmax,
   parameter_minmax=$parameter_minmax,
-  randSeed=$NLoptRandSeed, rand_minmax=$rand_minmax
+  randSeed=$NLoptRandSeed, rand_minmax=$rand_minmax,
+  END_C=$END_C, INEQ_C=$INEQ_C
 
   Initial Condition:
 
@@ -112,7 +113,8 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
   Options: alg=$alg,dx=$dx,max_eval=$max_eval,popSize=$pop_size
   imin=$imin,jmin=$jmin,imax=$imax,jmax=$jmax,
   parameter_minmax=$parameter_minmax,
-  randSeed=$NLoptRandSeed,rand_minmax=$rand_minmax
+  randSeed=$NLoptRandSeed,rand_minmax=$rand_minmax,
+  END_C=$END_C, INEQ_C=$INEQ_C
 
   $(count[1]) steps
 
