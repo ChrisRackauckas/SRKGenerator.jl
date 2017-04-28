@@ -9,8 +9,11 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
   ##Parameters
   N = 28
   N2= 20
-  N = END_C ? 28 : 26
+  N = EQ_C ? 30 : END_C ? 28 : 26
   N2= INEQ_C ? 20 : 16
+  if EQ_C && INEQ_C
+    error("Can only have EQ_C or INEQ_C!")
+  end
   M = 44
   count = [0]
   timeNow = now()
