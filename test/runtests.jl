@@ -42,7 +42,7 @@ else
 
 end
 
-resString = srk_optimize(:GN_ISRES,1/100,0,imin,1,-jmax,jmax,
+resString = srk_optimize(:LN_AUGLAG_EQ,1/100,0,imin,1,-jmax,jmax,
                          rand_minmax = rand(1:3),
                          NLoptRandSeed=rand(1:Int(1e8)),gpuEnabled = true,
                          cudaCores=cudaCores,ptx_str=ptx_str)
