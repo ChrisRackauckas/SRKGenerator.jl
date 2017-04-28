@@ -1754,7 +1754,7 @@ X_{n+1}=X_{n}\exp\left(\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h
 
 \end_inset
 
-
+ where the exponentiation is interpreted element-wise.
 \end_layout
 
 \begin_layout Subsection
@@ -2066,7 +2066,7 @@ Just a bunch of pictures? Tables?
 \end_layout
 
 \begin_layout Subsubsection
-Diffusion-Dominated Stability Methods
+Mixed Stability Methods
 \end_layout
 
 \begin_layout Standard
@@ -2074,7 +2074,7 @@ Just a bunch of pictures? Tables?
 \end_layout
 
 \begin_layout Subsubsection
-Mixed Stability Methods
+Diffusion-Dominated Stability Methods
 \end_layout
 
 \begin_layout Standard

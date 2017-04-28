@@ -2066,7 +2066,7 @@ Just a bunch of pictures? Tables?
 \end_layout
 
 \begin_layout Subsubsection
-Diffusion-Dominated Stability Methods
+Mixed Stability Methods
 \end_layout
 
 \begin_layout Standard
@@ -2074,7 +2074,7 @@ Just a bunch of pictures? Tables?
 \end_layout
 
 \begin_layout Subsubsection
-Mixed Stability Methods
+Diffusion-Dominated Stability Methods
 \end_layout
 
 \begin_layout Standard
@@ -2090,7 +2090,7 @@ Shampine's method for Jacobian approximation
 \end_layout
 
 \begin_layout Itemize
-Same_C methods
+EQ_C methods
 \end_layout
 
 \begin_layout Itemize
