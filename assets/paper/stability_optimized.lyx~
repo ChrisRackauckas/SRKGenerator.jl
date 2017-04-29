@@ -2085,6 +2085,32 @@ Just a bunch of pictures? Tables?
 Approximately-Optimal Methods with Stability Detection and Switching Behaviors
 \end_layout
 
+\begin_layout Standard
+In many real-world cases, one may not be able to clearly identify a model
+ as drift-stability bound or diffusion-stability bound.
+ In fact, many models may switch between such extremes.
+ An example is a model with stochastic switching between different steady
+ states.
+ In this case, we have that the diffusion term 
+\begin_inset Formula $f(t,X_{ss})\approx0$
+\end_inset
+
+ in the area of many stochastic steady states, meaning that while straddling
+ a steady state the integration is heavily diffusion-stability dominated.
+ However, when switching between steady states, 
+\begin_inset Formula $f$
+\end_inset
+
+ can be very large and stiff, causing the integration to be heavily drift-stabil
+ity dominated.
+ Since these switches are random, the ability to adapt between these two
+ behaviors could be key to achieving optimal performance.
+ Given the tradeoff between drift-stability and diffusion-stability, we
+ investigated methods for switching between methods which optimize for the
+ different situations.
+ 
+\end_layout
+
 \begin_layout Itemize
 Shampine's method for Jacobian approximation
 \end_layout

@@ -2113,8 +2113,8 @@ ity dominated.
 
 \begin_layout Standard
 The basis for our method is a straight-forward extension of a method proposed
- by Shampine for deterministic differential equations.
- 
+ for deterministic differential equations.
+ The idea 
 \end_layout
 
 \begin_layout Itemize

@@ -2111,6 +2111,12 @@ ity dominated.
  
 \end_layout
 
+\begin_layout Standard
+The basis for our method is a straight-forward extension of a method proposed
+ by Shampine for deterministic differential equations.
+ 
+\end_layout
+
 \begin_layout Itemize
 Shampine's method for Jacobian approximation
 \end_layout
