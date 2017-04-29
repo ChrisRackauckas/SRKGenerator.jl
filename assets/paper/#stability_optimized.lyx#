@@ -648,7 +648,7 @@ X_{n+1}=X_{n}+\sum_{i=1}^{s}\alpha_{i}f\left(t_{n}+c_{i}^{(0)}h,H_{i}^{(0)}\righ
  with stages
 \begin_inset Formula 
 \[
-H_{i}^{(0)}=X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}g\left(t_{n}+c_{j}^{(1)}h,H_{j}^{(1)}\right)\frac{I_{(1,0)}}{h}.
+H_{i}^{(0)}=X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}g\left(t_{n}+c_{j}^{(1)}h\right)\frac{I_{(1,0)}}{h}.
 \]
 
 \end_inset
@@ -1624,12 +1624,7 @@ A Multivariate Lamperti Transform for Multiplicative Noise to Additive SRK
 Given the efficiency of the methods for additive noise, one method for developin
 g efficient methods for more general noise processes is to use a transform
  of diagonal noise processes to additive noise.
- This transform is due to Lamperti, which
-\end_layout
-
-\begin_layout Standard
-From State Dependent Diffusion to Constant Diffusion in Stochastic Differential
- Equations by the Lamperti Transform 
+ This transform is due to Lamperti, which states that the SDE of the form
 \end_layout
 
 \begin_layout Standard
@@ -1640,7 +1635,7 @@ dX_{t}=f(t,X_{t})dt+\sigma(t,X_{t})R(t)dW_{t}
 
 \end_inset
 
- 
+ where 
 \begin_inset Formula $\sigma$
 \end_inset
 
@@ -1648,8 +1643,7 @@ dX_{t}=f(t,X_{t})dt+\sigma(t,X_{t})R(t)dW_{t}
 \begin_inset Formula $\sigma_{i}(t,X_{i,t})$
 \end_inset
 
-.
- Then the transformation
+ has the transformation
 \begin_inset Formula 
 \[
 Z_{i,t}=\psi_{i}(t,X_{i,t})=\int\frac{1}{\sigma_{i}(x,t)}dx\mid_{x=X_{i,t}}
@@ -1657,7 +1651,7 @@ Z_{i,t}=\psi_{i}(t,X_{i,t})=\int\frac{1}{\sigma_{i}(x,t)}dx\mid_{x=X_{i,t}}
 
 \end_inset
 
- will result in an Ito process with the ith element given by
+which will result in an Ito process with the ith element given by
 \begin_inset Formula 
 \[
 dZ_{i,t}=\left(\frac{\partial}{\partial t}\psi_{i}(t,x)\mid_{x=\psi^{-1}(t,Z_{i,t})}+\frac{f_{i}(\psi^{-1}(t,Z_{t}),t)}{\frac{1}{2}\frac{\partial}{\partial x}\sigma_{i}\left(\psi_{i}^{-1}\left(t,Z_{i,t}\right)\right)}\right)dt+\sum_{j=1}^{n}r_{ij}(t)dw_{j,t}
@@ -1668,26 +1662,27 @@ dZ_{i,t}=\left(\frac{\partial}{\partial t}\psi_{i}(t,x)\mid_{x=\psi^{-1}(t,Z_{i,
  with
 \begin_inset Formula 
 \[
-X_{t}=\psi^{-1}\left(t,Z_{t}\right)
+X_{t}=\psi^{-1}\left(t,Z_{t}\right).
 \]
 
 \end_inset
 
- Example: Geometric Brownian motion.
- 
+ This is easily verified using Ito's Lemma.
+ An example of such a transformation is multidimensional geometric Brownian
+ motion, where 
 \begin_inset Formula $A=diag(a_{1},a_{2})$
 \end_inset
 
 , 
-\begin_inset Formula $\sigma=diag(X_{1},x_{2})$
+\begin_inset Formula $\sigma=diag(X_{1},X_{2})$
 \end_inset
 
-, 
-\begin_inset Formula $r=r_{ij}$
+, and 
+\begin_inset Formula $R=r_{ij}$
 \end_inset
 
 .
- Then 
+ Then in this case, 
 \begin_inset Formula $Z=\psi(X)=\log(X)$
 \end_inset
 
@@ -1703,12 +1698,17 @@ a_{2}-\frac{1}{2}\left(r_{21}^{2}+r_{22}^{2}\right)
 \end{array}\right]dt+\left[\begin{array}{cc}
 r_{11} & r_{12}\\
 r_{21} & r_{22}
-\end{array}\right]dW_{t}
+\end{array}\right]dW_{t}.
 \]
 
 \end_inset
 
- Multiplicative Noise:
+ This transformation requires that 
+\begin_inset Formula $\sigma_{i}^{-1}(t,X_{i,t})$
+\end_inset
+
+ is one-to-one, and thus does not exist in general for diagonal noise.
+ However, in the case of mixed multiplicative and additive noise: 
 \begin_inset Formula 
 \[
 dX_{t}=f(t,X_{t})dt+\sigma X_{t}dW_{t}
@@ -1716,29 +1716,45 @@ dX_{t}=f(t,X_{t})dt+\sigma X_{t}dW_{t}
 
 \end_inset
 
- then
+ where 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is a constant diagonal matrix, then
+\begin_inset Formula 
+\begin{align*}
+d\log X_{t} & =\tilde{f}(t,X_{t})dt+dW_{t}\\
+\tilde{f}(t,X_{t}) & =\frac{f(t,X_{t})}{\sigma X_{t}}
+\end{align*}
+
+\end_inset
+
+ where the division is considered element-wise.
+ Thus we can modify the additive SRK method to be in the form
 \begin_inset Formula 
 \[
-d\left[\begin{array}{c}
-Z_{1}\\
-Z_{2}
-\end{array}\right]=\left[\begin{array}{c}
-\frac{f_{1}(t,X_{1})}{\sigma_{1}X_{1}}\\
-\frac{f_{2}(t,X_{2})}{\sigma_{2}X_{2}}
-\end{array}\right]dt+dW_{t}
+\log X_{n+1}=\log X_{n}+\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)
 \]
 
 \end_inset
 
- or 
-\begin_inset Formula $\tilde{f}(t,X_{t})=f(t,X_{t})./\sigma(t,X_{t})$
+with stages
+\begin_inset Formula 
+\[
+H_{i}^{(0)}=\log X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}\tilde{f}\left(t_{n}+c_{j}^{(0)}h,\exp\left(H_{j}^{(0)}\right)\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}\frac{I_{(1,0)}}{h}.
+\]
+
 \end_inset
 
- and 
-\begin_inset Formula $u_{n+1}=u_{n}+\exp.\left(...\right)$
+ Back-transforming this, we get
+\begin_inset Formula 
+\[
+X_{n+1}=X_{n}\exp\left(\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right)
+\]
+
 \end_inset
 
-
+ where the exponentiation is interpreted element-wise.
 \end_layout
 
 \begin_layout Subsection
@@ -2050,7 +2066,7 @@ Just a bunch of pictures? Tables?
 \end_layout
 
 \begin_layout Subsubsection
-Diffusion-Dominated Stability Methods
+Mixed Stability Methods
 \end_layout
 
 \begin_layout Standard
@@ -2058,7 +2074,7 @@ Just a bunch of pictures? Tables?
 \end_layout
 
 \begin_layout Subsubsection
-Mixed Stability Methods
+Diffusion-Dominated Stability Methods
 \end_layout
 
 \begin_layout Standard
@@ -2069,12 +2085,44 @@ Just a bunch of pictures? Tables?
 Approximately-Optimal Methods with Stability Detection and Switching Behaviors
 \end_layout
 
+\begin_layout Standard
+In many real-world cases, one may not be able to clearly identify a model
+ as drift-stability bound or diffusion-stability bound.
+ In fact, many models may switch between such extremes.
+ An example is a model with stochastic switching between different steady
+ states.
+ In this case, we have that the diffusion term 
+\begin_inset Formula $f(t,X_{ss})\approx0$
+\end_inset
+
+ in the area of many stochastic steady states, meaning that while straddling
+ a steady state the integration is heavily diffusion-stability dominated.
+ However, when switching between steady states, 
+\begin_inset Formula $f$
+\end_inset
+
+ can be very large and stiff, causing the integration to be heavily drift-stabil
+ity dominated.
+ Since these switches are random, the ability to adapt between these two
+ behaviors could be key to achieving optimal performance.
+ Given the tradeoff between drift-stability and diffusion-stability, we
+ investigated methods for switching between methods which optimize for the
+ different situations.
+ 
+\end_layout
+
+\begin_layout Standard
+The basis for our method is a straight-forward extension of a method proposed
+ by Shampine for deterministic differential equations.
+ 
+\end_layout
+
 \begin_layout Itemize
 Shampine's method for Jacobian approximation
 \end_layout
 
 \begin_layout Itemize
-Same_C methods
+EQ_C methods
 \end_layout
 
 \begin_layout Itemize

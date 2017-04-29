@@ -6,7 +6,7 @@ using NLopt, CUDArt
 
 const END_C = true
 const INEQ_C = true
-const EQ_C = false
+const EQ_C = true
 
 include("getCoefs.jl")
 include("main.jl")

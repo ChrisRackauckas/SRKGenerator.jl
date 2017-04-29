@@ -170,8 +170,8 @@ function g_maker(x,tmp,eV,counterSteps,counterSteps2,outfile,count)
     tmp[28]=c1[end]-1
   end
   if EQ_C
-    tmp[29]=c0[3]-c0[2]
-    tmp[30]=c1[3]-c1[2]
+    tmp[29]=c0[end]-c0[3]
+    tmp[30]=c1[end]-c1[3]
   end
   maxErr = maximum(tmp)
   if mod(count[1],counterSteps)==0

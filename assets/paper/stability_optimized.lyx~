@@ -1733,7 +1733,7 @@ d\log X_{t} & =\tilde{f}(t,X_{t})dt+dW_{t}\\
  Thus we can modify the additive SRK method to be in the form
 \begin_inset Formula 
 \[
-\log X_{n+1}=\log X_{n}+\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,H_{i}^{(0)}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)
+\log X_{n+1}=\log X_{n}+\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)
 \]
 
 \end_inset
@@ -1741,7 +1741,7 @@ d\log X_{t} & =\tilde{f}(t,X_{t})dt+dW_{t}\\
 with stages
 \begin_inset Formula 
 \[
-H_{i}^{(0)}=\log X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}\tilde{f}\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}\frac{I_{(1,0)}}{h}.
+H_{i}^{(0)}=\log X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}\tilde{f}\left(t_{n}+c_{j}^{(0)}h,\exp\left(H_{j}^{(0)}\right)\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}\frac{I_{(1,0)}}{h}.
 \]
 
 \end_inset
@@ -1749,7 +1749,7 @@ H_{i}^{(0)}=\log X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}\tilde{f}\left(t_{n}+c_{j}^{(0)
  Back-transforming this, we get
 \begin_inset Formula 
 \[
-X_{n+1}=X_{n}\exp\left(\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,H_{i}^{(0)}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right)
+X_{n+1}=X_{n}\exp\left(\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right)
 \]
 
 \end_inset
@@ -2090,7 +2090,7 @@ Shampine's method for Jacobian approximation
 \end_layout
 
 \begin_layout Itemize
-Same_C methods
+EQ_C methods
 \end_layout
 
 \begin_layout Itemize

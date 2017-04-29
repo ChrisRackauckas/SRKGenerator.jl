@@ -1733,7 +1733,7 @@ d\log X_{t} & =\tilde{f}(t,X_{t})dt+dW_{t}\\
  Thus we can modify the additive SRK method to be in the form
 \begin_inset Formula 
 \[
-\log X_{n+1}=\log X_{n}+\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,H_{i}^{(0)}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)
+\log X_{n+1}=\log X_{n}+\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)
 \]
 
 \end_inset
@@ -1741,7 +1741,7 @@ d\log X_{t} & =\tilde{f}(t,X_{t})dt+dW_{t}\\
 with stages
 \begin_inset Formula 
 \[
-H_{i}^{(0)}=\log X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}\tilde{f}\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}\frac{I_{(1,0)}}{h}.
+H_{i}^{(0)}=\log X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}\tilde{f}\left(t_{n}+c_{j}^{(0)}h,\exp\left(H_{j}^{(0)}\right)\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}\frac{I_{(1,0)}}{h}.
 \]
 
 \end_inset
@@ -1749,7 +1749,7 @@ H_{i}^{(0)}=\log X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}\tilde{f}\left(t_{n}+c_{j}^{(0)
  Back-transforming this, we get
 \begin_inset Formula 
 \[
-X_{n+1}=X_{n}\exp\left(\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,H_{i}^{(0)}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right)
+X_{n+1}=X_{n}\exp\left(\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right)
 \]
 
 \end_inset
@@ -2083,6 +2083,32 @@ Just a bunch of pictures? Tables?
 
 \begin_layout Section
 Approximately-Optimal Methods with Stability Detection and Switching Behaviors
+\end_layout
+
+\begin_layout Standard
+In many real-world cases, one may not be able to clearly identify a model
+ as drift-stability bound or diffusion-stability bound.
+ In fact, many models may switch between such extremes.
+ An example is a model with stochastic switching between different steady
+ states.
+ In this case, we have that the diffusion term 
+\begin_inset Formula $f(t,X_{ss})\approx0$
+\end_inset
+
+ in the area of many stochastic steady states, meaning that while straddling
+ a steady state the integration is heavily diffusion-stability dominated.
+ However, when switching between steady states, 
+\begin_inset Formula $f$
+\end_inset
+
+ can be very large and stiff, causing the integration to be heavily drift-stabil
+ity dominated.
+ Since these switches are random, the ability to adapt between these two
+ behaviors could be key to achieving optimal performance.
+ Given the tradeoff between drift-stability and diffusion-stability, we
+ investigated methods for switching between methods which optimize for the
+ different situations.
+ 
 \end_layout
 
 \begin_layout Itemize
