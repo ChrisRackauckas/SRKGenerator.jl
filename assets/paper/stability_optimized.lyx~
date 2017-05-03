@@ -2111,8 +2111,105 @@ ity dominated.
  
 \end_layout
 
-\begin_layout Itemize
-Shampine's method for Jacobian approximation
+\begin_layout Standard
+The basis for our method is a straight-forward extension of a method proposed
+ for deterministic differential equations.
+ The idea is to create a cheap approximation to the dominant eigenvalues
+ of the Jacobians for the drift and diffusion terms.
+ If 
+\begin_inset Formula $v$
+\end_inset
+
+ is the eigenvector of the respective Jacobian, then for 
+\begin_inset Formula $\Vert v\Vert$
+\end_inset
+
+ sufficiently small,
+\begin_inset Formula 
+\[
+\left|\lambda_{D}\right|\approx\frac{\Vert f(t,x+v)-f(t,x)\Vert}{\Vert v\Vert},\thinspace\thinspace\thinspace\left|\lambda_{N}\right|\approx\frac{\Vert g(t,x+v)-g(t,x)\Vert}{\Vert v\Vert}
+\]
+
+\end_inset
+
+ where 
+\begin_inset Formula $\left|\lambda_{D}\right|$
+\end_inset
+
+ and 
+\begin_inset Formula $\left|\lambda_{N}\right|$
+\end_inset
+
+ are the estimates of the dominant eigenvalues for the deterministic and
+ noise functions respectively.
+ We have in approximation that 
+\begin_inset Formula $H_{i}^{(k)}$
+\end_inset
+
+ is an approximation for 
+\begin_inset Formula $X_{t+c_{i}^{(k)}h}$
+\end_inset
+
+ and thus the difference between two successive approximations at the same
+ timepoint, 
+\begin_inset Formula $c_{i}^{(k)}=c_{j}^{(k)}$
+\end_inset
+
+, then the following serves as a local Jacobian estimate:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left|\lambda_{D}\right|\approx\frac{\Vert f(t+c_{i}^{(0)}h,H_{i}^{(0)})-f(t+c_{j}^{(0)}h,H_{j}^{(0)})\Vert}{\Vert H_{i}^{(0)}-H_{j}^{(0)}\Vert},\thinspace\thinspace\thinspace\left|\lambda_{N}\right|\approx\frac{\Vert f(t+c_{i}^{(1)}h,H_{i}^{(1)})-f(t+c_{j}^{(1)}h,H_{j}^{(1)})\Vert}{\Vert H_{i}^{(1)}-H_{j}^{(1)}\Vert}
+\]
+
+\end_inset
+
+ If we had already computed a successful step, we would like to know if
+ in the next calculation we should switch methods due to stability.
+ Thus it makes sense to approximate the Jacobian at the end of the interval,
+ meaning 
+\begin_inset Formula $i=s$
+\end_inset
+
+ and 
+\begin_inset Formula $j=s-1$
+\end_inset
+
+ where 
+\begin_inset Formula $s$
+\end_inset
+
+ is the number of stages.
+ Then if 
+\begin_inset Formula $z_{min}$
+\end_inset
+
+ is the minimum 
+\begin_inset Formula $z\in\mathbb{R}$
+\end_inset
+
+ such that 
+\begin_inset Formula $z$
+\end_inset
+
+ is in the stability region for the method, 
+\begin_inset Formula $\frac{h\left|\lambda_{D}\right|}{z_{min}}>1$
+\end_inset
+
+ when the steps are outside the stability region.
+ Because the drift and mixed stability methods do not track the noise axis
+ directly, we instead modify 
+\begin_inset Formula $w_{min}$
+\end_inset
+
+ to be 
+\begin_inset Formula $\frac{2}{3}$
+\end_inset
+
+ of the maximum of the stability region in the noise axis.
+ 
 \end_layout
 
 \begin_layout Itemize
