@@ -1294,7 +1294,7 @@ G(z)=1+z\left(\alpha\cdot\left(I-zA^{(0)}\right)^{-1}\right).
 \end_layout
 
 \begin_layout Subsection
-Stability-Optimal Explicit Methods
+Stability-Optimal 2-Stage Explicit SRA Methods
 \end_layout
 
 \begin_layout Standard
@@ -1349,7 +1349,7 @@ G(z)=1+A_{21}z^{2}\alpha_{2}+z\left(\alpha_{1}+\alpha_{2}\right)
 
 , meaning that the SRA1 method due to Rossler achieves the maximum stability
  criteria.
- However, given extra degrees of freedom, we impose that 
+ However, given extra degrees of freedom, we attempted to impose that 
 \begin_inset Formula $c_{1}^{(0)}=c_{1}^{(1)}=0$
 \end_inset
 
@@ -1358,8 +1358,18 @@ G(z)=1+A_{21}z^{2}\alpha_{2}+z\left(\alpha_{1}+\alpha_{2}\right)
 \end_inset
 
  so that the error estimator spans the whole interval.
- This can lead to improved robustness of the adaptivity.
- Under these conditions we find the solution
+ This can lead to improved robustness of the adaptive error estimator.
+ In fact, when trying to optimize the error estimator's span we find that
+ there is no error estimator which satisfies 
+\begin_inset Formula $c_{2}^{(0)}>\frac{3}{4}$
+\end_inset
+
+ which is the span of the SRA1 method.
+ Thus the SRA1 is the stability-optimized 2-stage explicit method which
+ achieves the most robust error estimator.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
 A^{(0)} & =\left(\begin{array}{cc}
@@ -1373,30 +1383,19 @@ A^{(0)} & =\left(\begin{array}{cc}
 \frac{2}{3}
 \end{array}\right)\\
 \beta^{(1)} & =\left(\begin{array}{c}
-0\\
-1
-\end{array}\right),\thinspace\thinspace\thinspace\beta^{(2)}=\left(\begin{array}{c}
 1\\
--1
+0
+\end{array}\right),\thinspace\thinspace\thinspace\beta^{(2)}=\left(\begin{array}{c}
+-1\\
+1
 \end{array}\right),\thinspace\thinspace\thinspace c^{(0)}=\left(\begin{array}{c}
 0\\
-1
+\frac{3}{4}
 \end{array}\right),\,\,\,c^{(1)}=\left(\begin{array}{c}
-0\\
-1
+1\\
+0
 \end{array}\right)
 \end{align*}
-
-\end_inset
-
- is the unique set of coefficients which satisfies these constraints, and
- achieves the optimal value for the root.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Graphics
-	filename C:/Users/Chris/.julia/v0.5/SRKGenerator/assets/obj_poly_solve/2stage_additive.pdf
-	scale 25
 
 \end_inset
 
@@ -1404,7 +1403,7 @@ A^{(0)} & =\left(\begin{array}{cc}
 \end_layout
 
 \begin_layout Subsection
-An A-Stable L-Stable Implicit Method For Stiff SDEs with Additive Noise
+An A-Stable L-Stable 2-Stage (Semi-)Implicit SRA Method
 \end_layout
 
 \begin_layout Standard
@@ -1561,7 +1560,9 @@ Recalling that
  are approximated respectively, we wish to impose
 \begin_inset Formula 
 \begin{align*}
+c_{1}^{(0)} & =0\\
 c_{2}^{(0)} & =1\\
+c_{1}^{(1)} & =0\\
 c_{2}^{(1)} & =1
 \end{align*}
 
@@ -1579,12 +1580,30 @@ c_{2}^{(1)} & =1
 
 .
  Using the constraint-satisfaction algorithm FindInstance in Mathematica,
- we find the following coefficient set:
+ we look for tableaus which satisfy the previous conditions with the added
+ constraint of semi-implicitness, i.e.
+ 
+\begin_inset Formula $B^{(0)}$
+\end_inset
+
+ is lower triangular.
+ This assumption is added becaues the inverse of the normal distribution
+ has unbounded moments, and thus in many cases it mathematically simpler
+ to consider the diffusion term as explicit (though there are recent methods
+ which drop this requirement via truncation or extra assumptions on the
+ solution).
+ However, we find that there is no coefficient set which meets all of these
+ requirements.
+ However, if we relax the interval estimate condition to allow 
+\begin_inset Formula $0\leq c_{2}^{(0)}\leq1$
+\end_inset
+
+, we find an A-L stable method:
 \begin_inset Formula 
 \begin{align*}
 A^{(0)} & =\left(\begin{array}{cc}
-2 & -\frac{7}{2}\\
-0 & \frac{3}{2}
+-1 & 1\\
+0 & \frac{3}{4}
 \end{array}\right),\thinspace\thinspace\thinspace B^{(0)}=\left(\begin{array}{cc}
 0 & 0\\
 \frac{3}{2} & 0
@@ -1600,7 +1619,7 @@ A^{(0)} & =\left(\begin{array}{cc}
 -1
 \end{array}\right),\thinspace\thinspace\thinspace c^{(0)}=\left(\begin{array}{c}
 0\\
-1
+\frac{3}{4}
 \end{array}\right),\,\,\,c^{(1)}=\left(\begin{array}{c}
 0\\
 1
@@ -1609,7 +1628,23 @@ A^{(0)} & =\left(\begin{array}{cc}
 
 \end_inset
 
+ If we attempt to look for an SDIRK-like method to reduce the complexity
+ of the implicit equation, i.e.
+ 
+\begin_inset Formula $A_{12}^{(0)}=0$
+\end_inset
 
+, using FindInstance we find the constraints unsatisfiable.
+ Note that if we drop the semi-implicit assumption we find that the full
+ constraints cannot be satisfied there (we still cannot satisfy 
+\begin_inset Formula $c_{1}^{(0)}=0$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{2}^{(0)}=1$
+\end_inset
+
+), and there does not exist an A-L stable SDIRK method in that case.
 \end_layout
 
 \begin_layout Section

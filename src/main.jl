@@ -67,7 +67,7 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
   eval_f = (x,grad) -> f_maker(x,ans,coef_ans,powz,poww,integrationFuncs,cudaCores,numCards,g_coefs,g_iarr,g_jarr,sizei,sizej,equalDiv,startIdx,g_tmp,totArea,counterSteps,counterSteps2,outfile,gpuEnabled,count)
   eval_g = (tmp,x,grad) -> g_maker(x,tmp,eV,counterSteps,counterSteps2,outfile,count)
   eval_g_ineq = (tmp,x,grad) -> g_ineq_maker(x,tmp,eV,counterSteps,counterSteps2,outfile,count)
-  opt = Opt(alg,M) #:LD_SLSQP, :LN_COBYLA (semi), :GN_ISRES support equality constraints
+  opt = Opt(alg,M) #:LD_SLSQP, :LN_COBYLA (semi), :GN_ISRES, :LN_AUGLAG_EQ support equality constraints
   lower_bounds!(opt,x_L)
   upper_bounds!(opt,x_U)
   max_objective!(opt, eval_f)
