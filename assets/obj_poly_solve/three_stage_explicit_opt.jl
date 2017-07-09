@@ -44,6 +44,7 @@ function f(x::Vector, grad::Vector)
   iter::Int += 1
   if mod(iter,1000) == 0
     global g_res
+    constraint_cost!(g_res, x)
     @show x
     @show g_res
     @show integral
@@ -87,6 +88,21 @@ xtol_rel!(opt,1e-4)
 maxeval!(opt::Opt, Int(1e6))
 maxf,maxx,ret = optimize(opt,x0)
 
+### Result
+
+x = [0.208263, 0.666718, -0.0522899, 0.945187, -0.123953, 0.0160279, 0.931976, 0.0433489, 0.903992, 0.117123, 0.0730312, -0.137181, 1.85575, -0.365674]
+a2, a3, c01, c11, c13, b13, b22, b23, A021, A031, A032, B021, B031, B032 = x
+b12 = (b22*(1 - c11 + b13*c11 - b13*c13))/(-1 + b23*c11 - b23*c13)
+b11 = 1 - b12 - b13
+b21 = - b22 - b23
+c12 = (-1 - b21*c11 - b23*c13)/b22
+a1 = 1 - a2 - a3
+c02 = A021
+c03 = A031 + A032
+G(A021,A031,A032,a1,a2,a3)
+g_res = [0.0, 0.0]
+constraint_cost!(g_res::Vector, x::Vector)
+g_res
 
 #=
 ##################
