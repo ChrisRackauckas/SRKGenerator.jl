@@ -2287,6 +2287,37 @@ Adding only the inequality constraints on the
  
 \end_layout
 
+\begin_layout Standard
+To look for more diffusion-stable methods, we dropped to 
+\begin_inset Formula $N=6$
+\end_inset
+
+ to encourage the methods to expand the stability in the 
+\begin_inset Formula $w$
+\end_inset
+
+-plane.
+ However, we could not find a method whose stability region went substantially
+ beyond 
+\begin_inset Formula $\left[-2,2\right]$
+\end_inset
+
+ in 
+\begin_inset Formula $w$
+\end_inset
+
+.
+ This was further decreased to 
+\begin_inset Formula $N=1$
+\end_inset
+
+ where methods still could not go substantially beyond 
+\begin_inset Formula $\left|2\right|$
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
 Drift-Dominated Stability Methods
 \end_layout

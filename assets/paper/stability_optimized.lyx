@@ -2127,7 +2127,9 @@ The resulting problem is a nonlinear programming problem with 44 variables
  A mixed approach using many solutions of the semi-local optimizer LN_AUGLAG_EQ
  and fewer solutions from the global optimizer GN_ISRES were used to approximate
  the optimality of solutions.
- 
+ Optimization was run many times in parallel until many results produced
+ methods with similar optimiality, indicating that we were likely obtained
+ values near the true minimum.
 \end_layout
 
 \begin_layout Standard
@@ -2162,7 +2164,7 @@ The parameters
 \end_layout
 
 \begin_layout Subsection
-Approximately-Optimal Methods
+Resulting Approximately-Optimal Methods
 \end_layout
 
 \begin_layout Standard
@@ -2198,31 +2200,127 @@ The coefficients generated for approximately-optimal methods fall into three
 \end_inset
 
 .
+ As a baseline, we optimized the objective without constraints on the 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ to see what the 
+\begin_inset Quotes eld
+\end_inset
+
+best possible method
+\begin_inset Quotes erd
+\end_inset
+
+ would be.
+ When this was done with large 
+\begin_inset Formula $N$
+\end_inset
+
+ and 
+\begin_inset Formula $M$
+\end_inset
+
+, the resulting method, which we name SRIOpt1, has almost every value of
+ 
+\begin_inset Formula $c$
+\end_inset
+
+ satisfy the constraints, but with 
+\begin_inset Formula $c_{2}^{(0)}\approx-0.04$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{4}^{(0)}\approx3.75$
+\end_inset
+
+.
+ To see if we could produce methods which were more diffusion-stable, we
+ decreased 
+\begin_inset Formula $N$
+\end_inset
+
+ to optimize more in 
+\begin_inset Formula $w$
+\end_inset
+
+ but failed to produce methods with substantially enlarged diffusion-stability
+ over SRIOpt1.
+\end_layout
+
+\begin_layout Standard
+Adding only the inequality constraints on the 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ and looking for methods for drift-dominated stability, we failed to produce
+ methods whose 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ estimators adequately covered the interval.
+ Some of the results did produce stability regions simliar to SRIOpt1 but
+ with 
+\begin_inset Formula $c_{i}^{(0)}<0.5$
+\end_inset
+
+ which indicates the method could have problems with error estimation.
+ When placing the equality constraints on the edge 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+, one method, which we label SRIOpt2, resulted in similar stability to SRIOpt1
+ but satisfy the 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ constraints.
+ In addition, this method satisfies 
+\begin_inset Formula $c_{3}^{(0)}=c_{4}^{(0)}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{3}^{(1)}=c_{4}^{(1)}=1$
+\end_inset
+
+, a property whose use will be explained in Section X.
  
 \end_layout
 
-\begin_layout Subsubsection
-Drift-Dominated Stability Methods
-\end_layout
-
 \begin_layout Standard
-Just a bunch of pictures? Tables?
-\end_layout
+To look for more diffusion-stable methods, we dropped to 
+\begin_inset Formula $N=6$
+\end_inset
 
-\begin_layout Subsubsection
-Mixed Stability Methods
-\end_layout
+ to encourage the methods to expand the stability in the 
+\begin_inset Formula $w$
+\end_inset
 
-\begin_layout Standard
-Just a bunch of pictures? Tables?
-\end_layout
+-plane.
+ However, we could not find a method whose stability region went substantially
+ beyond 
+\begin_inset Formula $\left[-2,2\right]$
+\end_inset
 
-\begin_layout Subsubsection
-Diffusion-Dominated Stability Methods
-\end_layout
+ in 
+\begin_inset Formula $w$
+\end_inset
 
-\begin_layout Standard
-Just a bunch of pictures? Tables?
+.
+ This was further decreased to 
+\begin_inset Formula $N=1$
+\end_inset
+
+ where methods still could not go substantially beyond 
+\begin_inset Formula $\left|2\right|$
+\end_inset
+
+.
+ Thus we were not able to obtain methods optimized for the diffusion-dominated
+ case.
+ This hard barrier was hit under many different constraint and objective
+ setups and under thousands of optimization runs, indicating there might
+ be a diffusion-stability barrier for explicit methods.
 \end_layout
 
 \begin_layout Section
