@@ -1403,6 +1403,115 @@ A^{(0)} & =\left(\begin{array}{cc}
 \end_layout
 
 \begin_layout Subsection
+Stability-Optimal 3-Stage Explicit SRA Methods
+\end_layout
+
+\begin_layout Standard
+For the 3-stage SRA method, we recieve the simplified stability function
+\begin_inset Formula 
+\[
+G(z)=A_{21}A_{31}\alpha_{3}z^{3}+A_{21}\alpha_{2}z^{2}+A_{31}\alpha_{3}z^{2}+A_{32}\alpha_{3}z^{2}+\alpha_{1}z+\alpha_{2}z+\alpha_{3}z+1
+\]
+
+\end_inset
+
+ To optimize this method, we attempted to use the same techniques as before
+ and optimize the real values of the negative roots.
+ However, in this case we have a cubic polynomial and the root equations
+ are more difficult.
+ In the Mathematica notebooks we should that one root condition can be discarded
+, but the other two had difficulties optimizing.
+ Instead, we turn to a more general technique to handle the stability optimizati
+on which will be employed in later sections as well.
+ To do so, we generate an optimization problem which we can numerically
+ solve for the coefficients.
+ To simplify the problem, we let 
+\begin_inset Formula $z\in\mathbb{R}$
+\end_inset
+
+.
+ Define the function:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f\left(z,w;N,M\right)=\int_{D}\chi_{G(z)\leq1}(z)dz
+\]
+
+\end_inset
+
+Notice that for 
+\begin_inset Formula $D\rightarrow\mathbb{C}$
+\end_inset
+
+, 
+\begin_inset Formula $f$
+\end_inset
+
+ is the area of the stability region.
+ Thus we define the stability-optimized diagonal SRK method as the set of
+ coefficients which achieves
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\max_{A^{(i)},B^{(i)},\beta^{(i)},\alpha} & f(z)\\
+\text{subject to: } & \text{Order Constraints}
+\end{align*}
+
+\end_inset
+
+In all cases we impose 
+\begin_inset Formula $0<c_{i}^{(0)},c_{i}^{(1)}<1$
+\end_inset
+
+.
+ We use the order constraints to simplify the problem to an nonlinear optimizati
+on problem on 14 variables with 3 equality constraints and 4 inequality
+ constraints (with bound constraints on the 10 variables).
+ However, we found that simplifying the problem even more to require 
+\begin_inset Formula $c_{1}^{(0)}=c_{1}^{(1)}=0$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{3}^{(0)}=c_{3}^{(1)}=1$
+\end_inset
+
+ did not significantly impact the stability regions but helps the error
+ estimator and thus we reduced the problem to 10 variables, 3 equality constrain
+ts, and 2 inequality constraints.
+ This was optimized using the COBYLA local optimization algorithm with randomize
+d initial conditions 100 times and all gave similar results.
+ In the Mathematica notebook we show the effect of changing the numerical
+ integration region 
+\begin_inset Formula $D$
+\end_inset
+
+ on the results, but conclude that a 
+\begin_inset Formula $D$
+\end_inset
+
+ which does not bias the result for better/worse real/complex handling does
+ not improve the result.
+ The resulting algorithm, SOSRA, we given by the coefficients in Table X
+ in the appendix.
+ Its stability region is compared to SRA1 and SRA3 in Figure X where it
+ is shown that SOSRA more than doubles the allowed real eigenvalues.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename C:/Users/Chris/.julia/v0.6/SRKGenerator/assets/obj_poly_solve/SOSRA_stability.pdf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 An A-Stable L-Stable 2-Stage (Semi-)Implicit SRA Method
 \end_layout
 
@@ -2273,14 +2382,6 @@ Show divergence of SRA1?
 
 \begin_layout Section
 Discussion
-\end_layout
-
-\begin_layout Itemize
-3rd stage additive
-\end_layout
-
-\begin_layout Itemize
-Implicit diagonal
 \end_layout
 
 \begin_layout Itemize

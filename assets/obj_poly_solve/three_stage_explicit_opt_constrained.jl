@@ -1,24 +1,26 @@
 using NLopt, ForwardDiff
 
-x0 = zeros(14)
+x0 = zeros(10)
 gcfg = ForwardDiff.GradientConfig(nothing,x0)
 g!(grad, x) = ForwardDiff.gradient!(grad, integral_function, x, gcfg)
-lbs  = -5ones(14)
-lbs[3:5] = zeros(3)
-lbs[9] = 0.0
-ubs = 20ones(14)
-ubs[3:5] = ones(3)
-ubs[9] = 1.0
+lbs  = -5ones(10)
+lbs[6] = 0.0
+ubs = 20ones(10)
+ubs[6] = 1.0
 
 function integral_function(x)
-  a2, a3, c01, c11, c13, b13, b22, b23, A021, A031, A032, B021, B031, B032 = x
+  a2, a3, b13, b22, b23, A021, A031, B021, B031, B032 = x
+  c01 = 0
+  c03 = 1
+  c11 = 0
+  c13 = 1
+  A032 = 1 - A031
   b12 = (b22*(1 - c11 + b13*c11 - b13*c13))/(-1 + b23*c11 - b23*c13)
   b11 = 1 - b12 - b13
   b21 = - b22 - b23
   c12 = (-1 - b21*c11 - b23*c13)/b22
   a1 = 1 - a2 - a3
   c02 = A021
-  c03 = A031 + A032
   G(A021,A031,A032,a1,a2,a3)
 end
 
@@ -46,8 +48,10 @@ end
 
 function G(A021,A031,A032,a1,a2,a3)
   tmps = zeros(Threads.nthreads())
-  xs = -6:0.01:1
-  ys = -4:0.01:4
+  xmin = 6
+  ymin = 4
+  xs = -xmin:0.01:1
+  ys = -ymin:0.01:4
   Threads.@threads for x in xs
     for y in ys
       z = x + im*y
@@ -55,18 +59,22 @@ function G(A021,A031,A032,a1,a2,a3)
     end
   end
   tmp = sum(tmps)
-  (tmp/(length(xs)*length(ys)))*(5*6)
+  (tmp/(length(xs)*length(ys)))*((xmin+1)*(2ymin))
 end
 
 function constraints!(res,x,grad)
-  a2, a3, c01, c11, c13, b13, b22, b23, A021, A031, A032, B021, B031, B032 = x
+  a2, a3, b13, b22, b23, A021, A031, B021, B031, B032 = x
+  c01 = 0
+  c03 = 1
+  c11 = 0
+  c13 = 1
+  A032 = 1 - A031
   b12 = (b22*(1 - c11 + b13*c11 - b13*c13))/(-1 + b23*c11 - b23*c13)
   b11 = 1 - b12 - b13
   b21 = - b22 - b23
   c12 = (-1 - b21*c11 - b23*c13)/b22
   a1 = 1 - a2 - a3
   c02 = A021
-  c03 = A031 + A032
   if length(grad)>0
     grad .= 0.0
     grad[1,1] = B021
@@ -91,39 +99,40 @@ function constraints!(res,x,grad)
 end
 
 function c_constraints!(res,x,grad)
-  a2, a3, c01, c11, c13, b13, b22, b23, A021, A031, A032, B021, B031, B032 = x
+  a2, a3, b13, b22, b23, A021, A031, B021, B031, B032 = x
+  c01 = 0
+  c03 = 1
+  c11 = 0
+  c13 = 1
+  A032 = 1 - A031
   b12 = (b22*(1 - c11 + b13*c11 - b13*c13))/(-1 + b23*c11 - b23*c13)
   b11 = 1 - b12 - b13
   b21 = - b22 - b23
   c12 = (-1 - b21*c11 - b23*c13)/b22
   a1 = 1 - a2 - a3
   c02 = A021
-  c03 = A031 + A032
-  res[1] = c03 - 1
-  res[2] = c12 - 1
-  res[3] = -c03
-  res[4] = -c12
+  res[1] = c12 - 1
+  res[2] = -c12
 end
 
 a2 = 1/6; a3 = 2/3; c01 = 0; c11 = 1; c13 = 0; b13 = 0;
 b22 = 1; b23 = 0; A021 = 1; A031 = 1/4; A032 = 1/4;
 B021 = 0; B031 = 1; B032 = 1/2
 #x0 = [a2, a3, c01, c11, c13, b13, b22, b23, A021, A031, A032, B021, B031, B032] + rand(14)
-x0 = rand(14)
-x0[3:5] = max.(0,x0[3:5])
-x0[3:5] = min.(1,x0[3:5])
-x0[9] = max.(0,x0[9])
-x0[9] = min.(1,x0[9])
-opt = Opt(:LN_COBYLA, 14) #:LD_SLSQP, :LN_COBYLA (semi), :GN_ISRES, :LN_AUGLAG_EQ support equality constraints
+x0 = rand(10)
+x0[6] = max.(0,x0[6])
+x0[6] = min.(1,x0[6])
+opt = Opt(:LN_COBYLA, 10) #:LD_SLSQP, :LN_COBYLA (semi), :GN_ISRES, :LN_AUGLAG_EQ support equality constraints
 lower_bounds!(opt, lbs)
 upper_bounds!(opt, ubs)
 max_objective!(opt, f)
 equality_constraint!(opt::Opt,constraints!, [1e-12 for i in 1:3])
-inequality_constraint!(opt::Opt,c_constraints!, [1e-12 for i in 1:4])
+inequality_constraint!(opt::Opt,c_constraints!, [1e-12 for i in 1:2])
 ftol_abs!(opt,1e-12)
 xtol_rel!(opt,1e-12)
 maxeval!(opt::Opt, Int(1e6))
 maxf,maxx,ret = optimize(opt,x0)
+println(maxf)
 
 #maxx_str = "x = [$(maxx[1]),$(maxx[2]),$(maxx[3]),$(maxx[4]),$(maxx[5]),$(maxx[6]),$(maxx[7]),$(maxx[8]),$(maxx[9]),$(maxx[10]),$(maxx[11]),$(maxx[12]),$(maxx[13]),$(maxx[14])]"
 #println(maxx_str)
@@ -131,14 +140,18 @@ maxf,maxx,ret = optimize(opt,x0)
 ### Result
 
 x = maxx
-a2, a3, c01, c11, c13, b13, b22, b23, A021, A031, A032, B021, B031, B032 = x
+a2, a3, b13, b22, b23, A021, A031, B021, B031, B032 = x
+c01 = 0
+c03 = 1
+c11 = 0
+c13 = 1
+A032 = 1 - A031
 b12 = (b22*(1 - c11 + b13*c11 - b13*c13))/(-1 + b23*c11 - b23*c13)
 b11 = 1 - b12 - b13
 b21 = - b22 - b23
 c12 = (-1 - b21*c11 - b23*c13)/b22
 a1 = 1 - a2 - a3
 c02 = A021
-c03 = A031 + A032
 G(A021,A031,A032,a1,a2,a3)
 g_res = zeros(3); g_res_grad = zeros(14,3); c_res=zeros(4)
 constraints!(g_res, x, g_res_grad)
@@ -148,12 +161,19 @@ c_constraints!(c_res, x, g_res_grad)
 c_res
 
 value_str = """
+  a1 = $a1;
   a2 = $a2;
   a3 = $a3;
   c01 = $c01;
+  c02 = $c02;
+  c03 = $c03;
   c11 = $c11;
+  c12 = $c12;
   c13 = $c13;
+  b11 = $b11;
+  b12 = $b12;
   b13 = $b13;
+  b21 = $b21;
   b22 = $b22;
   b23 = $b23;
   A021 = $A021;
@@ -162,13 +182,6 @@ value_str = """
   B021 = $B021;
   B031 = $B031;
   B032 = $B032;
-  b12 = $b12;
-  b11 = $b11;
-  b21 = $b21;
-  c12 = $c12;
-  a1 = $a1;
-  c02 = $c02;
-  c03 = $c03;
   """
 println(value_str)
 #=
