@@ -1,0 +1,531 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+In contrast to how common models of this form occur, methods which utilize
+ this functional form for increased efficiency are relatively underdeveloped.
+\end_layout
+
+\begin_layout Standard
+In many cases, these stochastic models are interesting for their qualitative
+ behavior.
+ Gillespie's results show a 
+\end_layout
+
+\begin_layout Standard
+The bread-and-butter methods for the integration of ordinary differential
+ equations 
+\begin_inset Formula 
+\[
+x'(t)=f(t,x)
+\]
+
+\end_inset
+
+are adaptive Runge-Kutta methods.
+ Runge first extended the Euler method to greater accuracy in 1895.
+ Later, these methods were extended to a general form resulting in the theory
+ of the Butcher tableau.
+ In this framework, a Runge-Kutta method
+\begin_inset Formula 
+\begin{align*}
+x_{n+1} & =x_{n}+h_{n}\sum_{j=1}^{s}b_{j}k_{j},\,\,\,\hat{x}_{n+1}=x_{n}+h_{n}\sum_{j=1}^{s}\hat{b}_{j}k_{j}\\
+f_{j} & =f\left(x_{n}+c_{i}h_{n},y_{n}+h_{n}\sum_{j=1}^{s}a_{ij}k_{j}\right)
+\end{align*}
+
+\end_inset
+
+is defined by a table of coefficients:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{11}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{12}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ldots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{1s}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{21}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{22}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ldots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{2s}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{s}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{s1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{s2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ldots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{ss}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ldots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{s}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x_{n+1}$
+\end_inset
+
+ is the approximation to 
+\begin_inset Formula $x(t_{j}+\Delta t)$
+\end_inset
+
+ where 
+\begin_inset Formula $t_{j}$
+\end_inset
+
+ is the 
+\begin_inset Formula $i$
+\end_inset
+
+th timepoint, and 
+\begin_inset Formula $\hat{x}_{n+1}$
+\end_inset
+
+ is an embedded approximation of a different order.
+ Using 
+\begin_inset Formula $E_{n}=\Vert x_{n}-\hat{x}_{n}\Vert$
+\end_inset
+
+ as a local error estimator, the timestep is adaptive using the error estimate.
+ One common algorithm for doing so is
+\begin_inset Formula 
+\[
+h_{n+1}=0.9h_{n}\left(\frac{TOL}{E_{n}}\right)^{\frac{1}{p}}
+\]
+
+\end_inset
+
+ due to optimality results by Cechino where 
+\begin_inset Formula $TOL$
+\end_inset
+
+ is a user-chosen error tolerance and 
+\begin_inset Formula $p$
+\end_inset
+
+ is the order of the method.
+\end_layout
+
+\begin_layout Standard
+Early work in Runge-Kutta methods focused on the development of high order
+ methods.
+ Fehlberg developed the first 5th order method with an embedded error estimator.
+ Dormand and Prince expanded the theory by considering the problem as a
+ coefficient optimization problem: choosing coefficients for an order 4/5
+ method which minimizes the the principle term in the truncation error to
+ maximize the efficiency in each step, while controlling for an enlarged
+ stability region.
+ In order to make the problem tractable, they introduced extra assumptions
+ and the resulting method, known as the RK5(4) or DP5 method (or through
+ the name of its implementations dopri5 or ode45) is the standard method
+ for integrating non-stiff ODEs.
+ More recent work by Tsitouras used a minimal number of simplifying assumptions
+ to generate a more efficient order 4/5 method.
+ As an alternative to the mixed truncation error vs stability region selection,
+ Verner derived methods with extended stability regions for higher orders.
+\end_layout
+
+\begin_layout Standard
+An approach to the integration of stochastic differential equations is the
+ use of adaptive Stochastic Runge-Kutta (SRK) methods.
+ Kloden and Platen developed a theory of stochastic Taylor expansions which
+ allowed the development of high strong order (greater than order 1.0) methods
+ which replace the derivatives by approximations, also known as derivative-free
+ or SRK methods.
+ Burrage and Burrage introduced the use of colored trees for calculating
+ the strong order conditions for SRK methods and thus extended the Butcher
+ tableau theory to SDE with Stratonovich noise.
+ Later work by Rossler extended the approach to Ito SDEs and along with
+ relaxed conditions for commutative, scalar, diagonal, and additive noise.
+ Rackauckas and Nie derived an extension to the Rossler methods which provides
+ a natural embedded order 1.0 method and results in efficient adaptive timesteppi
+ng for any Rossler method.
+ However, to the author's knowledge, no attempts have been made at deriving
+ optimal sets of coefficients for the high strong order adaptive SRK methods.
+ 
+\end_layout
+
+\begin_layout Standard
+In this paper we develop a method for deriving optimal-stability SRK methods.
+ Section 2 recaps the theory of high strong order SRK methods and their
+ adaptive extensions.
+ In Section 3 we derive a optimization problem whose solution is a stability-opt
+imized SRK methods.
+ Also discussed are extended constraints which are required for the stability
+ and locality of the error estimator.
+ In Section 4 we describe the numerical used to solve the optimization problem
+ and the resulting explicit SRK methods.
+ In Section 5 demonstrate the efficiency of our new methods on a set of
+ test problems.
+ We end by discussing the extension of our method of derivation to implicit
+ and non-diagonal SRK methods.
+\end_layout
+
+\end_body
+\end_document

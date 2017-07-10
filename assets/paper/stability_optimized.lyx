@@ -101,7 +101,7 @@ dX_{t}=f(t,X_{t})dt+g(t,X_{t})dW_{t}
 
 \end_inset
 
- where 
+where 
 \begin_inset Formula $X_{t}$
 \end_inset
 
@@ -128,13 +128,17 @@ dX_{t}=f(t,X_{t})dt+g(t,X_{t})dW_{t}
 
 -dimensional Brownian motion.
  In many models, noise is added to deterministic equations phenomenologically.
- In one case, the noise process is modeled as exogenous to the system and
- thus not dependent the system itself, leading to the assumption that 
+ These models are numerically studied for their qualitatative behavior:
+ scientists are interested not in numerical predictions exact to many decimal
+ places but to understand the phonomena which only occurs in the presence
+ of stochasticity, like random switching between cell types.
+ In these cases, the noise process can be modeled as exogenous to the system
+ and thus not dependent the system itself, leading to the assumption that
+ 
 \begin_inset Formula $g(t,X_{t})\equiv g(t)$
 \end_inset
 
-.
- This case is known as additive noise.
+ which is known as additive noise.
  Another common case is multiplicative noise, where to each deterministic
  equation a noise term 
 \begin_inset Formula $\sigma_{i}X_{t}^{i}dW_{t}$
@@ -149,464 +153,83 @@ dX_{t}=f(t,X_{t})dt+g(t,X_{t})dW_{t}
 \begin_inset Formula $\left(\sigma_{i}X_{t}^{i}\right)$
 \end_inset
 
- and thus falling into the category of diagonal noise.
- In contrast to how common models of this form occur, methods which utilize
- this functional form for increased efficiency are relatively underdeveloped.
+ and thus falling into the more general category of diagonal noise.
 \end_layout
 
 \begin_layout Standard
-The bread-and-butter methods for the integration of ordinary differential
- equations 
-\begin_inset Formula 
-\[
-x'(t)=f(t,x)
-\]
-
+The unique features of stochastic models in many cases are pathwise-dependent.
+ The mean of a chemical reaction network may stay at a constant steady state,
+ but in the presence of randomness this may be switching between various
+ states.
+ These pathwise properties are of interest because they capture the effects
+ which cannot be found in deterministic models.
+ However, these same effects exhibit numerical difficulties.
+ Almost by definition these features exist in the single trajectories of
+ the random processes and thus must be controlled individually.
+ These trajectories display large, transient and random switching behavior
+ which in a given trajectory causes stochastic bursts of numerical stiffness,
+ a phonomena which we will denote pathwise stiffness.
+ In previous work, the authors have shown that by using adaptive timestepping
+ a stochastic reaction network of 19 reactants is able to be solve with
+ an average timestep 100,000x larger than the value that was found necessary
+ for stability.
+ However, the methods were still largely 
+\begin_inset Quotes eld
 \end_inset
 
-are adaptive Runge-Kutta methods.
- Runge first extended the Euler method to greater accuracy in 1895.
- Later, these methods were extended to a general form resulting in the theory
- of the Butcher tableau.
- In this framework, a Runge-Kutta method
-\begin_inset Formula 
-\begin{align*}
-x_{n+1} & =x_{n}+h_{n}\sum_{j=1}^{s}b_{j}k_{j},\,\,\,\hat{x}_{n+1}=x_{n}+h_{n}\sum_{j=1}^{s}\hat{b}_{j}k_{j}\\
-f_{j} & =f\left(x_{n}+c_{i}h_{n},y_{n}+h_{n}\sum_{j=1}^{s}a_{ij}k_{j}\right)
-\end{align*}
-
+stability-bound
+\begin_inset Quotes erd
 \end_inset
 
-is defined by a table of coefficients:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Tabular
-<lyxtabular version="3" rows="5" columns="5">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $c_{1}$
+, that is the tolerance was set to solve the model was determined by what
+ was necessary for stability but was far below the error necessary for the
+ application.
+ The purpose of this investigation is to develop numerical methods with
+ the ability to properly handle pathwise stiffness and allow for efficient
+ solving of large Monte Carlo experiments.
+ We approach this through two means.
+ On one end we develop stability-optimized Stochastic Runge-Kutta (SRK)
+ methods which have the property of having drastically enlarged stability
+ regions.
+ Similar to the Runge-Kutta Chebyschev (and the S-ROCK extension to the
+ stochastic case), these methods are designed to be efficient for equations
+ which display stiffness without fully commiting to implicit solvers.
+ On the otherhand, to handle extreme stiffness we develop an implicit RK
+ method for additive noise problems.
+ We show that this method is A-L stable in a generalization of these terms
+ to additive noise SDEs.
+ To extend the utility of these methods, we derive and extension of the
+ methods for additive SDEs to multiplicative SDEs through a transformation.
+ In addition to the new methods, we display a novel scalable mechanism for
+ the derivation of 
+\begin_inset Quotes eld
 \end_inset
 
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $a_{11}$
+optimal
+\begin_inset Quotes erd
 \end_inset
 
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $a_{12}$
+ Runge-Kutta methods, and use it to design stability-optimized methods for
+ diagonal noise SDEs which would otherwise be analytically intractable due
+ to the few million terms in the stability equation.
+ Lastly, we show that on test problems that these methods are no less efficient
+ than existing SRK methods when one only requires a few decimal places of
+ accuracy (
+\begin_inset Formula $>10^{-6}$
 \end_inset
 
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\ldots$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $a_{1s}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $c_{2}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $a_{21}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $a_{22}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\ldots$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $a_{2s}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vdots$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vdots$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vdots$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vdots$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $c_{s}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $a_{s1}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $a_{s2}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\ldots$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $a_{ss}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $b_{1}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $b_{2}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\ldots$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $b_{s}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $x_{n+1}$
-\end_inset
-
- is the approximation to 
-\begin_inset Formula $x(t_{j}+\Delta t)$
-\end_inset
-
- where 
-\begin_inset Formula $t_{j}$
-\end_inset
-
- is the 
-\begin_inset Formula $i$
-\end_inset
-
-th timepoint, and 
-\begin_inset Formula $\hat{x}_{n+1}$
-\end_inset
-
- is an embedded approximation of a different order.
- Using 
-\begin_inset Formula $E_{n}=\Vert x_{n}-\hat{x}_{n}\Vert$
-\end_inset
-
- as a local error estimator, the timestep is adaptive using the error estimate.
- One common algorithm for doing so is
-\begin_inset Formula 
-\[
-h_{n+1}=0.9h_{n}\left(\frac{TOL}{E_{n}}\right)^{\frac{1}{p}}
-\]
-
-\end_inset
-
- due to optimality results by Cechino where 
-\begin_inset Formula $TOL$
-\end_inset
-
- is a user-chosen error tolerance and 
-\begin_inset Formula $p$
-\end_inset
-
- is the order of the method.
-\end_layout
-
-\begin_layout Standard
-Early work in Runge-Kutta methods focused on the development of high order
- methods.
- Fehlberg developed the first 5th order method with an embedded error estimator.
- Dormand and Prince expanded the theory by considering the problem as a
- coefficient optimization problem: choosing coefficients for an order 4/5
- method which minimizes the the principle term in the truncation error to
- maximize the efficiency in each step, while controlling for an enlarged
- stability region.
- In order to make the problem tractable, they introduced extra assumptions
- and the resulting method, known as the RK5(4) or DP5 method (or through
- the name of its implementations dopri5 or ode45) is the standard method
- for integrating non-stiff ODEs.
- More recent work by Tsitouras used a minimal number of simplifying assumptions
- to generate a more efficient order 4/5 method.
- As an alternative to the mixed truncation error vs stability region selection,
- Verner derived methods with extended stability regions for higher orders.
-\end_layout
-
-\begin_layout Standard
-An approach to the integration of stochastic differential equations is the
- use of adaptive Stochastic Runge-Kutta (SRK) methods.
- Kloden and Platen developed a theory of stochastic Taylor expansions which
- allowed the development of high strong order (greater than order 1.0) methods
- which replace the derivatives by approximations, also known as derivative-free
- or SRK methods.
- Burrage and Burrage introduced the use of colored trees for calculating
- the strong order conditions for SRK methods and thus extended the Butcher
- tableau theory to SDE with Stratonovich noise.
- Later work by Rossler extended the approach to Ito SDEs and along with
- relaxed conditions for commutative, scalar, diagonal, and additive noise.
- Rackauckas and Nie derived an extension to the Rossler methods which provides
- a natural embedded order 1.0 method and results in efficient adaptive timesteppi
-ng for any Rossler method.
- However, to the author's knowledge, no attempts have been made at deriving
- optimal sets of coefficients for the high strong order adaptive SRK methods.
- 
-\end_layout
-
-\begin_layout Standard
-In this paper we develop a method for deriving optimal-stability SRK methods.
- Section 2 recaps the theory of high strong order SRK methods and their
- adaptive extensions.
- In Section 3 we derive a optimization problem whose solution is a stability-opt
-imized SRK methods.
- Also discussed are extended constraints which are required for the stability
- and locality of the error estimator.
- In Section 4 we describe the numerical used to solve the optimization problem
- and the resulting explicit SRK methods.
- In Section 5 demonstrate the efficiency of our new methods on a set of
- test problems.
- We end by discussing the extension of our method of derivation to implicit
- and non-diagonal SRK methods.
+), but show that these methods have two to three times the stability region,
+ allowing them to dramatically speed up computations on stability-bound
+ problems.
 \end_layout
 
 \begin_layout Section
-Adaptive Strong Order 1.0/1.5 Methods
+Adaptive Strong Order 1.0/1.5 SRK Methods
 \end_layout
 
 \begin_layout Standard
-Rosseler used a colored root tree analysis to developed order conditions
- for high order SRK methods.
+The class of methods we wish to example are the Strong Order 1.5 SRK methods
+ due to Rossler.
  The diagonal noise methods utilize the same general form and order conditions
  as the methods for scalar noise so we use their notation for simplicity.
  The strong order 1.5 methods for scalar noise are of the form
@@ -1132,6 +755,9 @@ with some constraints on
  Thus unlike in the theory of ordinary differential equations, the choice
  of coefficients for SRK methods does not require explicitly finding an
  embedded method.
+ This gives the means to extend any SRK method to an adaptive timestepping
+ method which was shown to be fundamental for the transient behavior of
+ pathwise stiffness.
 \end_layout
 
 \begin_layout Section
@@ -2578,8 +2204,23 @@ We end by noting that SRSRA2 has the same property, allowing stiffness detection
 Numerical Results
 \end_layout
 
-\begin_layout Itemize
-Convergence charts?
+\begin_layout Subsection
+SOSRA Numerical Experiments
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename C:/Users/Chris/.julia/v0.6/SRKGenerator/assets/paper_figures/SRA_efficiency.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+SOSRI Numerical Experiments
 \end_layout
 
 \begin_layout Itemize

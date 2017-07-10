@@ -101,7 +101,7 @@ dX_{t}=f(t,X_{t})dt+g(t,X_{t})dW_{t}
 
 \end_inset
 
- where 
+where 
 \begin_inset Formula $X_{t}$
 \end_inset
 
@@ -128,13 +128,17 @@ dX_{t}=f(t,X_{t})dt+g(t,X_{t})dW_{t}
 
 -dimensional Brownian motion.
  In many models, noise is added to deterministic equations phenomenologically.
- In one case, the noise process is modeled as exogenous to the system and
- thus not dependent the system itself, leading to the assumption that 
+ These models are numerically studied for their qualitatative behavior:
+ scientists are interested not in numerical predictions exact to many decimal
+ places but to understand the phonomena which only occurs in the presence
+ of stochasticity, like random switching between cell types.
+ In these cases, the noise process can be modeled as exogenous to the system
+ and thus not dependent the system itself, leading to the assumption that
+ 
 \begin_inset Formula $g(t,X_{t})\equiv g(t)$
 \end_inset
 
-.
- This case is known as additive noise.
+ which is known as additive noise.
  Another common case is multiplicative noise, where to each deterministic
  equation a noise term 
 \begin_inset Formula $\sigma_{i}X_{t}^{i}dW_{t}$
@@ -149,9 +153,81 @@ dX_{t}=f(t,X_{t})dt+g(t,X_{t})dW_{t}
 \begin_inset Formula $\left(\sigma_{i}X_{t}^{i}\right)$
 \end_inset
 
- and thus falling into the category of diagonal noise.
- In contrast to how common models of this form occur, methods which utilize
+ and thus falling into the more general category of diagonal noise.
+\end_layout
+
+\begin_layout Standard
+The unique features of stochastic models in many cases are pathwise-dependent.
+ The mean of a chemical reaction network may stay at a constant steady state,
+ but in the presence of randomness this may be switching between various
+ states.
+ These pathwise properties are of interest because they capture the effects
+ which cannot be found in deterministic models.
+ However, these same effects exhibit numerical difficulties.
+ Almost by definition these features exist in the single trajectories of
+ the random processes and thus must be controlled individually.
+ These trajectories display large, transient and random switching behavior
+ which in a given trajectory causes stochastic bursts of numerical stiffness,
+ a phonomena which we will denote pathwise stiffness.
+ In previous work, the authors have shown that by using adaptive timestepping
+ a stochastic reaction network of 19 reactants is able to be solve with
+ an average timestep 100,000x larger than the value that was found necessary
+ for stability.
+ However, the methods were still largely 
+\begin_inset Quotes eld
+\end_inset
+
+stability-bound
+\begin_inset Quotes erd
+\end_inset
+
+, that is the tolerance was set to solve the model was determined by what
+ was necessary for stability but was far below the error necessary for the
+ application.
+ The purpose of this investigation is to develop numerical methods with
+ the ability to properly handle pathwise stiffness and allow for efficient
+ solving of large Monte Carlo experiments.
+ We approach this through two means.
+ On one end we develop stability-optimized Stochastic Runge-Kutta (SRK)
+ methods which have the property of having drastically enlarged stability
+ regions.
+ Similar to the Runge-Kutta Chebyschev (and the S-ROCK extension to the
+ stochastic case), these methods are designed to be efficient for equations
+ which display stiffness without fully commiting to implicit solvers.
+ On the otherhand, to handle extreme stiffness we develop an implicit RK
+ method for additive noise problems.
+ We show that this method is A-L stable in a generalization of these terms
+ to additive noise SDEs.
+ To extend the utility of these methods, we derive and extension of the
+ methods for additive SDEs to multiplicative SDEs through a transformation.
+ In addition to the new methods, we display a novel scalable mechanism for
+ the derivation of 
+\begin_inset Quotes eld
+\end_inset
+
+optimal
+\begin_inset Quotes erd
+\end_inset
+
+ Runge-Kutta methods, and use it to design stability-optimized methods for
+ diagonal noise SDEs which would otherwise be analytically intractable due
+ to the few million terms in the stability equation.
+ Lastly, we show that in a range of standard tolerances (
+\begin_inset Formula $\left[10^{-5}\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In contrast to how common models of this form occur, methods which utilize
  this functional form for increased efficiency are relatively underdeveloped.
+\end_layout
+
+\begin_layout Standard
+In many cases, these stochastic models are interesting for their qualitative
+ behavior.
+ Gillespie's results show a 
 \end_layout
 
 \begin_layout Standard
@@ -1497,8 +1573,15 @@ d initial conditions 100 times and all gave similar results.
  not improve the result.
  The resulting algorithm, SOSRA, we given by the coefficients in Table X
  in the appendix.
- Its stability region is compared to SRA1 and SRA3 in Figure X where it
- is shown that SOSRA more than doubles the allowed real eigenvalues.
+ Lastly, we used the condition that 
+\begin_inset Formula $c_{2}^{(0)}=c_{3}^{(0)}=c_{2}^{(1)}=c_{3}^{(1)}=1$
+\end_inset
+
+ to allow for free stability detection.
+ The method generated with this extra constraint is SOSRA2.
+ These methods have their stability regions compared to SRA1 and SRA3 in
+ Figure X where it is shown that the SOSRA methods more than doubles the
+ allowed real eigenvalues.
 \end_layout
 
 \begin_layout Standard
@@ -2493,28 +2576,101 @@ Hairer noted that, for ODEs, if a RK method has
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\left|\lambda_{D}\right|\approx\frac{\Vert f(t,x+v)-f(t,x)\Vert}{\Vert v\Vert},\thinspace\thinspace\thinspace\left|\lambda_{N}\right|\approx\frac{\Vert g(t,x+v)-g(t,x)\Vert}{\Vert v\Vert}
+\left|\lambda_{D}\right|\approx\frac{\Vert f\left(t_{n}+c_{4}^{(0)}h,H_{4}^{(0)}\right)-f\left(t_{n}+c_{3}^{(0)}h,H_{3}^{(0)}\right)\Vert}{\Vert H_{4}^{(0)}-H_{3}^{(0)}\Vert},\thinspace\thinspace\thinspace\left|\lambda_{N}\right|\approx\frac{\Vert g\left(t_{n}+c_{4}^{(0)}h,H_{4}^{(1)}\right)-g\left(t_{n}+c_{3}^{(0)}h,H_{3}^{(1)}\right)\Vert}{\Vert H_{4}^{(1)}-H_{3}^{(1)}\Vert}
 \]
 
 \end_inset
 
-
+Given that these values are all part of the actual step calculations, this
+ stiffness estimate is free.
+ By comparing these values to the stability plot in Figure X, we use the
+ following heristic to decide if SRIOpt2 is stability-bound in its steps:
+ 
 \end_layout
 
-\begin_layout Itemize
-EQ_C methods
+\begin_layout Enumerate
+If 
+\begin_inset Formula $10>\left|\lambda_{D}\right|>2.5$
+\end_inset
+
+, then we check if 
+\begin_inset Formula $h\left|\lambda_{N}\right|>1$
+\end_inset
+
+.
 \end_layout
 
-\begin_layout Itemize
-Split error estimator
+\begin_layout Enumerate
+If 
+\begin_inset Formula $\left|\lambda_{D}\right|<2.5$
+\end_inset
+
+, then we check if 
+\begin_inset Formula $h\left|\lambda_{N}\right|/2>1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The denominator is chosen as a reasonable approximation to the edge of the
+ stability region.
+ If either of those conditions are satisfied, then 
+\begin_inset Formula $h$
+\end_inset
+
+ is constrained by the stability region.
+ The solver can thus alert the user that the method is non-stiff or use
+ this estimate to switch to a method more suitable for stiff equations.
+ In addition, the error estimator gives separate error estimates in the
+ drift and diffusion terms.
+ A scheme could combine these two facts to develop a more robust stiffness
+ detection method, and label the stiffness as either drift or diffusion
+ dominated.
+\end_layout
+
+\begin_layout Standard
+We end by noting that SRSRA2 has the same property, allowing stiffness detection
+ via
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left|\lambda_{D}\right|\approx\frac{\Vert f\left(t_{n}+c_{3}^{(0)}h,H_{3}^{(0)}\right)-f\left(t_{n}+c_{2}^{(0)}h,H_{2}^{(0)}\right)\Vert}{\Vert H_{3}^{(0)}-H_{2}^{(0)}\Vert}
+\]
+
+\end_inset
+
+ and, employing a similar method as the deterministic case, check for stiffness
+ via the estimate 
+\begin_inset Formula $h\left|\lambda_{D}\right|/5>1$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section
 Numerical Results
 \end_layout
 
-\begin_layout Itemize
-Convergence charts?
+\begin_layout Subsection
+SOSRA Numerical Experiments
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename C:/Users/Chris/.julia/v0.6/SRKGenerator/assets/paper_figures/SRA_efficiency.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+SOSRI Numerical Experiments
 \end_layout
 
 \begin_layout Itemize
