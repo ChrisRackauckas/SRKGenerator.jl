@@ -214,7 +214,7 @@ eig_est = dt*(norm(ftmp-gtmp)/norm(H0[2]-H0[3]))/5
 eig_est > 5 && println("$t")
 
 
-
+using FFTW
 using StochasticDiffEq, Plots, DiffEqDevTools, DiffEqProblemLibrary
 pyplot()
 
@@ -237,13 +237,13 @@ using Base.Test
 dts = 1./2.^(7:-1:4) #14->7 good plot
 srand(100)
 prob = prob_sde_2Dlinear
-sim1 = test_convergence(dts,prob,SRI(tableau=StochasticDiffEq.constructSRIOpt1()),numMonte=10)
+sim1 = test_convergence(dts,prob,SRI(tableau=StochasticDiffEq.constructSRIOpt1()),numMonte=10000)
 @test abs(sim1.𝒪est[:final]-1.5) < 0.3
-sim2 = test_convergence(dts,prob,SRI(tableau=StochasticDiffEq.constructSRIOpt2()),numMonte=10)
+sim2 = test_convergence(dts,prob,SRI(tableau=StochasticDiffEq.constructSRIOpt2()),numMonte=10000)
 @test abs(sim2.𝒪est[:final]-1.5) < 0.3
 
 using Plots; pyplot()
 p1 = plot(wp,title="Work-Precision Plot")
 p2 = plot(sim1,title="Convergence Tests",label=["SOSRI l∞" "SOSRI weak final error" "SOSRI final error" "SOSRI l2"])
-plot!(p2,sim2,label=["SOSRI2 l∞" "SOSRI2 weak final" "SOSRI2 final" "SOSRI2 l2"])
+plot!(p2,sim2,label=["SOSRI2 l∞" "SOSRI2 weak final error" "SOSRI2 final" "SOSRI2 l2"])
 plot(p1,p2,layout=(2,1))
