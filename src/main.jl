@@ -1,5 +1,7 @@
 function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
                     NLoptRandSeed = 0,parameter_minmax=5,max_eval=Int(1e8),
+                    x_L = -parameter_minmax*ones(M),
+                    x_U =  parameter_minmax*ones(M),
                     rand_minmax = 3,
                     initCon = rand_minmax*(2rand(44)-1),
                     tol = 1e-2,ftol = 1e-15,tol2 = 1e-5,
@@ -24,8 +26,6 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
   coef_ans = Vector{Float32}(36)
   powz = Vector{Int8}(36)
   poww = Vector{Int8}(36)
-  x_L = -parameter_minmax*ones(M)
-  x_U =  parameter_minmax*ones(M)
   g_L = -tol*ones(N)
   g_U =  tol*ones(N)
   sizei = length(imin:dx:imax)
@@ -103,6 +103,7 @@ function srk_optimize(alg,dx,pop_size,imin,imax,jmin,jmax;
 
   maxf,maxx,ret = optimize(opt,initCon)
 
+  println(ret)
   tmp2 = Vector{Float64}(N)
   eval_g(tmp2,maxx,0)
   maxErr = maximum(tmp2)
