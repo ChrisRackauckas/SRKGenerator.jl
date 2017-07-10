@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    819952,      13951]
-NotebookOptionsPosition[    817777,      13886]
-NotebookOutlinePosition[    818153,      13902]
-CellTagsIndexPosition[    818110,      13899]
+NotebookDataLength[    820175,      13960]
+NotebookOptionsPosition[    817920,      13892]
+NotebookOutlinePosition[    818296,      13908]
+CellTagsIndexPosition[    818253,      13905]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -10260,7 +10260,13 @@ vawD9Lf21z86UK9oGS1LenZx0e4JS8zt6UA4HenEN5995wvpnHdy3vyYTxx0
      Scaled[0.02]}},
   Ticks->{Automatic, Automatic}]], "Output",
  CellChangeTimes->{{3.702860990265318*^9, 3.7028610068013625`*^9}}]
+}, Open  ]]
 }, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["SRIOpt2 Refinement", "Subsection",
+ CellChangeTimes->{{3.708657917399333*^9, 3.708657921809664*^9}}],
 
 Cell[CellGroupData[{
 
@@ -13942,15 +13948,18 @@ Cell[491782, 8457, 493, 9, 77, "Output"],
 Cell[492278, 8468, 114, 1, 47, "Output"],
 Cell[492395, 8471, 96427, 1581, 664, "Output"],
 Cell[588825, 10054, 11578, 207, 608, "Output"]
+}, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[600440, 10266, 7233, 138, 715, "Input"],
-Cell[607676, 10406, 1787, 33, 135, "Output"],
-Cell[609466, 10441, 501, 9, 77, "Output"],
-Cell[609970, 10452, 137, 2, 47, "Output"],
-Cell[610110, 10456, 195570, 3209, 664, 115212, 1891, "CachedBoxData", \
+Cell[600452, 10267, 106, 1, 77, "Subsection"],
+Cell[CellGroupData[{
+Cell[600583, 10272, 7233, 138, 715, "Input"],
+Cell[607819, 10412, 1787, 33, 135, "Output"],
+Cell[609609, 10447, 501, 9, 77, "Output"],
+Cell[610113, 10458, 137, 2, 47, "Output"],
+Cell[610253, 10462, 195570, 3209, 664, 115212, 1891, "CachedBoxData", \
 "BoxData", "Output"],
-Cell[805683, 13667, 12066, 215, 608, "Output"]
+Cell[805826, 13673, 12066, 215, 608, "Output"]
 }, Open  ]]
 }, Open  ]]
 }

@@ -77,8 +77,8 @@
 \begin_body
 
 \begin_layout Title
-Stability-Optimized High Strong Order Methods for Stochastic Differential
- Equations with Additive and Diagonal Noise
+Stability-Optimized High Strong Order Methods and Stiffness Detection for
+ Stochastic Differential Equations with Additive and Diagonal Noise
 \end_layout
 
 \begin_layout Author
@@ -224,7 +224,7 @@ optimal
 \end_layout
 
 \begin_layout Section
-Adaptive Strong Order 1.0/1.5 Methods
+Adaptive Strong Order 1.0/1.5 SRK Methods
 \end_layout
 
 \begin_layout Standard
@@ -2144,7 +2144,7 @@ If
 \end_inset
 
 , then we check if 
-\begin_inset Formula $h\left|\lambda_{N}\right|>1$
+\begin_inset Formula $h\left|\lambda_{N}\right|>q$
 \end_inset
 
 .
@@ -2156,7 +2156,7 @@ If
 \end_inset
 
 , then we check if 
-\begin_inset Formula $h\left|\lambda_{N}\right|/2>1$
+\begin_inset Formula $h\left|\lambda_{N}\right|/2>q$
 \end_inset
 
 .
@@ -2165,6 +2165,24 @@ If
 \begin_layout Standard
 The denominator is chosen as a reasonable approximation to the edge of the
  stability region.
+ 
+\begin_inset Formula $q$
+\end_inset
+
+ is a safety factor: in theory 
+\begin_inset Formula $q$
+\end_inset
+
+ is 
+\begin_inset Formula $1$
+\end_inset
+
+ since we divided by the edge of the stability region, but in practice this
+ is only an eigenvalue estimate and thus 
+\begin_inset Formula $q$
+\end_inset
+
+ allows for a tradeoff between the false positive and false negative rates.
  If either of those conditions are satisfied, then 
 \begin_inset Formula $h$
 \end_inset
@@ -2194,7 +2212,7 @@ We end by noting that SRSRA2 has the same property, allowing stiffness detection
 
  and, employing a similar method as the deterministic case, check for stiffness
  via the estimate 
-\begin_inset Formula $h\left|\lambda_{D}\right|/5>1$
+\begin_inset Formula $h\left|\lambda_{D}\right|/5>q$
 \end_inset
 
 .
@@ -2209,6 +2227,57 @@ SOSRA Numerical Experiments
 \end_layout
 
 \begin_layout Standard
+In order to test the efficiency and correctness of the SOSRA algorithms,
+ we chose to use the additive noise test equation 
+\begin_inset Formula 
+\begin{equation}
+dX_{t}=\left(\frac{\beta}{\sqrt{1+t}}-\frac{1}{2\left(1+t\right)}X_{t}\right)dt+\frac{\alpha\beta}{\sqrt{1+t}}dW_{t},\thinspace\thinspace\thinspace X_{0}=\frac{1}{2},\label{eq:ex3}
+\end{equation}
+
+\end_inset
+
+ where 
+\begin_inset Formula $\alpha=\frac{1}{10}$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta=\frac{1}{20}$
+\end_inset
+
+.
+ Actual Solution:
+\begin_inset Formula 
+\begin{equation}
+X_{t}=\frac{1}{\sqrt{1+t}}X_{0}+\frac{\beta}{\sqrt{1+t}}\left(t+\alpha W_{t}\right).\label{eq:sol3}
+\end{equation}
+
+\end_inset
+
+ To test the efficiency we plotted a work-precision diagram against the
+ SRA1, SRA2, SRA3, and the fixed timestep Euler-Maruyama and a Runge-Kutta
+ Milstein scheme.
+ The results, as depicted in Figure X, show that there is a minimal difference
+ in efficiency between the SRA algorithms for errors in the interval 
+\begin_inset Formula $\left[10^{-6},10^{-2}\right]$
+\end_inset
+
+, while these algorithms are all siginificantly more efficient than the
+ lower order algorithms when the required error is 
+\begin_inset Formula $<10^{-4}$
+\end_inset
+
+.
+ To show that the SOSRA methods indeed achieve the appropriate strong order,
+ a convergence test was conducted and it was shown that four separate measures
+ of error converged at a rate 2.0 (it has previously been noted that SRA
+ methods have a higher convergence rate, at least on this problem.
+ The authors have noticed this phonomena elsewere as well).
+ These results show that in the regime of mild accuracy, these methods are
+ much more efficient than low order methods yet achieve the same efficiency
+ as the non-stability optimized SRA variants.
+\end_layout
+
+\begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename C:/Users/Chris/.julia/v0.6/SRKGenerator/assets/paper_figures/SRA_efficiency.pdf
@@ -2219,8 +2288,313 @@ SOSRA Numerical Experiments
 
 \end_layout
 
+\begin_layout Standard
+To test how efficiently the algorithms could achieve their goal, we choose
+ to analyze the qualtative results of the driven Van der Pol equation.
+ The driven Van der Pol equation is given by the system:
+\begin_inset Formula 
+\begin{align*}
+dy & =μ((1-x^{2})y-x)dt\\
+dx & =ydt
+\end{align*}
+
+\end_inset
+
+ where 
+\begin_inset Formula $\mu$
+\end_inset
+
+ is the driving factor.
+ As 
+\begin_inset Formula $\mu$
+\end_inset
+
+ increases the equation becomes more stiff.
+ 
+\begin_inset Formula $\mu=10^{6}$
+\end_inset
+
+ is a common test for stiff ODE solvers, with lower values used to test
+ the semi-stiff regime for ODEs.
+ For our purposes, we chose 
+\begin_inset Formula $\mu=10^{5}$
+\end_inset
+
+ as a semi-stiff test case.
+ Figure X shows the ODE solved using the Tsit5 explicit Runge-Kutta algorithm
+ and demonstrates the mild stiffness which is still well-handled by explicit
+ methods.
+ We extend this model to the driven Van der Pol model with additive noise:
+\begin_inset Formula 
+\begin{align*}
+dy & =μ((1-x^{2})y-x)dt+\rho dW_{t}^{(1)}\\
+dx & =y+\rho dW_{t}^{(2)}
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $\rho=3.0$
+\end_inset
+
+ is the noise gain and 
+\begin_inset Formula $dW^{(1)}$
+\end_inset
+
+ and 
+\begin_inset Formula $dW^{(2)}$
+\end_inset
+
+ are independent Brownian motions.
+ The solution to this model is interesting because it gives the same qualitative
+ behavior, large bursts when 
+\begin_inset Formula $x(t)$
+\end_inset
+
+ crosses zero, but in this case the zero crossings are stochastic.
+ Even at high tolerances, (
+\begin_inset Formula $abstol=10$
+\end_inset
+
+,
+\begin_inset Formula $reltol=1/2^{1}$
+\end_inset
+
+), SOSRA is able to reproduce this qualitative behavior as shown in Figure
+ X, and SOSRA2 producing similar results at the same tolerances a factor
+ of two lower.
+ However, even at tolerances of 
+\begin_inset Formula $abstol=1/2^{3}$
+\end_inset
+
+,
+\begin_inset Formula $reltol=1/2^{3}$
+\end_inset
+
+ SRA3 was unable to reproduce the correct qualitative behavior as shown
+ in Figure X.
+ Thus we decreased the tolerances by factors of 2 until it was able to reproduce
+ the correct qualitative results as shown in Figure X.
+ This shows that the SOSRA are more reliable on models with transient stiffness.
+ To test the impact on the runtime of tha algorithms, each of the algorithms
+ were run 100 times with the tolerance setup that allows them to most efficientl
+y generate correct qualitative results.
+ The runtimes are shown in Table X
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Runtime
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Relative Time (vs SOSRA)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SOSRA
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+520.054837
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SOSRA2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+520.847214
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.002x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SRA1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2488.683401
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.785x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SRA3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2033.
+ 793730
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.911x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename C:/Users/Chris/.julia/v0.6/SRKGenerator/assets/paper_figures/additive_vanderpol.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename C:/Users/Chris/.julia/v0.6/SRKGenerator/assets/paper_figures/sde_stiffness_detection.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 SOSRI Numerical Experiments
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+dX_{t}=\alpha X_{t}dt+\beta X_{t}dW_{t}\thinspace\thinspace\thinspace X_{0}=\frac{1}{2},\label{eq:ex1}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\alpha=\frac{1}{10}$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta=\frac{1}{20}$
+\end_inset
+
+.
+ Actual Solution:
+\begin_inset Formula 
+\begin{equation}
+X_{t}=X_{0}e^{\left(\beta-\frac{\alpha^{2}}{2}\right)t+\alpha W_{t}}.\label{eq:sol1}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
