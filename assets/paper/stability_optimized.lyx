@@ -172,7 +172,7 @@ The unique features of stochastic models in many cases are pathwise-dependent.
  In previous work, the authors have shown that by using adaptive timestepping
  a stochastic reaction network of 19 reactants is able to be solve with
  an average timestep 100,000x larger than the value that was found necessary
- for stability.
+ for stability during the random stiff events.
  However, the methods were still largely 
 \begin_inset Quotes eld
 \end_inset
@@ -281,483 +281,16 @@ H_{i}^{(0)}=X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)
 \end_inset
 
  thus fully determine the SRK method.
- These coefficients are subject to the constraint equations:
-\end_layout
-
-\begin_layout Standard
-The coefficients 
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Formula $\left(A_{0},B_{0},\beta^{(i)},\alpha\right)$
-\end_inset
-
- must satisfy the following order conditions to achieve order .5:
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{multicols}{3}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\alpha^{T}e=1$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(1)^{T}}e=1$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(2)^{T}}e=0$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(3)^{T}}e=0$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(4)^{T}}e=0$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{multicols}
-\end_layout
-
-\end_inset
-
- additionally, for order 1:
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{multicols}{2}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(1)^{T}}B^{(1)}e=0$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(2)^{T}}B^{(1)}e=1$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(3)^{T}}B^{(1)}e=0$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(4)^{T}}B^{(1)}e=0$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{multicols}
-\end_layout
-
-\end_inset
-
- and lastly for order 1.5:
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{multicols}{2}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\alpha^{T}A^{(0)}e=\frac{1}{2}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\alpha^{T}B^{(0)}e=1$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\alpha^{T}\left(B^{(0)}e\right)^{2}=\frac{3}{2}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(1)^{T}}A^{(1)}e=1$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(2)^{T}}A^{(1)}e=0$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(3)^{T}}A^{(1)}e=-1$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(4)^{T}}A^{(1)}e=0$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(1)^{T}}\left(B^{(1)}e\right)^{2}=1$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(2)^{T}}\left(B^{(1)}e\right)^{2}=0$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(3)^{T}}\left(B^{(1)}e\right)^{2}=-1$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(4)^{T}}\left(B^{(1)}e\right)^{2}=2$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(1)^{T}}\left(B^{(1)}\left(B^{(1)}e\right)\right)=0$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(2)^{T}}\left(B^{(1)}\left(B^{(1)}e\right)\right)=0$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(3)^{T}}\left(B^{(1)}\left(B^{(1)}e\right)\right)=0$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(4)^{T}}\left(B^{(1)}\left(B^{(1)}e\right)\right)=1$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{multicols}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-16.\thinspace\thinspace\thinspace\frac{1}{2}\beta^{(1)^{T}}\left(A^{(1)}\left(B^{(0)}e\right)\right)+\frac{1}{3}\beta^{(3)^{T}}\left(A^{(1)}\left(B^{(0)}e\right)\right)=0
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $f,g\in C^{1,2}(\mathcal{I}\times\mathbb{R}^{d},\mathbb{R}^{d})$
-\end_inset
-
-, 
-\begin_inset Formula $c^{(i)}=A^{(i)}e$
-\end_inset
-
-, 
-\begin_inset Formula $e=(1,1,1,1)^{T}$
-\end_inset
-
-.
- The reduced constraints for additive noise were derived for order 1:
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{multicols}{3}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\alpha^{T}e=1$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(1)^{T}}e=1$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(2)^{T}}e=0$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{multicols}
-\end_layout
-
-\end_inset
-
- and the additional conditions for order 1.5:
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{multicols}{3}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\alpha^{T}B^{(0)}e=1$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\alpha^{T}A^{(0)}e=\frac{1}{2}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\alpha^{T}\left(B^{(0)}e\right)^{2}=\frac{3}{2}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(1)^{T}}c^{(1)}=1$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\beta^{(2)^{T}}c^{(1)}=-1$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{multicols}
-\end_layout
-
-\end_inset
-
-where 
-\begin_inset Formula $c^{(0)}=A^{(0)}e$
-\end_inset
-
- with 
-\begin_inset Formula $f\in C^{1,3}(\mathcal{I}\times\mathbb{R}^{d},\mathbb{R}^{d})$
-\end_inset
-
- and 
-\begin_inset Formula $g\in C^{1}(\mathcal{I},\mathbb{R}^{d})$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Rackauckas and Nie showed that for any method of this form, there exists
- an error estimator
-\begin_inset Formula 
-\[
-E=\delta E_{D}+E_{N}
-\]
-
-\end_inset
-
- where 
-\begin_inset Formula $E_{D}$
-\end_inset
-
- is the deterministic (drift) error estimator and 
-\begin_inset Formula $E_{N}$
-\end_inset
-
- is the noise error estimator, given respectively by
-\begin_inset Formula 
-\begin{align*}
-E_{D} & =\left|h\sum_{i\in I_{1}}\left(-1\right)^{\sigma(i)}f\left(t_{n}+c_{i}^{(0)}h,H_{i}^{(0)}\right)\right|\\
-E_{N} & =\left|\sum_{i\in I_{1}}\left(\beta_{i}^{(3)}\frac{I_{(1,0)}}{h}+\beta_{i}^{(4)}\frac{I_{(1,1,1)}}{h}\right)g\left(t_{n}+c_{i}^{(1)}h,H_{i}^{(1)}\right)\right|
-\end{align*}
-
-\end_inset
-
-with some constraints on 
-\begin_inset Formula $\sigma(i)$
-\end_inset
-
- and the 
-\begin_inset Formula $I_{j}$
-\end_inset
-
-.
+ These coefficients are subject to the constraint equations described in
+ Appendix X in order to receive strong order 1.5.
+ Rackauckas and Nie constructed a systematic method for developing an embedded
+ strong order 1.0 method from any SRK tableau and showed that adaptive timesteppi
+ng using this estimator is fundamental for the efficient simulation of pathwise
+ stiff models.
  Thus unlike in the theory of ordinary differential equations, the choice
  of coefficients for SRK methods does not require explicitly finding an
- embedded method.
- This gives the means to extend any SRK method to an adaptive timestepping
- method which was shown to be fundamental for the transient behavior of
- pathwise stiffness.
+ embedded method when developing an adaptive SRK method and we will therefore
+ take for granted that each of the derived methods is adaptive in time.
 \end_layout
 
 \begin_layout Section
@@ -1136,8 +669,49 @@ d initial conditions 100 times and all gave similar results.
 
 \begin_layout Standard
 \align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename C:/Users/Chris/.julia/v0.6/SRKGenerator/assets/obj_poly_solve/SOSRA_stability.pdf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+SOSRA Stability Regions.
+ The stability regions (
+\begin_inset Formula $\left|G(z)\right|<1$
+\end_inset
+
+) are plotted in the 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+-plane for 
+\begin_inset Formula $z=x+iy$
+\end_inset
+
+.
+ Shown are the SRA methods SRA1 and SRA3 in addition to the SOSRA and SOSRA2
+ methods.
+ Note that SOSRA and SOSRA2 have nearly identical stability regions, making
+ it hard to decern the two in the plot.
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -1958,8 +1532,39 @@ To look for more diffusion-stable methods, we dropped to
 
 \begin_layout Standard
 \align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename C:/Users/Chris/.julia/v0.6/SRKGenerator/assets/solution_examples/DiagonalStability.pdf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+SOSRI Stability Regions.
+ The stability regions for the SOSRI methods are plotted in the 
+\begin_inset Formula $(z,w)$
+\end_inset
+
+-plane.
+ In addition, the regions for Euler-Maruyama, SRIW1, and SRIW2 are shown
+ for comparison.
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -2144,7 +1749,7 @@ If
 \end_inset
 
 , then we check if 
-\begin_inset Formula $h\left|\lambda_{N}\right|>q$
+\begin_inset Formula $h\left|\lambda_{N}\right|>\omega$
 \end_inset
 
 .
@@ -2156,7 +1761,7 @@ If
 \end_inset
 
 , then we check if 
-\begin_inset Formula $h\left|\lambda_{N}\right|/2>q$
+\begin_inset Formula $h\left|\lambda_{N}\right|/2>\omega$
 \end_inset
 
 .
@@ -2166,11 +1771,11 @@ If
 The denominator is chosen as a reasonable approximation to the edge of the
  stability region.
  
-\begin_inset Formula $q$
+\begin_inset Formula $\omega$
 \end_inset
 
  is a safety factor: in theory 
-\begin_inset Formula $q$
+\begin_inset Formula $\omega$
 \end_inset
 
  is 
@@ -2179,7 +1784,7 @@ The denominator is chosen as a reasonable approximation to the edge of the
 
  since we divided by the edge of the stability region, but in practice this
  is only an eigenvalue estimate and thus 
-\begin_inset Formula $q$
+\begin_inset Formula $\omega$
 \end_inset
 
  allows for a tradeoff between the false positive and false negative rates.
@@ -2279,9 +1884,104 @@ X_{t}=\frac{1}{\sqrt{1+t}}X_{0}+\frac{\beta}{\sqrt{1+t}}\left(t+\alpha W_{t}\rig
 
 \begin_layout Standard
 \align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename C:/Users/Chris/.julia/v0.6/SRKGenerator/assets/paper_figures/SRA_efficiency.pdf
 	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+SOSRA efficiency and correctness tests.
+ 
+\series bold
+(A)
+\series default
+ Shown are the work-precision plots for the methods on the additive noise
+ test problem.
+ Each of the adaptive timestepping methods solved the problem on the interval
+ using changing values of tolerances, with 
+\begin_inset Formula $tol=abstol=reltol$
+\end_inset
+
+ starting at 
+\begin_inset Formula $10^{2}$
+\end_inset
+
+ and ending at 
+\begin_inset Formula $10^{-4}$
+\end_inset
+
+ going in increments of 
+\begin_inset Formula $10$
+\end_inset
+
+.
+ The fixed timestepping methods used timesteps of size 
+\begin_inset Formula $h=1/5^{-1}$
+\end_inset
+
+ to 
+\begin_inset Formula $h=1/5^{4}$
+\end_inset
+
+, changing the value by factors of 
+\begin_inset Formula $5$
+\end_inset
+
+.
+ The error is the strong 
+\begin_inset Formula $l_{2}$
+\end_inset
+
+ error computed over the timeseries.
+ The time is the avarage time to compute a trajectory and is averaged over
+ 1000 runs at the same tolerance / timestep size.
+ 
+\series bold
+(B) 
+\series default
+Depicted are the results of a convergence test on the SOSRA and SOSRA2 methods.
+ The test used a fixed timestep 
+\begin_inset Formula $h=1/2^{-2}$
+\end_inset
+
+ to 
+\begin_inset Formula $h=1/2^{-10}$
+\end_inset
+
+.
+ Shown are four separate error estimates: the strong 
+\begin_inset Formula $l_{\infty}$
+\end_inset
+
+ error, the strong 
+\begin_inset Formula $l_{2}$
+\end_inset
+
+ error, the weak error at the final timepoint, and the strong error at the
+ final timepoint.
+ The strong error is averaged over 10 trajectories, which is the same number
+ of trajectories used to compute the weak error estimate.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -2385,6 +2085,13 @@ y generate correct qualitative results.
 \end_layout
 
 \begin_layout Standard
+\align center
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
 \align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="5" columns="3">
@@ -2545,7 +2252,33 @@ SRA3
 
 \end_layout
 
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+SRA Runtimes on Van der Pol with additive noise.
+ The additive noise Van der Pol equation was solved 100 times using the
+ respective algorithms.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename C:/Users/Chris/.julia/v0.6/SRKGenerator/assets/paper_figures/additive_vanderpol.pdf
@@ -2556,11 +2289,61 @@ SRA3
 
 \end_layout
 
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Representative trajectories for solutions to the Van der Pol equations with
+ additive noise.
+ 
+\series bold
+(A)
+\series default
+ The solution to the ODE with the explicit Runge-Kutta method Tsit5.
+ 
+\series bold
+(B) 
+\series default
+The solution to the SDE with tolerance 
+\begin_inset Formula $abstol=1,reltol=1/2^{1}$
+\end_inset
+
+ from SOSRA.
+ 
+\series bold
+(C) 
+\series default
+Solution to the SDE with tolerances 
+\begin_inset Formula $abstol=2^{-3},reltol=2^{-3}$
+\end_inset
+
+ with SRA3.
+ 
+\series bold
+(D) 
+\series default
+Solution to the SDE with tolerances 
+\begin_inset Formula $abstol=2^{-6},reltol=2^{-4}$
+\end_inset
+
+ with SRA3.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 In addition to testing efficiency, we used this to test the stiffness detection
  in SOSRA2.
  Using a safety factor of 
-\begin_inset Formula $q=5$
+\begin_inset Formula $\omega=5$
 \end_inset
 
 , we added only two lines of code to make the algorithm print out the timings
@@ -2578,6 +2361,13 @@ In addition to testing efficiency, we used this to test the stiffness detection
 
 \begin_layout Standard
 \align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename C:/Users/Chris/.julia/v0.6/SRKGenerator/assets/paper_figures/sde_stiffness_detection.pdf
 	scale 50
@@ -2587,8 +2377,33 @@ In addition to testing efficiency, we used this to test the stiffness detection
 
 \end_layout
 
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Stiffness detection in the Van der Pol equations with additive noise.
+ Two representative trajectories to the Van der Pol equations are plotted.
+ The green dots indicate timepoints where the stiffness detection algorithm
+ detected stiffness.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 SOSRI Numerical Experiments
+\end_layout
+
+\begin_layout Standard
+In order to test the efficiency and correctness of the SOSRI algorithms,
+ we chose to use the scalar noise test equation 
 \end_layout
 
 \begin_layout Standard
@@ -2616,10 +2431,36 @@ X_{t}=X_{0}e^{\left(\beta-\frac{\alpha^{2}}{2}\right)t+\alpha W_{t}}.\label{eq:s
 
 \end_inset
 
+To test the efficiency we plotted a work-precision diagram against the SRIW1,
+ SOSRI, SOSRI2, and the fixed timestep Euler-Maruyama and a Runge-Kutta
+ Milstein schemes.
+ The results, as depicted in Figure X, show that there is a minimal difference
+ in efficiency between the SRI algorithms for errors over the interval 
+\begin_inset Formula $\left[10^{-6},10^{-2}\right]$
+\end_inset
 
+, while these algorithms are all siginificantly more efficient than the
+ lower order algorithms when the required error is 
+\begin_inset Formula $<10^{-2}$
+\end_inset
+
+.
+ To show that the SOSRA methods indeed achieve the appropriate strong order,
+ a convergence test was conducted and it was shown that four separate measures
+ of error converged at a rate 1.5 as depicted in Figure X.
+ These results show that in the regime of mild accuracy, these methods are
+ much more efficient than low order methods yet achieve the same efficiency
+ as the non-stability optimized SRI variants.
 \end_layout
 
 \begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename C:/Users/Chris/.julia/v0.6/SRKGenerator/assets/paper_figures/SOSRI_efficiency_convergence.pdf
@@ -2630,11 +2471,151 @@ X_{t}=X_{0}e^{\left(\beta-\frac{\alpha^{2}}{2}\right)t+\alpha W_{t}}.\label{eq:s
 
 \end_layout
 
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+SOSRI efficiency and correctness tests.
+ 
+\series bold
+(A)
+\series default
+ Shown are the work-precision plots for the methods on the scalar noise
+ test problem.
+ Each of the adaptive timestepping methods solved the problem on the interval
+ using changing values of tolerances, with 
+\begin_inset Formula $tol=abstol=reltol$
+\end_inset
+
+ starting at 
+\begin_inset Formula $10^{-1}$
+\end_inset
+
+ and ending at 
+\begin_inset Formula $10^{-5}$
+\end_inset
+
+ going in increments of 
+\begin_inset Formula $10$
+\end_inset
+
+.
+ The fixed timestepping methods used timesteps of size 
+\begin_inset Formula $h=1/5^{-3}$
+\end_inset
+
+ to 
+\begin_inset Formula $h=1/5^{8}$
+\end_inset
+
+, changing the value by factors of 
+\begin_inset Formula $5$
+\end_inset
+
+.
+ The error is the strong 
+\begin_inset Formula $l_{2}$
+\end_inset
+
+ error computed over the timeseries.
+ The time is the avarage time to compute a trajectory and is averaged over
+ 1000 runs at the same tolerance / timestep size.
+ 
+\series bold
+(B) 
+\series default
+Depicted are the results of a convergence test on the SOSRA and SOSRA2 methods.
+ The test used a fixed timestep 
+\begin_inset Formula $h=1/2^{-2}$
+\end_inset
+
+ to 
+\begin_inset Formula $h=1/2^{-10}$
+\end_inset
+
+.
+ Shown are four separate error estimates: the strong 
+\begin_inset Formula $l_{\infty}$
+\end_inset
+
+ error, the strong 
+\begin_inset Formula $l_{2}$
+\end_inset
+
+ error, the weak error at the final timepoint, and the strong error at the
+ final timepoint.
+ The strong error is averaged over 10 trajectories, which is the same number
+ of trajectories used to compute the weak error estimate.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To test the real consequences of the enhanced stability, we use the Oval2
+ model of 19 pathwise stiff reaction equations introduced in X and studied
+ as a numerical test in Y.
+ In the previous work it was noted that 
+\begin_inset Formula $t\in\left[0,1\right]$
+\end_inset
+
+ was a less stiff version of this model over the timespan 
+\begin_inset Formula $t\in\left[0,500\right]$
+\end_inset
+
+.
+ Thus we first tested the speed that the methods could solve for 10,000
+ trajectories with no failures due to numerical instabilities.
+ The tolerances were tuned for each method by factors of 2 and finding the
+ largest values that were stable.
+ In order to test the raw efficiency of the methods, we used the same tableau-ba
+sed implementation and only replaced the coefficients.
+ The results are depcited in Table X.
+ Since SOSRI demonstrated that its stability is much higher than even SOSRI2,
+ we show the effect of tolerance changes on SOSRI as well.
+ The results show that at similar tolerances the SRI methods take nearly
+ the same amount of time.
+ However, there is an upper bound on the tolerances before the adaptivity
+ is no longer able to help keep the method stable.
+ For SRIW1, this bound is much lower, causing it to run more than 15x slower
+ than the fastest SOSRI setup.
+ We note that this relative tolerance 
+\begin_inset Formula $2^{-18}\approx3.9\times10^{-6}$
+\end_inset
+
+ is essentially requiring 6 digits of accuracy (in strong error), which
+ is far beyond the accuracy necessary in many cases.
+ Instead, SOSRI can achieve around 2 digits of accuracy in a time that is
+ an order of magnitude faster.
+ We note that the maximal tolerances which is stable for SOSRI2 is lower
+ than that for SOSRI, meaning that it is able to handle less stiff problems
+ as well, but note that it includes a stiffness detection algorithm similar
+ to SOSRA2 and thus tradeoff some stiffness handling for the ability to
+ switch to other algorithms when stiff.
+\end_layout
+
 \begin_layout Standard
 \align center
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="4" columns="3">
+<lyxtabular version="3" rows="8" columns="5">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -2652,6 +2633,24 @@ Algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
+Abstol
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Reltol
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 Runtime
 \end_layout
 
@@ -2661,7 +2660,7 @@ Runtime
 \begin_inset Text
 
 \begin_layout Plain Layout
-Relative Time (vs SOSRA)
+Relative Time (vs SOSRI)
 \end_layout
 
 \end_inset
@@ -2681,7 +2680,31 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-5.852476145
+\begin_inset Formula $2^{-7}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2^{-4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.456220255
 \end_layout
 
 \end_inset
@@ -2701,7 +2724,190 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
+SOSRI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2^{-7}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2^{-6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.528014259
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.02x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SOSRI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2^{-12}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2^{-15}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+15.154482346
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.401x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SOSRI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2^{-14}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2^{-18}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+64.385613115
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14.45x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 SOSRI2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2^{-12}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2^{-15}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2719,7 +2925,60 @@ SOSRI2
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.643x
+3.471x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SOSRI2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2^{-14}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2^{-18}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+63.918306532
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14.34x
 \end_layout
 
 \end_inset
@@ -2739,6 +2998,30 @@ SRIW1
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $2^{-14}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2^{-18}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 68.196888282
 \end_layout
 
@@ -2748,7 +3031,7 @@ SRIW1
 \begin_inset Text
 
 \begin_layout Plain Layout
-11.65x
+15.30x
 \end_layout
 
 \end_inset
@@ -2761,11 +3044,67 @@ SRIW1
 
 \end_layout
 
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+SRI times for the the Oval2 model on 
+\begin_inset Formula $t\in\left[0,1\right]$
+\end_inset
+
+.
+ The equations were solve 10,000 times with the given tolerances to completion
+ and the elapsed time was recorded.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We then timed the runtime to solve 10 trajectories in the 
+\begin_inset Formula $t\in\left[0,500\right]$
+\end_inset
+
+ case.
+ The results are shown in Table X.
+ This time we found the optimal tolerance in terms of powers of 
+\begin_inset Formula $10$
+\end_inset
+
+.
+ Once again, SRIW1 needed a lower tolerance than is necessary in order to
+ stay stable.
+ SOSRI is able to solve the problem only asking for 2 digits of accuracy,
+ while the others require more (especially in absolute tolerance as there
+ is a stiff reactant whose values travel close to zero).
+ One interesting point to note is that at similar tolerances both SOSRI
+ and SOSRI2 receive similar timings again, and both are nearly twice as
+ fast as SRIW1 when matching tolerances.
+ 
+\end_layout
+
 \begin_layout Standard
 \align center
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="4" columns="3">
+<lyxtabular version="3" rows="7" columns="5">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -2783,6 +3122,24 @@ Algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
+Abstol
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Reltol
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 Runtime
 \end_layout
 
@@ -2792,7 +3149,7 @@ Runtime
 \begin_inset Text
 
 \begin_layout Plain Layout
-Relative Time (vs SOSRA)
+Relative Time (vs SOSRI)
 \end_layout
 
 \end_inset
@@ -2804,6 +3161,30 @@ Relative Time (vs SOSRA)
 
 \begin_layout Plain Layout
 SOSRI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-2}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2832,7 +3213,137 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
+SOSRI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+127.546408
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.017x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SOSRI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-5}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+161.754319
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.826x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 SOSRI2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-4}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2857,11 +3368,88 @@ SOSRI2
 </cell>
 </row>
 <row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SOSRI2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-5}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+189.233673
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.163x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 SRIW1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-5}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-3}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2892,20 +3480,1087 @@ SRIW1
 
 \end_layout
 
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+SRI times for the the Oval2 model on 
+\begin_inset Formula $t\in\left[0,500\right]$
+\end_inset
+
+.
+ The equations were solve 10,000 times with the given tolerances to completion
+ and the elapsed time was recorded.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Discussion
 \end_layout
 
-\begin_layout Itemize
-non-commutative and commutative
+\begin_layout Standard
+In this work we derived stability-optimized SRK methods for additive and
+ diagonal noise equations, and used a transformation to allow the additive
+ noise methods to solve multiplicative noise problems.
+ Many other equations can be reduced to the additive noise case as well
+ using the same means.
+ Importantly, our derivation methods utilized heavy computational tools
+ in order to approximately optimize otherwise intractable equations.
+ This same method of derivation can easily be scaled up to higher orders,
+ and by incorporating the coefficients for higher conditions, efficiency
+ can be optimized as well by adding the norm of the principle error coefficients
+ to the optimization function.
+ We note that the majority of the search was performed using global optimizers
+ in massive parallel using a hand-optimized CUDA kernal for the numerical
+ integral of the characteristic function, replacing man-hours with core-hours
+ and effectively optimizing the method.
+ The clear next steps are to find SRA and SRI methods with minimal error
+ estimates and sensible stability regions for the cases in which lower strong
+ error matters, and similar optimizations on SRK methods developed for weak
+ noise estimation.
+ We note that high strong order methods were investigated because of their
+ better trajectory-wise convergence, allowing for a more robust solution
+ and error estimation since our application to transiently pathwise stiff
+ equations requires such properties.
 \end_layout
 
-\begin_layout Itemize
-principle truncation
+\begin_layout Standard
+In this work we also derived an A-L stable method for additive (and thus
+ multiplicative) noise equations, and computationally could not find an
+ A-B-L stable method.
+ While our method does not prove that no 2-stage A-B-L method exists, we
+ have at least drastically narrowed down its possibility.
+ However, the results clearly showed that the methods with higher number
+ of stages were more efficient, a phonomena seen in other types of Runge-Kutta
+ methods like symplectic RK methods.
+ Thus one interesting avenue of future research would be in the development
+ of 3-stage implicit methods for additive noise equations.
+ While the complexity of the constraints would be higher, the same general
+ approach should yield satisfactory results.
+ 
+\end_layout
+
+\begin_layout Standard
+Our timings convincingly show that the current high order SRK methods are
+ stability-bound and that when scientific studies are only looking for small
+ amounts of accuracy in stochastic simulations, most of the computational
+ effort is lost to generating more accurate than neccessary solutions in
+ order to satisfy stability constraints.
+ For additive noise problems we were able to obtain solutions about 4x faster
+ and for diagonal noise 8x-15x than the current methods.
+ We note that the popular Euler-Maruyama and (derivative-free) Milstein
+ methods were previously compared in X and were shown to be more than 12x
+ slower than the SRIW1 method on the Oval2 model for 
+\begin_inset Formula $t\in\left[0,1\right]$
+\end_inset
+
+.
+ We have also shown that these methods are very robust even at high tolerances
+ and have a tendency to produce the correct qualitative results (via plots)
+ even when the user chosen accuracy is low.
+ Given that the user input is minimal, we see these as very strong candidates
+ for general purpose solvers for problem-solving environments such as MATLAB
+ and Julia since they can easily and efficiently produce results which are
+ sufficiently correct.
+ We note that these methods are not efficient at low tolerances, and other
+ methods such as SRA3 (or higher order SRK methods) should be used instead.
+\end_layout
+
+\begin_layout Standard
+We note that the stiffness detection in SDEs is a novel addition which we
+ have demonstrated can act very robustly.
+ It has a control parameter 
+\begin_inset Formula $\omega$
+\end_inset
+
+ which can be used to control the false positive and false negative rate
+ as needed.
+ Note that stiff methods can achieve similar largest eigenvalue estimates
+ directly from the Jacobians of 
+\begin_inset Formula $f$
+\end_inset
+
+ (and 
+\begin_inset Formula $g$
+\end_inset
+
+) given that the methods are implicit (or in the case of Rosenbrock methods,
+ the Jacobian must still be computed), and thus this can be paired with
+ a stiff solver to allow for automatic switching between stiff and nonstiff
+ solvers.
+ Given that the cost for such stiffness checks is minimal, we are interested
+ in future studies on the efficiency of such methods due to the stochastic
+ nature of stiffness in SDEs.
 \end_layout
 
 \begin_layout Section
-Appendix: Derivations
+Appendix I: SRK Order Conditions 
+\end_layout
+
+\begin_layout Subsection
+Order Conditions for Rößler-SRI Methods
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Order-Conditions-for-SRI"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The coefficients 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\left(A_{0},B_{0},\beta^{(i)},\alpha\right)$
+\end_inset
+
+ must satisfy the following order conditions to achieve order .5:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{3}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\alpha^{T}e=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(1)^{T}}e=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(2)^{T}}e=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(3)^{T}}e=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(4)^{T}}e=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+ additionally, for order 1:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{2}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(1)^{T}}B^{(1)}e=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(2)^{T}}B^{(1)}e=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(3)^{T}}B^{(1)}e=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(4)^{T}}B^{(1)}e=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+ and lastly for order 1.5:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{2}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\alpha^{T}A^{(0)}e=\frac{1}{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\alpha^{T}B^{(0)}e=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\alpha^{T}\left(B^{(0)}e\right)^{2}=\frac{3}{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(1)^{T}}A^{(1)}e=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(2)^{T}}A^{(1)}e=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(3)^{T}}A^{(1)}e=-1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(4)^{T}}A^{(1)}e=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(1)^{T}}\left(B^{(1)}e\right)^{2}=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(2)^{T}}\left(B^{(1)}e\right)^{2}=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(3)^{T}}\left(B^{(1)}e\right)^{2}=-1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(4)^{T}}\left(B^{(1)}e\right)^{2}=2$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(1)^{T}}\left(B^{(1)}\left(B^{(1)}e\right)\right)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(2)^{T}}\left(B^{(1)}\left(B^{(1)}e\right)\right)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(3)^{T}}\left(B^{(1)}\left(B^{(1)}e\right)\right)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(4)^{T}}\left(B^{(1)}\left(B^{(1)}e\right)\right)=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[ ]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+16.\thinspace\thinspace\thinspace\frac{1}{2}\beta^{(1)^{T}}\left(A^{(1)}\left(B^{(0)}e\right)\right)+\frac{1}{3}\beta^{(3)^{T}}\left(A^{(1)}\left(B^{(0)}e\right)\right)=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $f,g\in C^{1,2}(\mathcal{I}\times\mathbb{R}^{d},\mathbb{R}^{d})$
+\end_inset
+
+, 
+\begin_inset Formula $c^{(i)}=A^{(i)}e$
+\end_inset
+
+, 
+\begin_inset Formula $e=(1,1,1,1)^{T}$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "RN2707"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Order Conditions for Rößler-SRA Methods
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Order-Conditions-for-SRA"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The coefficients
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset Formula $\left(A_{0},B_{0},\beta^{(i)},\alpha\right)$
+\end_inset
+
+ must satisfy the conditions for order 1:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{3}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\alpha^{T}e=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(1)^{T}}e=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(2)^{T}}e=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and the additional conditions for order 1.5:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{3}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\alpha^{T}B^{(0)}e=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\alpha^{T}A^{(0)}e=\frac{1}{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\alpha^{T}\left(B^{(0)}e\right)^{2}=\frac{3}{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(1)^{T}}c^{(1)}=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\beta^{(2)^{T}}c^{(1)}=-1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $c^{(0)}=A^{(0)}e$
+\end_inset
+
+ with 
+\begin_inset Formula $f\in C^{1,3}(\mathcal{I}\times\mathbb{R}^{d},\mathbb{R}^{d})$
+\end_inset
+
+ and 
+\begin_inset Formula $g\in C^{1}(\mathcal{I},\mathbb{R}^{d})$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "RN2707"
+
+\end_inset
+
+.
+ From these conditions he proposed the following Strong Order 1.5 scheme
+ known as SRA1:
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begingroup
+\backslash
+tabcolsep=8pt
+\backslash
+def
+\backslash
+arraystretch{2}
+\end_layout
+
+\end_inset
+
+
+\size small
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $c^{(0)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $A^{(0)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $B^{(0)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\alpha^{T}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\beta^{(1)^{T}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\beta^{(2)^{T}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+endgroup
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begingroup
+\backslash
+tabcolsep=6pt
+\backslash
+def
+\backslash
+arraystretch{2}
+\end_layout
+
+\end_inset
+
+
+\size footnotesize
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="7">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $\frac{3}{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $\frac{3}{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $\frac{1}{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $\frac{2}{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+endgroup
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Appendix II: Derivation Details
 \end_layout
 
 \begin_layout Standard
