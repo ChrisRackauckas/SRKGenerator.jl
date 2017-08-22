@@ -444,12 +444,19 @@ This set of equations decouples to the form of Equation ## since the iterated
  Thus the stability condition is determined by the equation
 \begin_inset Formula 
 \[
-G(z)=1+z\left(\alpha\cdot\left(I-zA^{(0)}\right)^{-1}\right).
+G(z)=1+z\alpha\cdot\left(I-zA^{(0)}\right)^{-1}
 \]
 
 \end_inset
 
-
+ which one may notice is the stability equation of the drift tableau applied
+ to a deterministic ODE.
+ Thus the stability properties of the deterministic Runge-Kutta methods
+ carry over to the additive noise SRA methods on this test equation.
+ However, most two-stage tableaus were developed to satisfy higher order
+ deterministic order constraints which do not apply.
+ We will instead look to maximize stability while satisfying the stochastic
+ order constraints.
 \end_layout
 
 \begin_layout Subsection
@@ -718,251 +725,6 @@ SOSRA Stability Regions.
 
 \end_layout
 
-\begin_layout Subsection
-An A-Stable L-Stable 2-Stage (Semi-)Implicit SRA Method
-\end_layout
-
-\begin_layout Standard
-It's clear that, as in the case for deterministic equations, the explicit
- methods cannot be made A-stable.
- However, the implicit two-stage additive noise SRK method is determined
- by
-\begin_inset Formula 
-\[
-G(z)=\frac{z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{12}z(\alpha_{1}-A_{21})+A_{21}\ensuremath{\alpha_{2}}z-A_{22}(\alpha_{1}z+1)+\alpha_{1}+\alpha_{2})+1}{A_{11}z(A_{22}z-1)-z(A_{12}A_{21}z+A_{22})+1}
-\]
-
-\end_inset
-
- which is 
-\begin_inset Formula $A$
-\end_inset
-
--stable if 
-\begin_inset Formula 
-\[
-A_{11}z(A_{22}z-1)-z(A_{12}A_{21}z+A_{22})+1>z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{12}z(\alpha_{1}-A_{21})+A_{21}\ensuremath{\alpha_{2}}z-A_{22}(\alpha_{1}z+1)+\alpha_{1}+\alpha_{2})+1.
-\]
-
-\end_inset
-
- Notice that the numerator equals the denominator if and only if 
-\begin_inset Formula $z=0$
-\end_inset
-
- or
-\begin_inset Formula 
-\[
-z=\frac{\alpha_{1}+\alpha_{2}}{\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2}}.
-\]
-
-\end_inset
-
- From the order conditions we know that 
-\begin_inset Formula $\alpha_{1}+\alpha_{2}=1$
-\end_inset
-
- which means that no root exists with 
-\begin_inset Formula $Re(z)<0$
-\end_inset
-
- if 
-\begin_inset Formula $\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2}>0$
-\end_inset
-
-.
- Thus under these no roots conditions, we can determine A-stability by checking
- the inequality at 
-\begin_inset Formula $z=1$
-\end_inset
-
-, which gives 
-\begin_inset Formula $1>\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2}$
-\end_inset
-
-.
- Using the order condition, we have a total of four constraints on the 
-\begin_inset Formula $A^{(0)}$
-\end_inset
-
- and 
-\begin_inset Formula $\alpha$
-\end_inset
-
-:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{align*}
-\left(A_{11}+A_{12}\right)\alpha_{1}+\left(A_{21}+A_{22}\right)\alpha_{2} & =\frac{1}{2}\\
-\alpha_{1}+\alpha_{2} & =1\\
-0<\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2} & <1
-\end{align*}
-
-\end_inset
-
-An immediate fact we note is that none of the 2-stage (Order 3) Labatto
- or Radau methods create stochastically A-stable methods.
- Instead, we wish to derive methods which have similar properties and have
- stochastic A-stability.
- One property we extend is L-stability.
- The straightforward extension of L-stability is the condition
-\begin_inset Formula 
-\[
-\lim_{z\rightarrow\infty}G(z)=0.
-\]
-
-\end_inset
-
-This implies that
-\begin_inset Formula 
-\[
-\frac{-A_{11}A_{22}+A_{11}\alpha_{2}+A_{12}A_{21}-A_{12}\alpha_{1}-A_{21}\alpha_{2}+A_{22}\alpha_{2}\alpha_{1}}{A_{12}A_{21}-A_{11}A_{22}}=0
-\]
-
-\end_inset
-
- The denominator is 
-\begin_inset Formula $-\det(A^{(0)})$
-\end_inset
-
- which implies 
-\begin_inset Formula $A^{(0)}$
-\end_inset
-
- must be non-singular.
- Next, we attempt to impose B-stability on the drift portion of the method.
- We use the condition due to Burrage and Butcher that for 
-\begin_inset Formula $B=\text{diag}\left(\alpha_{1},\alpha_{2}\right)$
-\end_inset
-
- 
-\begin_inset Formula $M=BA^{(0)}+A^{(0)}B-\alpha\alpha^{T}$
-\end_inset
-
-, we require both 
-\begin_inset Formula $B$
-\end_inset
-
- and 
-\begin_inset Formula $M$
-\end_inset
-
- to be non-negative definite.
- However, in the supplemental Mathematica notebooks we show computationally
- that there is no 2-stage SRK method of this form which satisfies all three
- of these stability conditions.
- Thus we settle for A-stability and L-stability.
-\end_layout
-
-\begin_layout Standard
-Recalling that 
-\begin_inset Formula $c^{(0)}$
-\end_inset
-
- and 
-\begin_inset Formula $c^{(1)}$
-\end_inset
-
- are the locations in time where 
-\begin_inset Formula $f$
-\end_inset
-
- and 
-\begin_inset Formula $g$
-\end_inset
-
- are approximated respectively, we wish to impose
-\begin_inset Formula 
-\begin{align*}
-c_{1}^{(0)} & =0\\
-c_{2}^{(0)} & =1\\
-c_{1}^{(1)} & =0\\
-c_{2}^{(1)} & =1
-\end{align*}
-
-\end_inset
-
- so that the error estimator covers the entire interval of integration (for
- robustness to discontinuities).
- Since 
-\begin_inset Formula $c^{(0)}=A^{(0)}e$
-\end_inset
-
-, this leads to the condition 
-\begin_inset Formula $A_{21}+A_{22}=1$
-\end_inset
-
-.
- Using the constraint-satisfaction algorithm FindInstance in Mathematica,
- we look for tableaus which satisfy the previous conditions with the added
- constraint of semi-implicitness, i.e.
- 
-\begin_inset Formula $B^{(0)}$
-\end_inset
-
- is lower triangular.
- This assumption is added becaues the inverse of the normal distribution
- has unbounded moments, and thus in many cases it mathematically simpler
- to consider the diffusion term as explicit (though there are recent methods
- which drop this requirement via truncation or extra assumptions on the
- solution).
- However, we find that there is no coefficient set which meets all of these
- requirements.
- However, if we relax the interval estimate condition to allow 
-\begin_inset Formula $0\leq c_{2}^{(0)}\leq1$
-\end_inset
-
-, we find an A-L stable method:
-\begin_inset Formula 
-\begin{align*}
-A^{(0)} & =\left(\begin{array}{cc}
--1 & 1\\
-0 & \frac{3}{4}
-\end{array}\right),\thinspace\thinspace\thinspace B^{(0)}=\left(\begin{array}{cc}
-0 & 0\\
-\frac{3}{2} & 0
-\end{array}\right),\thinspace\thinspace\thinspace\thinspace\alpha=\left(\begin{array}{c}
-\frac{1}{3}\\
-\frac{2}{3}
-\end{array}\right)\\
-\beta^{(1)} & =\left(\begin{array}{c}
-0\\
-1
-\end{array}\right),\thinspace\thinspace\thinspace\beta^{(2)}=\left(\begin{array}{c}
-1\\
--1
-\end{array}\right),\thinspace\thinspace\thinspace c^{(0)}=\left(\begin{array}{c}
-0\\
-\frac{3}{4}
-\end{array}\right),\,\,\,c^{(1)}=\left(\begin{array}{c}
-0\\
-1
-\end{array}\right)
-\end{align*}
-
-\end_inset
-
- If we attempt to look for an SDIRK-like method to reduce the complexity
- of the implicit equation, i.e.
- 
-\begin_inset Formula $A_{12}^{(0)}=0$
-\end_inset
-
-, using FindInstance we find the constraints unsatisfiable.
- Note that if we drop the semi-implicit assumption we find that the full
- constraints cannot be satisfied there (we still cannot satisfy 
-\begin_inset Formula $c_{1}^{(0)}=0$
-\end_inset
-
- and 
-\begin_inset Formula $c_{2}^{(0)}=1$
-\end_inset
-
-), and there does not exist an A-L stable SDIRK method in that case.
-\end_layout
-
 \begin_layout Section
 Optimized-Stability Methods for Multiplicative Noise via Transformation
 \end_layout
@@ -993,7 +755,7 @@ dX_{t}=f(t,X_{t})dt+\sigma(t,X_{t})R(t)dW_{t}
  has the transformation
 \begin_inset Formula 
 \[
-Z_{i,t}=\psi_{i}(t,X_{i,t})=\int\frac{1}{\sigma_{i}(x,t)}dx\mid_{x=X_{i,t}}
+Z_{i,t}=\psi_{i}(t,X_{i,t})=\int\sigma_{i}^{-1}(x,t)dx\mid_{x=X_{i,t}}
 \]
 
 \end_inset
@@ -1055,10 +817,11 @@ r_{21} & r_{22}
 \end_inset
 
  is one-to-one, and thus does not exist in general for diagonal noise.
- However, in the case of mixed multiplicative and additive noise: 
+ However, in the case of mixed multiplicative and additive noise (affine
+ noise): 
 \begin_inset Formula 
 \[
-dX_{t}=f(t,X_{t})dt+\sigma X_{t}dW_{t}
+dX_{t}=f(t,X_{t})dt+\left(\sigma_{M}X_{t}+\sigma_{A}\right)dW_{t}
 \]
 
 \end_inset
@@ -1067,20 +830,24 @@ dX_{t}=f(t,X_{t})dt+\sigma X_{t}dW_{t}
 \begin_inset Formula $\sigma$
 \end_inset
 
- is a constant diagonal matrix, then
+ is a constant diagonal matrix, then 
+\begin_inset Formula $\psi_{i}(t,X_{i,t})=\int\left(\frac{1}{x-\frac{\sigma_{A}}{\sigma_{M}}}\right)dx\mid_{x=X_{i,t}}=\log(X_{t}-\frac{\sigma_{A}}{\sigma_{M}})$
+\end_inset
+
+ and thus 
 \begin_inset Formula 
 \begin{align*}
-d\log X_{t} & =\tilde{f}(t,X_{t})dt+dW_{t}\\
-\tilde{f}(t,X_{t}) & =\frac{f(t,X_{t})}{\sigma X_{t}}
+d\log\left(X_{t}-\frac{\sigma_{A}}{\sigma_{M}}\right) & =\tilde{f}(t,X_{t})dt+\sigma_{M}dW_{t}\\
+\tilde{f}(t,X_{t}) & =\frac{f(t,X_{t})}{X_{t}-\frac{\sigma_{A}}{\sigma_{M}}}
 \end{align*}
 
 \end_inset
 
- where the division is considered element-wise.
+where the division is considered element-wise.
  Thus we can modify the additive SRK method to be in the form
 \begin_inset Formula 
 \[
-\log X_{n+1}=\log X_{n}+\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)
+\log\left(X_{n+1}-\frac{\sigma_{A}}{\sigma_{M}}\right)=\log\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)
 \]
 
 \end_inset
@@ -1088,7 +855,7 @@ d\log X_{t} & =\tilde{f}(t,X_{t})dt+dW_{t}\\
 with stages
 \begin_inset Formula 
 \[
-H_{i}^{(0)}=\log X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}\tilde{f}\left(t_{n}+c_{j}^{(0)}h,\exp\left(H_{j}^{(0)}\right)\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}\frac{I_{(1,0)}}{h}.
+H_{i}^{(0)}=\log\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{j=1}^{s}A_{ij}^{(0)}\tilde{f}\left(t_{n}+c_{j}^{(0)}h,\exp\left(H_{j}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}\frac{I_{(1,0)}}{h}.
 \]
 
 \end_inset
@@ -1096,7 +863,7 @@ H_{i}^{(0)}=\log X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}\tilde{f}\left(t_{n}+c_{j}^{(0)
  Back-transforming this, we get
 \begin_inset Formula 
 \[
-X_{n+1}=X_{n}\exp\left(\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right)
+X_{n+1}=\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)\exp\left(\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right)+\frac{\sigma_{A}}{\sigma_{M}}
 \]
 
 \end_inset
@@ -2593,13 +2360,50 @@ sed implementation and only replaced the coefficients.
 
  is essentially requiring 6 digits of accuracy (in strong error), which
  is far beyond the accuracy necessary in many cases.
- Instead, SOSRI can achieve around 2 digits of accuracy in a time that is
- an order of magnitude faster.
+ Instead, SOSRI can achieve around 2 digits of accuracy in each trajectory
+ in a time that is an order of magnitude faster.
+ Since weak order is higher and weak error is usually lower, this represents
+ more than enough accuracy to adequately solve the problem.
  We note that the maximal tolerances which is stable for SOSRI2 is lower
  than that for SOSRI, meaning that it is able to handle less stiff problems
  as well, but note that it includes a stiffness detection algorithm similar
  to SOSRA2 and thus tradeoff some stiffness handling for the ability to
  switch to other algorithms when stiff.
+ We note that timings for Euler-Mauyama and Runge-Kutta Milstein schemes
+ are omitted since the tests were unable to finish.
+ From the results of CITE we note that the average 
+\begin_inset Formula $dt$
+\end_inset
+
+ for SRIW1 on the edge of its stability had that the smallest 
+\begin_inset Formula $dt$
+\end_inset
+
+ was approximately 
+\begin_inset Formula $10^{-11}$
+\end_inset
+
+.
+ Figure X shows that the stability region for fixed stepsize Euler-Maruyama
+ is strictly smaller than SRIW1 and thus would require around 
+\begin_inset Formula $5\times10^{12}$
+\end_inset
+
+ timesteps (with Runge-Kutta Milstein being similar) to solve to 
+\begin_inset Formula $t=500$
+\end_inset
+
+.
+ Thus, given it takes on our setup extrapolating the time given 170 seconds
+ for 
+\begin_inset Formula $2^{20}$
+\end_inset
+
+ steps, this projects to around 
+\begin_inset Formula $1.6\times10^{8}$
+\end_inset
+
+ seconds, or approximately 5 years.
 \end_layout
 
 \begin_layout Standard
@@ -3092,6 +2896,28 @@ We then timed the runtime to solve 10 trajectories in the
 \end_layout
 
 \begin_layout Standard
+As another test we applied the methods to a method of lines (MOL) discretization
+ of a stochastic partial differential equation (SPDE) describing the spatial
+ regulation of the zebrafish hindbrain via retinoic acid signaling.
+ The model was solved nearly to steady state using a second order Rosenbrock
+ method on the PDE described by the drift term.
+ Starting from steady state, noise was added to the gradient by solving
+ the extension to an SPDE with multiplicative noise on 
+\begin_inset Formula $t\in\left[0,50\right]$
+\end_inset
+
+.
+ Each of the methods solved the problem at the highest tolerance possible
+ and the timings are noted in Table X.
+ Since this problem starts from the only positive steady state, it is only
+ semi-stiff.
+ Yet we receieve similar results as the other problems, signaling that the
+ expanded stability domain can lead to speedups against other high order
+ SRK methods even to equations which only exhibit slight amounts of stiffness.
+ 
+\end_layout
+
+\begin_layout Standard
 \align center
 \begin_inset Float table
 wide false
@@ -3491,6 +3317,261 @@ SRI times for the the Oval2 model on
 .
  The equations were solve 10,000 times with the given tolerances to completion
  and the elapsed time was recorded.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Abstol
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Reltol
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Runtime
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Relative Time (vs SOSRI)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SOSRI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4150.078598
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SOSRI2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17563.2690785
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.232x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SRIW1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-5}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+41407.3344385
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.977x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+SRI times for the the RA SPDE model on 
+\begin_inset Formula $t\in\left[0,50\right]$
+\end_inset
+
+.
+ The equations were solved twice with the given tolerances to completion
+ and the elapsed time was recorded.
+ Note that none of the timings varied by more than 1% of the total runtime.
  
 \end_layout
 

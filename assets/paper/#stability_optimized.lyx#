@@ -760,28 +760,15 @@ Letting
 \begin_inset Formula $\alpha$
 \end_inset
 
-, and 
+, 
 \begin_inset Formula $c^{(0)}$
 \end_inset
 
- be the TRBDF2 tableau, our goal is to find suitable values for 
-\begin_inset Formula $B^{(0)}$
-\end_inset
-
-, 
-\begin_inset Formula $\beta^{(1)}$
-\end_inset
-
-, 
-\begin_inset Formula $\beta^{(2)}$
-\end_inset
-
 , and 
-\begin_inset Formula $c^{(1)}$
+\begin_inset Formula $\\b$
 \end_inset
 
-.
- 
+
 \end_layout
 
 \begin_layout Section
@@ -814,7 +801,7 @@ dX_{t}=f(t,X_{t})dt+\sigma(t,X_{t})R(t)dW_{t}
  has the transformation
 \begin_inset Formula 
 \[
-Z_{i,t}=\psi_{i}(t,X_{i,t})=\int\sigma_{i}^{-1}(x,t)dx\mid_{x=X_{i,t}}
+Z_{i,t}=\psi_{i}(t,X_{i,t})=\int\frac{1}{\sigma_{i}(x,t)}dx\mid_{x=X_{i,t}}
 \]
 
 \end_inset
@@ -876,11 +863,10 @@ r_{21} & r_{22}
 \end_inset
 
  is one-to-one, and thus does not exist in general for diagonal noise.
- However, in the case of mixed multiplicative and additive noise (affine
- noise): 
+ However, in the case of mixed multiplicative and additive noise: 
 \begin_inset Formula 
 \[
-dX_{t}=f(t,X_{t})dt+\left(\sigma_{M}X_{t}+\sigma_{A}\right)dW_{t}
+dX_{t}=f(t,X_{t})dt+\sigma X_{t}dW_{t}
 \]
 
 \end_inset
@@ -889,24 +875,20 @@ dX_{t}=f(t,X_{t})dt+\left(\sigma_{M}X_{t}+\sigma_{A}\right)dW_{t}
 \begin_inset Formula $\sigma$
 \end_inset
 
- is a constant diagonal matrix, then 
-\begin_inset Formula $\psi_{i}(t,X_{i,t})=\int\left(\frac{1}{x-\frac{\sigma_{A}}{\sigma_{M}}}\right)dx\mid_{x=X_{i,t}}=\log(X_{t}-\frac{\sigma_{A}}{\sigma_{M}})$
-\end_inset
-
- and thus 
+ is a constant diagonal matrix, then
 \begin_inset Formula 
 \begin{align*}
-d\log\left(X_{t}-\frac{\sigma_{A}}{\sigma_{M}}\right) & =\tilde{f}(t,X_{t})dt+\sigma_{M}dW_{t}\\
-\tilde{f}(t,X_{t}) & =\frac{f(t,X_{t})}{X_{t}-\frac{\sigma_{A}}{\sigma_{M}}}
+d\log X_{t} & =\tilde{f}(t,X_{t})dt+dW_{t}\\
+\tilde{f}(t,X_{t}) & =\frac{f(t,X_{t})}{\sigma X_{t}}
 \end{align*}
 
 \end_inset
 
-where the division is considered element-wise.
+ where the division is considered element-wise.
  Thus we can modify the additive SRK method to be in the form
 \begin_inset Formula 
 \[
-\log\left(X_{n+1}-\frac{\sigma_{A}}{\sigma_{M}}\right)=\log\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)
+\log X_{n+1}=\log X_{n}+\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)
 \]
 
 \end_inset
@@ -914,7 +896,7 @@ where the division is considered element-wise.
 with stages
 \begin_inset Formula 
 \[
-H_{i}^{(0)}=\log\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{j=1}^{s}A_{ij}^{(0)}\tilde{f}\left(t_{n}+c_{j}^{(0)}h,\exp\left(H_{j}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}\frac{I_{(1,0)}}{h}.
+H_{i}^{(0)}=\log X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}\tilde{f}\left(t_{n}+c_{j}^{(0)}h,\exp\left(H_{j}^{(0)}\right)\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}\frac{I_{(1,0)}}{h}.
 \]
 
 \end_inset
@@ -922,7 +904,7 @@ H_{i}^{(0)}=\log\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{j=1}^{s}A
  Back-transforming this, we get
 \begin_inset Formula 
 \[
-X_{n+1}=\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)\exp\left(\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right)+\frac{\sigma_{A}}{\sigma_{M}}
+X_{n+1}=X_{n}\exp\left(\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right)
 \]
 
 \end_inset
