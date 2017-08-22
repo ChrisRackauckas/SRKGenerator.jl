@@ -726,62 +726,247 @@ SOSRA Stability Regions.
 \end_layout
 
 \begin_layout Subsection
-An L-Stable SRA Method: Additive TRBDF2 (ATRBDF2)
+An L-Stable 2-Stage (Semi-)Implicit SRA Method
 \end_layout
 
 \begin_layout Standard
-Lastly, we wished to find an L-stable method capable of handling highly
- stiff additive SDEs.
- Given the connection between SRA and deterministic stability, we looked
- to find an appropriate generalization of an L-stable determininstic Runge-Kutta
- method.
- Since the strong order would not exceed 1.5, we restricted our search to
- low order implicit Runge-Kutta methods.
- Extensive numerical testing in the development of DifferentialEquations.jl
- has shown that the explicit first step singly diagonal implicit Runge-Kutta
- (ESDIRK) method TRBDF2 (standing for a composition between the Trapezoid
- and the BDF2 methods) is a very efficient low order implicit Runge-Kutta
- method.
- Particularly nice qualities include the fact that it's 2nd order stiffly
- accurate (and thus applicable to DAEs), has an explicit first stage which
- is auto-computed via the FSAL (first same as last) property and thus is
- effectively a two stage method, has very accurate stage predictors, has
- a stabilization of its error estimate, and performs well on equations which
- are traditionally difficult stiff test problems like the Van Der Pol equation
- and the Robertson equation.
-\end_layout
+It's clear that, as in the case for deterministic equations, the explicit
+ methods cannot be made A-stable.
+ However, the implicit two-stage additive noise SRK method is determined
+ by
+\begin_inset Formula 
+\[
+G(z)=\frac{z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{12}z(\alpha_{1}-A_{21})+A_{21}\ensuremath{\alpha_{2}}z-A_{22}(\alpha_{1}z+1)+\alpha_{1}+\alpha_{2})+1}{A_{11}z(A_{22}z-1)-z(A_{12}A_{21}z+A_{22})+1}
+\]
 
-\begin_layout Standard
-Letting 
-\begin_inset Formula $A^{(0)}$
 \end_inset
 
-, 
-\begin_inset Formula $\alpha$
+ which is 
+\begin_inset Formula $A$
 \end_inset
 
-, and 
-\begin_inset Formula $c^{(0)}$
+-stable if 
+\begin_inset Formula 
+\[
+A_{11}z(A_{22}z-1)-z(A_{12}A_{21}z+A_{22})+1>z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{12}z(\alpha_{1}-A_{21})+A_{21}\ensuremath{\alpha_{2}}z-A_{22}(\alpha_{1}z+1)+\alpha_{1}+\alpha_{2})+1.
+\]
+
 \end_inset
 
- be the TRBDF2 tableau, our goal is to find suitable values for 
-\begin_inset Formula $B^{(0)}$
+ Notice that the numerator equals the denominator if and only if 
+\begin_inset Formula $z=0$
 \end_inset
 
-, 
-\begin_inset Formula $\beta^{(1)}$
+ or
+\begin_inset Formula 
+\[
+z=\frac{\alpha_{1}+\alpha_{2}}{\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2}}.
+\]
+
 \end_inset
 
-, 
-\begin_inset Formula $\beta^{(2)}$
+From the order conditions we know that 
+\begin_inset Formula $\alpha_{1}+\alpha_{2}=1$
 \end_inset
 
-, and 
-\begin_inset Formula $c^{(1)}$
+ which means that no root exists with 
+\begin_inset Formula $Re(z)<0$
+\end_inset
+
+ if 
+\begin_inset Formula $\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2}>0$
 \end_inset
 
 .
+ Thus under these no roots conditions, we can determine A-stability by checking
+ the inequality at 
+\begin_inset Formula $z=1$
+\end_inset
+
+, which gives 
+\begin_inset Formula $1>\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2}$
+\end_inset
+
+.
+ Using the order condition, we have a total of four constraints on the 
+\begin_inset Formula $A^{(0)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\left(A_{11}+A_{12}\right)\alpha_{1}+\left(A_{21}+A_{22}\right)\alpha_{2} & =\frac{1}{2}\\
+\alpha_{1}+\alpha_{2} & =1\\
+0<\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2} & <1
+\end{align*}
+
+\end_inset
+
+Instead, we wish to derive methods which have similar properties and have
+ stochastic A-stability.
+ One property we extend is L-stability.
+ The straightforward extension of L-stability is the condition
+\begin_inset Formula 
+\[
+\lim_{z\rightarrow\infty}G(z)=0.
+\]
+
+\end_inset
+
+This implies that
+\begin_inset Formula 
+\[
+\frac{-A_{11}A_{22}+A_{11}\alpha_{2}+A_{12}A_{21}-A_{12}\alpha_{1}-A_{21}\alpha_{2}+A_{22}\alpha_{2}\alpha_{1}}{A_{12}A_{21}-A_{11}A_{22}}=0
+\]
+
+\end_inset
+
+ The denominator is 
+\begin_inset Formula $-\det(A^{(0)})$
+\end_inset
+
+ which implies 
+\begin_inset Formula $A^{(0)}$
+\end_inset
+
+ must be non-singular.
+ Next, we attempt to impose B-stability on the drift portion of the method.
+ We use the condition due to Burrage and Butcher that for 
+\begin_inset Formula $B=\text{diag}\left(\alpha_{1},\alpha_{2}\right)$
+\end_inset
+
  
+\begin_inset Formula $M=BA^{(0)}+A^{(0)}B-\alpha\alpha^{T}$
+\end_inset
+
+, we require both 
+\begin_inset Formula $B$
+\end_inset
+
+ and 
+\begin_inset Formula $M$
+\end_inset
+
+ to be non-negative definite.
+ However, in the supplemental Mathematica notebooks we show computationally
+ that there is no 2-stage SRK method of this form which satisfies all three
+ of these stability conditions.
+ Thus we settle for A-stability and L-stability.
+\end_layout
+
+\begin_layout Standard
+Recalling that 
+\begin_inset Formula $c^{(0)}$
+\end_inset
+
+ and 
+\begin_inset Formula $c^{(1)}$
+\end_inset
+
+ are the locations in time where 
+\begin_inset Formula $f$
+\end_inset
+
+ and 
+\begin_inset Formula $g$
+\end_inset
+
+ are approximated respectively, we wish to impose
+\begin_inset Formula 
+\begin{align*}
+c_{1}^{(0)} & =0\\
+c_{2}^{(0)} & =1\\
+c_{1}^{(1)} & =0\\
+c_{2}^{(1)} & =1
+\end{align*}
+
+\end_inset
+
+ so that the error estimator covers the entire interval of integration (for
+ robustness to discontinuities).
+ Since 
+\begin_inset Formula $c^{(0)}=A^{(0)}e$
+\end_inset
+
+, this leads to the condition 
+\begin_inset Formula $A_{21}+A_{22}=1$
+\end_inset
+
+.
+ Using the constraint-satisfaction algorithm FindInstance in Mathematica,
+ we look for tableaus which satisfy the previous conditions with the added
+ constraint of semi-implicitness, i.e.
+ 
+\begin_inset Formula $B^{(0)}$
+\end_inset
+
+ is lower triangular.
+ This assumption is added becaues the inverse of the normal distribution
+ has unbounded moments, and thus in many cases it mathematically simpler
+ to consider the diffusion term as explicit (though there are recent methods
+ which drop this requirement via truncation or extra assumptions on the
+ solution).
+ However, we find that there is no coefficient set which meets all of these
+ requirements.
+ However, if we relax the interval estimate condition to allow 
+\begin_inset Formula $0\leq c_{2}^{(0)}\leq1$
+\end_inset
+
+, we find an A-L stable method:
+\begin_inset Formula 
+\begin{align*}
+A^{(0)} & =\left(\begin{array}{cc}
+-1 & 1\\
+0 & \frac{3}{4}
+\end{array}\right),\thinspace\thinspace\thinspace B^{(0)}=\left(\begin{array}{cc}
+0 & 0\\
+\frac{3}{2} & 0
+\end{array}\right),\thinspace\thinspace\thinspace\thinspace\alpha=\left(\begin{array}{c}
+\frac{1}{3}\\
+\frac{2}{3}
+\end{array}\right)\\
+\beta^{(1)} & =\left(\begin{array}{c}
+0\\
+1
+\end{array}\right),\thinspace\thinspace\thinspace\beta^{(2)}=\left(\begin{array}{c}
+1\\
+-1
+\end{array}\right),\thinspace\thinspace\thinspace c^{(0)}=\left(\begin{array}{c}
+0\\
+\frac{3}{4}
+\end{array}\right),\,\,\,c^{(1)}=\left(\begin{array}{c}
+0\\
+1
+\end{array}\right)
+\end{align*}
+
+\end_inset
+
+which we denote LSRA.
+ If we attempt to look for a 2-stage SDIRK-like method to reduce the complexity
+ of the implicit equation, i.e.
+ 
+\begin_inset Formula $A_{12}^{(0)}=0$
+\end_inset
+
+, using FindInstance we find the constraints unsatisfiable.
+ Note that if we drop the semi-implicit assumption we find that the full
+ constraints cannot be satisfied there (we still cannot satisfy 
+\begin_inset Formula $c_{1}^{(0)}=0$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{2}^{(0)}=1$
+\end_inset
+
+), and there does not exist an A-L stable SDIRK method in that case.
 \end_layout
 
 \begin_layout Section
@@ -1647,6 +1832,17 @@ We end by noting that SRSRA2 has the same property, allowing stiffness detection
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+In addition, stiff solvers can measure the maximal eigenvalues directly
+ from the Jacobian.
+ Here we suggest the measure from Shampine of using 
+\begin_inset Formula $\Vert J\Vert_{\infty}$
+\end_inset
+
+ as a cheap upper bound.
+ For semi-implicit methods like 
 \end_layout
 
 \begin_layout Section
