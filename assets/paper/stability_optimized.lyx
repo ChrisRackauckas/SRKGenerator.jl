@@ -194,12 +194,15 @@ stability-bound
  Similar to the Runge-Kutta Chebyschev (and the S-ROCK extension to the
  stochastic case), these methods are designed to be efficient for equations
  which display stiffness without fully commiting to implicit solvers.
- On the otherhand, to handle extreme stiffness we develop an implicit RK
- method for additive noise problems.
- We show that this method is A-L stable in a generalization of these terms
- to additive noise SDEs.
+ On the otherhand, to handle extreme stiffness we develop implicit RK methods
+ for additive noise SDEs.
+ We extend the definition of L-stability to additive noise SDEs and develop
+ two methods: a fully implicit 2-stage L-stable method and an extension
+ of the a well-known L-stable explicit first stage singly diagonally implicit
+ RK (ESDIRK) method.
  To extend the utility of these methods, we derive and extension of the
- methods for additive SDEs to multiplicative SDEs through a transformation.
+ methods for additive SDEs to affine SDEs (mixed multiplicative and additive
+ noise terms) through a transformation.
  In addition to the new methods, we display a novel scalable mechanism for
  the derivation of 
 \begin_inset Quotes eld
@@ -449,7 +452,7 @@ G(z)=1+z\alpha\cdot\left(I-zA^{(0)}\right)^{-1}
 
 \end_inset
 
- which one may notice is the stability equation of the drift tableau applied
+which one may notice is the stability equation of the drift tableau applied
  to a deterministic ODE.
  Thus the stability properties of the deterministic Runge-Kutta methods
  carry over to the additive noise SRA methods on this test equation.
@@ -460,6 +463,10 @@ G(z)=1+z\alpha\cdot\left(I-zA^{(0)}\right)^{-1}
 \end_layout
 
 \begin_layout Subsection
+Explicit Methods for Non-Stiff SDEs with Additive Noise
+\end_layout
+
+\begin_layout Subsubsection
 Stability-Optimal 2-Stage Explicit SRA Methods
 \end_layout
 
@@ -568,7 +575,7 @@ A^{(0)} & =\left(\begin{array}{cc}
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Stability-Optimal 3-Stage Explicit SRA Methods
 \end_layout
 
@@ -726,6 +733,10 @@ SOSRA Stability Regions.
 \end_layout
 
 \begin_layout Subsection
+Drift Implicit Methods for Stiff SDEs with Additive Noise
+\end_layout
+
+\begin_layout Subsubsection
 An L-Stable 2-Stage (Semi-)Implicit SRA Method
 \end_layout
 
@@ -969,6 +980,162 @@ which we denote LSRA.
 ), and there does not exist an A-L stable SDIRK method in that case.
 \end_layout
 
+\begin_layout Subsubsection
+Extensions of ODE Implicit Runge-Kutta Methods to Implicit SRA Methods
+\end_layout
+
+\begin_layout Standard
+Since the stability region of the SRA methods is completely determined by
+ the deterministic portion 
+\begin_inset Formula $A^{(0)}$
+\end_inset
+
+, in some cases there may exist a sensible extension of implicit Runge-Kutta
+ methods for ordinary differential equations to high order adaptive methods
+ stochastic differential equations with additive noise which keep the same
+ stability properties.
+ Since the order constraints which only involve the deterministic portions
+ 
+\begin_inset Formula $A^{(0)}$
+\end_inset
+
+, 
+\begin_inset Formula $c^{(0)}$
+\end_inset
+
+, and 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ match the conditions required for ODE integrators, existance is dependent
+ on finding 
+\begin_inset Formula $\beta^{(1)}$
+\end_inset
+
+, 
+\begin_inset Formula $\beta^{(2)}$
+\end_inset
+
+, 
+\begin_inset Formula $c^{(1)}$
+\end_inset
+
+, and 
+\begin_inset Formula $B^{(0)}$
+\end_inset
+
+ that satisfy the full order constraints.
+ In this case, an adaptive error estimator can be added by using the same
+ estimator as the ODE method (which we call 
+\begin_inset Formula $E_{D}$
+\end_inset
+
+) but adding the absolute size of the stochastic portions 
+\begin_inset Formula 
+\[
+E_{N}=\left|\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right|
+\]
+
+\end_inset
+
+ leading to the error estimator
+\begin_inset Formula 
+\[
+E=\delta E_{D}+E_{N}.
+\]
+
+\end_inset
+
+This can be shown similarly to the construction in (Rackauckas and Nie 2017).
+ Given the large literature on implicit RK methods for ODEs, this presents
+ a large pool of possibly good methods and heuristically one may believe
+ that these would do very well in the case of small noise.
+ 
+\end_layout
+
+\begin_layout Standard
+However, we note that there does not always exist such an extension.
+ Using the constraint-satisfaction algorithm FindInstance in Mathematica,
+ we looked for extensions of the explicit first stage signly-diagonally
+ implicit RK (ESDIRK) method TRBDF2 and could not find values satisfying
+ the constraints.
+ In fact, our computational search could not find 3-stage (E)SDIRK methods
+ which satisfy the extension.
+ However, the 4-stage 3rd order ODE method due to Kennedy and Carpenter
+ (cite) can be extended to the following:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+A^{(0)} & =\left(\begin{array}{cccc}
+0 & 0 & 0 & 0\\
+\frac{1767732205903}{4055673282236} & \frac{1767732205903}{4055673282236} & 0 & 0\\
+\frac{2746238789719}{10658868560708} & -\frac{640167445237}{6845629431997} & \frac{1767732205903}{4055673282236} & 0\\
+\frac{1471266399579}{7840856788654} & -\frac{4482444167858}{7529755066697} & \frac{11266239266428}{11593286722821} & \frac{1767732205903}{4055673282236}
+\end{array}\right),\\
+B^{(0)} & =\left(\begin{array}{cccc}
+0 & 0 & 0 & 0\\
+\frac{\frac{87294609440832483406992237\left(-53983406399371387722712393713535786276-26826820\sqrt{6853072660943221216270384658311461343029149665543510113394397}\right)}{4868738516734691891458097}-354038415192410790619483213666362001932}{210758174113231167877981435258781706648} & 0 & 0 & 0\\
+0 & 0 & 0 & 0\\
+0 & 0 & \frac{-53983406399371387722712393713535786276-26826820\sqrt{6853072660943221216270384658311461343029149665543510113394397}}{8606625878152317177894269252900546591} & 0
+\end{array}\right),\\
+\alpha & =\left(\begin{array}{c}
+\frac{1471266399579}{7840856788654}\\
+-\frac{4482444167858}{7529755066697}\\
+\frac{11266239266428}{11593286722821}\\
+\frac{1767732205903}{4055673282236}
+\end{array}\right)\\
+\beta^{(1)} & =\left(\begin{array}{c}
+0\\
+0\\
+0\\
+1
+\end{array}\right),\thinspace\thinspace\thinspace\beta^{(2)}=\left(\begin{array}{c}
+1\\
+0\\
+0\\
+-1
+\end{array}\right),\thinspace\thinspace\thinspace c^{(0)}=\left(\begin{array}{c}
+0\\
+\frac{1767732205903}{4055673282236}\\
+\frac{3}{5}\\
+1
+\end{array}\right),\,\,\,c^{(1)}=\left(\begin{array}{c}
+0\\
+0\\
+0\\
+1
+\end{array}\right)
+\end{align*}
+
+\end_inset
+
+ (E)SDIRK methods are particularly interesting because these methods can
+ be solved using a single factorization of the function of the Jacobian
+ 
+\begin_inset Formula $I-\gamma dtJ$
+\end_inset
+
+ where 
+\begin_inset Formula $J$
+\end_inset
+
+ is the Jacobian.
+ Additionally, explicit handling of the noise term is similar to the Implicit-Ex
+plicit (IMEX) form for additive Runge-Kutta methods in that it occurs by
+ adding a single constant term to the Newton iterations in each stage, meaning
+ it does not significantly increase the computational cost.
+ One thing to note is that the method is that since the problem is additive
+ noise the method is never implicit in the dependent variables in the noise
+ part, so in theory this can also be extended with 
+\begin_inset Formula $B^{(1)}$
+\end_inset
+
+ implicit as well (with convergence concerns due to the non-finite inverse
+ moments of the Normal distribution, see (Kloden) for details).
+\end_layout
+
 \begin_layout Section
 Optimized-Stability Methods for Multiplicative Noise via Transformation
 \end_layout
@@ -1082,7 +1249,7 @@ dX_{t}=f(t,X_{t})dt+\left(\sigma_{M}X_{t}+\sigma_{A}\right)dW_{t}
 \begin_inset Formula 
 \begin{align*}
 d\log\left(X_{t}-\frac{\sigma_{A}}{\sigma_{M}}\right) & =\tilde{f}(t,X_{t})dt+\sigma_{M}dW_{t}\\
-\tilde{f}(t,X_{t}) & =\frac{f(t,X_{t})}{X_{t}-\frac{\sigma_{A}}{\sigma_{M}}}
+\tilde{f}(t,X_{t}) & =\frac{1}{2}\frac{f(t,X_{t})}{X_{t}-\frac{\sigma_{A}}{\sigma_{M}}}
 \end{align*}
 
 \end_inset
