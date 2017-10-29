@@ -90,7 +90,7 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Stochastic differential equations have seen increasing use in scientific
+Stochastic differential equations are being increasingly used in scientific
  fields such as biology and climate science due to their ability to capture
  the randomness inherent in physical systems.
  These equations are of the general form:
@@ -199,10 +199,10 @@ stability-bound
  We extend the definition of L-stability to additive noise SDEs and develop
  two methods: a fully implicit 2-stage L-stable method and an extension
  of the a well-known L-stable explicit first stage singly diagonally implicit
- RK (ESDIRK) method.
- To extend the utility of these methods, we derive and extension of the
- methods for additive SDEs to affine SDEs (mixed multiplicative and additive
- noise terms) through a transformation.
+ RK (ESDIRK) method due to Kennedy and Carpenter.
+ To extend the utility of these methods, we derive an extension of the methods
+ for additive SDEs to affine SDEs (mixed multiplicative and additive noise
+ terms) through a transformation.
  In addition to the new methods, we display a novel scalable mechanism for
  the derivation of 
 \begin_inset Quotes eld
@@ -215,6 +215,9 @@ optimal
  Runge-Kutta methods, and use it to design stability-optimized methods for
  diagonal noise SDEs which would otherwise be analytically intractable due
  to the few million terms in the stability equation.
+ In order to handle extreme transient stiffness, for each of these types
+ of methods we derive methods for detecting stiffness and switching between
+ implicit and explicit integrators in the presence of stiffness.
  Lastly, we show that on test problems that these methods are no less efficient
  than existing SRK methods when one only requires a few decimal places of
  accuracy (
@@ -222,8 +225,8 @@ optimal
 \end_inset
 
 ), but show that these methods have two to three times the stability region,
- allowing them to dramatically speed up computations on stability-bound
- problems.
+ allowing them to speed up computations on stability-bound problems by around
+ 10x.
 \end_layout
 
 \begin_layout Section
@@ -232,7 +235,7 @@ Adaptive Strong Order 1.0/1.5 SRK Methods
 
 \begin_layout Standard
 The class of methods we wish to example are the Strong Order 1.5 SRK methods
- due to Rossler.
+ due to Rossler (cite).
  The diagonal noise methods utilize the same general form and order conditions
  as the methods for scalar noise so we use their notation for simplicity.
  The strong order 1.5 methods for scalar noise are of the form
@@ -240,18 +243,18 @@ The class of methods we wish to example are the Strong Order 1.5 SRK methods
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-X_{n+1}=X_{n}+\sum_{i=1}^{s}\alpha_{i}f\left(t_{n}+c_{i}^{(0)}h,H_{i}^{(0)}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,1)}}{\sqrt{h}}+\beta_{i}^{(3)}\frac{I_{(1,0)}}{h}+\beta_{i}^{(4)}\frac{I_{(1,1,1)}}{h}\right)g\left(t_{n}+c_{i}^{(1)}h\right)
-\]
+\begin{equation}
+X_{n+1}=X_{n}+\sum_{i=1}^{s}\alpha_{i}f\left(t_{n}+c_{i}^{(0)}h,H_{i}^{(0)}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,1)}}{\sqrt{h}}+\beta_{i}^{(3)}\frac{I_{(1,0)}}{h}+\beta_{i}^{(4)}\frac{I_{(1,1,1)}}{h}\right)g\left(t_{n}+c_{i}^{(1)}h\right)\label{eq:update}
+\end{equation}
 
 \end_inset
 
  with stages
 \begin_inset Formula 
-\begin{align*}
-H_{i}^{(0)} & =X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}g\left(t_{n}+c_{j}^{(1)}h,H_{j}^{(1)}\right)\frac{I_{(1,0)}}{h}\\
-H_{i}^{(1)} & =X_{n}+\sum_{j=1}^{s}A_{ij}^{(1)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(1)}g\left(t_{n}+c_{j}^{(1)}h,H_{j}^{(1)}\right)\sqrt{h}
-\end{align*}
+\begin{align}
+H_{i}^{(0)} & =X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}g\left(t_{n}+c_{j}^{(1)}h,H_{j}^{(1)}\right)\frac{I_{(1,0)}}{h}\label{eq:stages}\\
+H_{i}^{(1)} & =X_{n}+\sum_{j=1}^{s}A_{ij}^{(1)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(1)}g\left(t_{n}+c_{j}^{(1)}h,H_{j}^{(1)}\right)\sqrt{h}\nonumber 
+\end{align}
 
 \end_inset
 
@@ -259,23 +262,24 @@ H_{i}^{(1)} & =X_{n}+\sum_{j=1}^{s}A_{ij}^{(1)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{
 \begin_inset Formula $I_{j}$
 \end_inset
 
- are the Wiktorsson approximations to the iterated stochastic integrals.
+ are the Wiktorsson approximations to the iterated stochastic integrals
+ (cite).
  In the case of additive noise, this reduces to the form
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-X_{n+1}=X_{n}+\sum_{i=1}^{s}\alpha_{i}f\left(t_{n}+c_{i}^{(0)}h,H_{i}^{(0)}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)g\left(t_{n}+c_{i}^{(1)}h\right)
-\]
+\begin{equation}
+X_{n+1}=X_{n}+\sum_{i=1}^{s}\alpha_{i}f\left(t_{n}+c_{i}^{(0)}h,H_{i}^{(0)}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)g\left(t_{n}+c_{i}^{(1)}h\right)\label{eq:add_update}
+\end{equation}
 
 \end_inset
 
  with stages
 \begin_inset Formula 
-\[
-H_{i}^{(0)}=X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}g\left(t_{n}+c_{j}^{(1)}h\right)\frac{I_{(1,0)}}{h}.
-\]
+\begin{equation}
+H_{i}^{(0)}=X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}g\left(t_{n}+c_{j}^{(1)}h\right)\frac{I_{(1,0)}}{h}.\label{eq:add_stages}
+\end{equation}
 
 \end_inset
 
@@ -284,8 +288,8 @@ H_{i}^{(0)}=X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)
 \end_inset
 
  thus fully determine the SRK method.
- These coefficients are subject to the constraint equations described in
- Appendix X in order to receive strong order 1.5.
+ These coefficients must satisfy the constraint equations described in Appendix
+ X in order to receive strong order 1.5.
  Rackauckas and Nie constructed a systematic method for developing an embedded
  strong order 1.0 method from any SRK tableau and showed that adaptive timesteppi
 ng using this estimator is fundamental for the efficient simulation of pathwise
@@ -301,8 +305,8 @@ Optimized-Stability High Order SRK Methods with Additive Noise
 \end_layout
 
 \begin_layout Standard
-Using the terms as defined by Kloden and Platen, we define a discrete approximat
-ion as numerically stable if for any finite time interval 
+Using the terms as defined by Kloden and Platen (cite), we define a discrete
+ approximation as numerically stable if for any finite time interval 
 \begin_inset Formula $\left[t_{0},T\right]$
 \end_inset
 
@@ -320,9 +324,9 @@ ion as numerically stable if for any finite time interval
 
  
 \begin_inset Formula 
-\[
-\lim_{\left|X_{0}^{\delta}-\bar{X}_{0}^{\delta}\right|\rightarrow0}\sup_{t_{0}\leq t\leq T}P\left(\left|X_{t}^{\delta}-\bar{X}_{t}^{\delta}\right|\geq\epsilon\right)=0
-\]
+\begin{equation}
+\lim_{\left|X_{0}^{\delta}-\bar{X}_{0}^{\delta}\right|\rightarrow0}\sup_{t_{0}\leq t\leq T}P\left(\left|X_{t}^{\delta}-\bar{X}_{t}^{\delta}\right|\geq\epsilon\right)=0\label{eq:add_stab}
+\end{equation}
 
 \end_inset
 
@@ -349,9 +353,9 @@ ion as numerically stable if for any finite time interval
 .
  For additive noise, we consider the complex-valued linear test equations
 \begin_inset Formula 
-\[
-dX_{t}=\mu X_{t}dt+dW_{t}
-\]
+\begin{equation}
+dX_{t}=\mu X_{t}dt+dW_{t}\label{eq:add_test}
+\end{equation}
 
 \end_inset
 
@@ -362,9 +366,9 @@ dX_{t}=\mu X_{t}dt+dW_{t}
  is a complex number.
  In this framework, a scheme which can be written in the form 
 \begin_inset Formula 
-\[
-X_{n+1}^{h}=X_{n}^{h}G\left(\mu h\right)+Z_{n}^{\delta}
-\]
+\begin{equation}
+X_{n+1}^{h}=X_{n}^{h}G\left(\mu h\right)+Z_{n}^{\delta}\label{eq:add_test_2}
+\end{equation}
 
 \end_inset
 
@@ -395,17 +399,17 @@ with a constant step size
 \begin_layout Standard
 The additive SRK method can be written as
 \begin_inset Formula 
-\[
-X_{n+1}^{h}=X_{n}^{h}+z\left(\alpha\cdot H^{(0)}\right)+\beta^{(1)}\sigma I_{(1)}+\sigma\beta^{(2)}\frac{I_{(1,0)}}{h}
-\]
+\begin{equation}
+X_{n+1}^{h}=X_{n}^{h}+z\left(\alpha\cdot H^{(0)}\right)+\beta^{(1)}\sigma I_{(1)}+\sigma\beta^{(2)}\frac{I_{(1,0)}}{h}\label{eq:SRK_stab_step1}
+\end{equation}
 
 \end_inset
 
  where
 \begin_inset Formula 
-\[
-H^{(0)}=\left(I-zA^{(0)}\right)^{-1}\left(\hat{X_{n}^{h}}+B^{(0)}e\sigma\frac{I_{(1,0)}}{h}\right)
-\]
+\begin{equation}
+H^{(0)}=\left(I-zA^{(0)}\right)^{-1}\left(\hat{X_{n}^{h}}+B^{(0)}e\sigma\frac{I_{(1,0)}}{h}\right)\label{eq:SRK_stab_step}
+\end{equation}
 
 \end_inset
 
@@ -428,9 +432,9 @@ where
 .
  By substitution we receive
 \begin_inset Formula 
-\[
-X_{n+1}^{h}=X_{n}^{h}\left(1+z\left(\alpha\cdot\left(I-zA^{(0)}\right)^{-1}\right)\right)+\left(I-zA^{(0)}\right)^{-1}B^{(0)}e\sigma\frac{I_{(1,0)}}{h}+\beta^{(1)}\sigma I_{(1)}+\sigma\beta^{(2)}\frac{I_{(1,0)}}{h}
-\]
+\begin{equation}
+X_{n+1}^{h}=X_{n}^{h}\left(1+z\left(\alpha\cdot\left(I-zA^{(0)}\right)^{-1}\right)\right)+\left(I-zA^{(0)}\right)^{-1}B^{(0)}e\sigma\frac{I_{(1,0)}}{h}+\beta^{(1)}\sigma I_{(1)}+\sigma\beta^{(2)}\frac{I_{(1,0)}}{h}\label{eq:SRK_stab_sub}
+\end{equation}
 
 \end_inset
 
@@ -446,9 +450,9 @@ This set of equations decouples to the form of Equation ## since the iterated
 .
  Thus the stability condition is determined by the equation
 \begin_inset Formula 
-\[
-G(z)=1+z\alpha\cdot\left(I-zA^{(0)}\right)^{-1}
-\]
+\begin{equation}
+G(z)=1+z\alpha\cdot\left(I-zA^{(0)}\right)^{-1}\label{eq:SRA_stab}
+\end{equation}
 
 \end_inset
 
@@ -481,9 +485,9 @@ For explicit methods, the
 
  are lower diagonal and we receive the simplified stability function 
 \begin_inset Formula 
-\[
-G(z)=1+A_{21}z^{2}\alpha_{2}+z\left(\alpha_{1}+\alpha_{2}\right)
-\]
+\begin{equation}
+G(z)=1+A_{21}z^{2}\alpha_{2}+z\left(\alpha_{1}+\alpha_{2}\right)\label{eq:SRA_stab_2}
+\end{equation}
 
 \end_inset
 
@@ -495,7 +499,11 @@ G(z)=1+A_{21}z^{2}\alpha_{2}+z\left(\alpha_{1}+\alpha_{2}\right)
 
 .
  Thus we wish to find 
-\begin_inset Formula $A^{(0)},\alpha$
+\begin_inset Formula $A^{(0)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha$
 \end_inset
 
  s.t.
@@ -516,7 +524,7 @@ G(z)=1+A_{21}z^{2}\alpha_{2}+z\left(\alpha_{1}+\alpha_{2}\right)
 \end_inset
 
 .
- We see that this is achieved when 
+ This is achieved when 
 \begin_inset Formula $\alpha=\frac{2}{3}$
 \end_inset
 
@@ -544,7 +552,7 @@ G(z)=1+A_{21}z^{2}\alpha_{2}+z\left(\alpha_{1}+\alpha_{2}\right)
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{align*}
+\begin{align}
 A^{(0)} & =\left(\begin{array}{cc}
 0 & 0\\
 \frac{3}{4} & 0
@@ -554,7 +562,7 @@ A^{(0)} & =\left(\begin{array}{cc}
 \end{array}\right),\thinspace\thinspace\thinspace\thinspace\alpha=\left(\begin{array}{c}
 \frac{1}{3}\\
 \frac{2}{3}
-\end{array}\right)\\
+\end{array}\right)\nonumber \\
 \beta^{(1)} & =\left(\begin{array}{c}
 1\\
 0
@@ -567,8 +575,8 @@ A^{(0)} & =\left(\begin{array}{cc}
 \end{array}\right),\,\,\,c^{(1)}=\left(\begin{array}{c}
 1\\
 0
-\end{array}\right)
-\end{align*}
+\end{array}\right)\label{eq:SRA1}
+\end{align}
 
 \end_inset
 
@@ -582,9 +590,9 @@ Stability-Optimal 3-Stage Explicit SRA Methods
 \begin_layout Standard
 For the 3-stage SRA method, we recieve the simplified stability function
 \begin_inset Formula 
-\[
-G(z)=A_{21}A_{31}\alpha_{3}z^{3}+A_{21}\alpha_{2}z^{2}+A_{31}\alpha_{3}z^{2}+A_{32}\alpha_{3}z^{2}+\alpha_{1}z+\alpha_{2}z+\alpha_{3}z+1
-\]
+\begin{equation}
+G(z)=A_{21}A_{31}\alpha_{3}z^{3}+A_{21}\alpha_{2}z^{2}+A_{31}\alpha_{3}z^{2}+A_{32}\alpha_{3}z^{2}+\alpha_{1}z+\alpha_{2}z+\alpha_{3}z+1\label{eq:SRA_stab_3}
+\end{equation}
 
 \end_inset
 
@@ -592,8 +600,6 @@ G(z)=A_{21}A_{31}\alpha_{3}z^{3}+A_{21}\alpha_{2}z^{2}+A_{31}\alpha_{3}z^{2}+A_{
  and optimize the real values of the negative roots.
  However, in this case we have a cubic polynomial and the root equations
  are more difficult.
- In the Mathematica notebooks we should that one root condition can be discarded
-, but the other two had difficulties optimizing.
  Instead, we turn to a more general technique to handle the stability optimizati
 on which will be employed in later sections as well.
  To do so, we generate an optimization problem which we can numerically
@@ -608,9 +614,9 @@ on which will be employed in later sections as well.
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-f\left(z,w;N,M\right)=\int_{D}\chi_{G(z)\leq1}(z)dz
-\]
+\begin{equation}
+f\left(z,w;N,M\right)=\int_{D}\chi_{G(z)\leq1}(z)dz\label{eq:SRA_integral}
+\end{equation}
 
 \end_inset
 
@@ -623,16 +629,16 @@ Notice that for
 \end_inset
 
  is the area of the stability region.
- Thus we define the stability-optimized diagonal SRK method as the set of
- coefficients which achieves
+ Thus we define the stability-optimized SRK method for additive noise SDEs
+ as the set of coefficients which achieves
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{align*}
-\max_{A^{(i)},B^{(i)},\beta^{(i)},\alpha} & f(z)\\
-\text{subject to: } & \text{Order Constraints}
-\end{align*}
+\begin{align}
+\max_{A^{(i)},B^{(i)},\beta^{(i)},\alpha} & f(z)\label{eq:SRA_maximize}\\
+\text{subject to: } & \text{Order Constraints}\nonumber 
+\end{align}
 
 \end_inset
 
@@ -674,11 +680,26 @@ d initial conditions 100 times and all gave similar results.
 \begin_inset Formula $c_{2}^{(0)}=c_{3}^{(0)}=c_{2}^{(1)}=c_{3}^{(1)}=1$
 \end_inset
 
- to allow for free stability detection.
+ to allow for free stability detection (discussed in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:StabilityDetection"
+
+\end_inset
+
+).
  The method generated with this extra constraint is SOSRA2.
  These methods have their stability regions compared to SRA1 and SRA3 in
- Figure X where it is shown that the SOSRA methods more than doubles the
- allowed real eigenvalues.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:SOSRA-Stability-Regions."
+
+\end_inset
+
+ where it is shown that the SOSRA methods more than doubles the allowed
+ timesteps when the eigenvalues of the Jacobian are dominated by the real
+ part.
 \end_layout
 
 \begin_layout Standard
@@ -720,6 +741,13 @@ SOSRA Stability Regions.
  methods.
  Note that SOSRA and SOSRA2 have nearly identical stability regions, making
  it hard to decern the two in the plot.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:SOSRA-Stability-Regions."
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -746,9 +774,9 @@ It's clear that, as in the case for deterministic equations, the explicit
  However, the implicit two-stage additive noise SRK method is determined
  by
 \begin_inset Formula 
-\[
-G(z)=\frac{z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{12}z(\alpha_{1}-A_{21})+A_{21}\ensuremath{\alpha_{2}}z-A_{22}(\alpha_{1}z+1)+\alpha_{1}+\alpha_{2})+1}{A_{11}z(A_{22}z-1)-z(A_{12}A_{21}z+A_{22})+1}
-\]
+\begin{equation}
+G(z)=\frac{z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{12}z(\alpha_{1}-A_{21})+A_{21}\ensuremath{\alpha_{2}}z-A_{22}(\alpha_{1}z+1)+\alpha_{1}+\alpha_{2})+1}{A_{11}z(A_{22}z-1)-z(A_{12}A_{21}z+A_{22})+1}\label{eq:SRA_stab2_implicit}
+\end{equation}
 
 \end_inset
 
@@ -758,9 +786,9 @@ G(z)=\frac{z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{12}z(\alpha_{1}-A_{21})+A_{21}\ens
 
 -stable if 
 \begin_inset Formula 
-\[
-A_{11}z(A_{22}z-1)-z(A_{12}A_{21}z+A_{22})+1>z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{12}z(\alpha_{1}-A_{21})+A_{21}\ensuremath{\alpha_{2}}z-A_{22}(\alpha_{1}z+1)+\alpha_{1}+\alpha_{2})+1.
-\]
+\begin{equation}
+A_{11}z(A_{22}z-1)-z(A_{12}A_{21}z+A_{22})+1>z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{12}z(\alpha_{1}-A_{21})+A_{21}\ensuremath{\alpha_{2}}z-A_{22}(\alpha_{1}z+1)+\alpha_{1}+\alpha_{2})+1.\label{eq:SRA_stab2_ineq}
+\end{equation}
 
 \end_inset
 
@@ -770,9 +798,9 @@ A_{11}z(A_{22}z-1)-z(A_{12}A_{21}z+A_{22})+1>z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{
 
  or
 \begin_inset Formula 
-\[
-z=\frac{\alpha_{1}+\alpha_{2}}{\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2}}.
-\]
+\begin{equation}
+z=\frac{\alpha_{1}+\alpha_{2}}{\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2}}.\label{eq:SRA_stab2_z}
+\end{equation}
 
 \end_inset
 
@@ -812,30 +840,31 @@ From the order conditions we know that
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{align*}
-\left(A_{11}+A_{12}\right)\alpha_{1}+\left(A_{21}+A_{22}\right)\alpha_{2} & =\frac{1}{2}\\
-\alpha_{1}+\alpha_{2} & =1\\
-0<\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2} & <1
-\end{align*}
+\begin{align}
+\left(A_{11}+A_{12}\right)\alpha_{1}+\left(A_{21}+A_{22}\right)\alpha_{2} & =\frac{1}{2}\label{eq:SRA_stab2_conds}\\
+\alpha_{1}+\alpha_{2} & =1\nonumber \\
+0<\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2} & <1\nonumber 
+\end{align}
 
 \end_inset
 
-Instead, we wish to derive methods which have similar properties and have
- stochastic A-stability.
- One property we extend is L-stability.
+However, A-stability is not sufficient for most ODE integrators to properly
+ handle stiff equations and thus extra properties generally imposed.
+ One important property we wish to extend to stochastic integrators is L-stabili
+ty.
  The straightforward extension of L-stability is the condition
 \begin_inset Formula 
-\[
-\lim_{z\rightarrow\infty}G(z)=0.
-\]
+\begin{equation}
+\lim_{z\rightarrow\infty}G(z)=0.\label{eq:SRA_L}
+\end{equation}
 
 \end_inset
 
 This implies that
 \begin_inset Formula 
-\[
-\frac{-A_{11}A_{22}+A_{11}\alpha_{2}+A_{12}A_{21}-A_{12}\alpha_{1}-A_{21}\alpha_{2}+A_{22}\alpha_{2}\alpha_{1}}{A_{12}A_{21}-A_{11}A_{22}}=0
-\]
+\begin{equation}
+\frac{-A_{11}A_{22}+A_{11}\alpha_{2}+A_{12}A_{21}-A_{12}\alpha_{1}-A_{21}\alpha_{2}+A_{22}\alpha_{2}\alpha_{1}}{A_{12}A_{21}-A_{11}A_{22}}=0\label{eq:SRA_Lcond}
+\end{equation}
 
 \end_inset
 
@@ -891,12 +920,12 @@ Recalling that
 
  are approximated respectively, we wish to impose
 \begin_inset Formula 
-\begin{align*}
-c_{1}^{(0)} & =0\\
-c_{2}^{(0)} & =1\\
-c_{1}^{(1)} & =0\\
-c_{2}^{(1)} & =1
-\end{align*}
+\begin{align}
+c_{1}^{(0)} & =0\label{eq:SRA_ccond}\\
+c_{2}^{(0)} & =1\nonumber \\
+c_{1}^{(1)} & =0\nonumber \\
+c_{2}^{(1)} & =1\nonumber 
+\end{align}
 
 \end_inset
 
@@ -932,7 +961,7 @@ c_{2}^{(1)} & =1
 
 , we find an A-L stable method:
 \begin_inset Formula 
-\begin{align*}
+\begin{align}
 A^{(0)} & =\left(\begin{array}{cc}
 -1 & 1\\
 0 & \frac{3}{4}
@@ -942,7 +971,7 @@ A^{(0)} & =\left(\begin{array}{cc}
 \end{array}\right),\thinspace\thinspace\thinspace\thinspace\alpha=\left(\begin{array}{c}
 \frac{1}{3}\\
 \frac{2}{3}
-\end{array}\right)\\
+\end{array}\right)\label{eq:LSRA}\\
 \beta^{(1)} & =\left(\begin{array}{c}
 0\\
 1
@@ -955,8 +984,8 @@ A^{(0)} & =\left(\begin{array}{cc}
 \end{array}\right),\,\,\,c^{(1)}=\left(\begin{array}{c}
 0\\
 1
-\end{array}\right)
-\end{align*}
+\end{array}\right)\nonumber 
+\end{align}
 
 \end_inset
 
@@ -1032,17 +1061,17 @@ Since the stability region of the SRA methods is completely determined by
 
 ) but adding the absolute size of the stochastic portions 
 \begin_inset Formula 
-\[
-E_{N}=\left|\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right|
-\]
+\begin{equation}
+E_{N}=\left|\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right|\label{eq:EN}
+\end{equation}
 
 \end_inset
 
  leading to the error estimator
 \begin_inset Formula 
-\[
-E=\delta E_{D}+E_{N}.
-\]
+\begin{equation}
+E=\delta E_{D}+E_{N}.\label{eq:E}
+\end{equation}
 
 \end_inset
 
@@ -1059,33 +1088,36 @@ However, we note that there does not always exist such an extension.
  we looked for extensions of the explicit first stage signly-diagonally
  implicit RK (ESDIRK) method TRBDF2 and could not find values satisfying
  the constraints.
- In fact, our computational search could not find 3-stage (E)SDIRK methods
- which satisfy the extension.
- However, the 4-stage 3rd order ODE method due to Kennedy and Carpenter
- (cite) can be extended to the following:
+ In addition, we could not find values for an extension of the 5th order
+ Radau IIA method which satisfies the constraints.
+ In fact, our computational search could not find any extension of a 3-stage
+ L-stable implicit RK method which satisfies the constraints.
+ 
+\end_layout
+
+\begin_layout Standard
+But, the 4-stage 3rd order ODE method due to Kennedy and Carpenter (cite)
+ can be extended to the following:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{align*}
+\begin{align}
 A^{(0)} & =\left(\begin{array}{cccc}
 0 & 0 & 0 & 0\\
 \frac{1767732205903}{4055673282236} & \frac{1767732205903}{4055673282236} & 0 & 0\\
 \frac{2746238789719}{10658868560708} & -\frac{640167445237}{6845629431997} & \frac{1767732205903}{4055673282236} & 0\\
 \frac{1471266399579}{7840856788654} & -\frac{4482444167858}{7529755066697} & \frac{11266239266428}{11593286722821} & \frac{1767732205903}{4055673282236}
-\end{array}\right),\\
-B^{(0)} & =\left(\begin{array}{cccc}
-0 & 0 & 0 & 0\\
-\frac{\frac{87294609440832483406992237\left(-53983406399371387722712393713535786276-26826820\sqrt{6853072660943221216270384658311461343029149665543510113394397}\right)}{4868738516734691891458097}-354038415192410790619483213666362001932}{210758174113231167877981435258781706648} & 0 & 0 & 0\\
-0 & 0 & 0 & 0\\
-0 & 0 & \frac{-53983406399371387722712393713535786276-26826820\sqrt{6853072660943221216270384658311461343029149665543510113394397}}{8606625878152317177894269252900546591} & 0
-\end{array}\right),\\
+\end{array}\right),\label{eq:KenCarp4}\\
+B_{2,1}^{(0)} & =\frac{\frac{87294609440832483406992237\left(-53983406399371387722712393713535786276-26826820\sqrt{6853072660943221216270384658311461343029149665543510113394397}\right)}{4868738516734691891458097}-354038415192410790619483213666362001932}{210758174113231167877981435258781706648},\nonumber \\
+B_{4,3}^{(0)} & =\frac{-53983406399371387722712393713535786276-26826820\sqrt{6853072660943221216270384658311461343029149665543510113394397}}{8606625878152317177894269252900546591},\nonumber \\
+B_{i,j}^{(0)} & =0\thinspace o.w.,\nonumber \\
 \alpha & =\left(\begin{array}{c}
 \frac{1471266399579}{7840856788654}\\
 -\frac{4482444167858}{7529755066697}\\
 \frac{11266239266428}{11593286722821}\\
 \frac{1767732205903}{4055673282236}
-\end{array}\right)\\
+\end{array}\right)\nonumber \\
 \beta^{(1)} & =\left(\begin{array}{c}
 0\\
 0\\
@@ -1106,8 +1138,8 @@ B^{(0)} & =\left(\begin{array}{cccc}
 0\\
 0\\
 1
-\end{array}\right)
-\end{align*}
+\end{array}\right)\nonumber 
+\end{align}
 
 \end_inset
 
@@ -1149,9 +1181,9 @@ g efficient methods for more general noise processes is to use a transform
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-dX_{t}=f(t,X_{t})dt+\sigma(t,X_{t})R(t)dW_{t}
-\]
+\begin{equation}
+dX_{t}=f(t,X_{t})dt+\sigma(t,X_{t})R(t)dW_{t}\label{eq:Lamperti}
+\end{equation}
 
 \end_inset
 
@@ -1165,25 +1197,25 @@ dX_{t}=f(t,X_{t})dt+\sigma(t,X_{t})R(t)dW_{t}
 
  has the transformation
 \begin_inset Formula 
-\[
-Z_{i,t}=\psi_{i}(t,X_{i,t})=\int\sigma_{i}^{-1}(x,t)dx\mid_{x=X_{i,t}}
-\]
+\begin{equation}
+Z_{i,t}=\psi_{i}(t,X_{i,t})=\int\sigma_{i}^{-1}(x,t)dx\mid_{x=X_{i,t}}\label{eq:LampertiIntegral}
+\end{equation}
 
 \end_inset
 
 which will result in an Ito process with the ith element given by
 \begin_inset Formula 
-\[
-dZ_{i,t}=\left(\frac{\partial}{\partial t}\psi_{i}(t,x)\mid_{x=\psi^{-1}(t,Z_{i,t})}+\frac{f_{i}(\psi^{-1}(t,Z_{t}),t)}{\frac{1}{2}\frac{\partial}{\partial x}\sigma_{i}\left(\psi_{i}^{-1}\left(t,Z_{i,t}\right)\right)}\right)dt+\sum_{j=1}^{n}r_{ij}(t)dw_{j,t}
-\]
+\begin{equation}
+dZ_{i,t}=\left(\frac{\partial}{\partial t}\psi_{i}(t,x)\mid_{x=\psi^{-1}(t,Z_{i,t})}+\frac{f_{i}(\psi^{-1}(t,Z_{t}),t)}{\frac{1}{2}\frac{\partial}{\partial x}\sigma_{i}\left(\psi_{i}^{-1}\left(t,Z_{i,t}\right)\right)}\right)dt+\sum_{j=1}^{n}r_{ij}(t)dw_{j,t}\label{eq:LampertiTransform}
+\end{equation}
 
 \end_inset
 
  with
 \begin_inset Formula 
-\[
-X_{t}=\psi^{-1}\left(t,Z_{t}\right).
-\]
+\begin{equation}
+X_{t}=\psi^{-1}\left(t,Z_{t}\right).\label{eq:LampertiInv}
+\end{equation}
 
 \end_inset
 
@@ -1208,7 +1240,7 @@ X_{t}=\psi^{-1}\left(t,Z_{t}\right).
 
  and
 \begin_inset Formula 
-\[
+\begin{equation}
 d\left[\begin{array}{c}
 Z_{1}\\
 Z_{2}
@@ -1218,8 +1250,8 @@ a_{2}-\frac{1}{2}\left(r_{21}^{2}+r_{22}^{2}\right)
 \end{array}\right]dt+\left[\begin{array}{cc}
 r_{11} & r_{12}\\
 r_{21} & r_{22}
-\end{array}\right]dW_{t}.
-\]
+\end{array}\right]dW_{t}.\label{eq:AdditveLamperti}
+\end{equation}
 
 \end_inset
 
@@ -1231,9 +1263,9 @@ r_{21} & r_{22}
  However, in the case of mixed multiplicative and additive noise (affine
  noise): 
 \begin_inset Formula 
-\[
-dX_{t}=f(t,X_{t})dt+\left(\sigma_{M}X_{t}+\sigma_{A}\right)dW_{t}
-\]
+\begin{equation}
+dX_{t}=f(t,X_{t})dt+\left(\sigma_{M}X_{t}+\sigma_{A}\right)dW_{t}\label{eq:LampertiAffine}
+\end{equation}
 
 \end_inset
 
@@ -1247,35 +1279,36 @@ dX_{t}=f(t,X_{t})dt+\left(\sigma_{M}X_{t}+\sigma_{A}\right)dW_{t}
 
  and thus 
 \begin_inset Formula 
-\begin{align*}
-d\log\left(X_{t}-\frac{\sigma_{A}}{\sigma_{M}}\right) & =\tilde{f}(t,X_{t})dt+\sigma_{M}dW_{t}\\
-\tilde{f}(t,X_{t}) & =\frac{1}{2}\frac{f(t,X_{t})}{X_{t}-\frac{\sigma_{A}}{\sigma_{M}}}
-\end{align*}
+\begin{align}
+d\log\left(X_{t}-\frac{\sigma_{A}}{\sigma_{M}}\right) & =\tilde{f}(t,X_{t})dt+\sigma_{M}dW_{t}\label{eq:LampertiAffineSol}\\
+\tilde{f}(t,X_{t}) & =\frac{1}{2}\frac{f(t,X_{t})}{X_{t}-\frac{\sigma_{A}}{\sigma_{M}}}\nonumber 
+\end{align}
 
 \end_inset
 
-where the division is considered element-wise.
+where the log and division are considered element-wise, and the subtraction
+ is considered against the diagonal vector.
  Thus we can modify the additive SRK method to be in the form
 \begin_inset Formula 
-\[
-\log\left(X_{n+1}-\frac{\sigma_{A}}{\sigma_{M}}\right)=\log\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)
-\]
+\begin{equation}
+\log\left(X_{n+1}-\frac{\sigma_{A}}{\sigma_{M}}\right)=\log\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\label{eq:AffineStep}
+\end{equation}
 
 \end_inset
 
 with stages
 \begin_inset Formula 
-\[
-H_{i}^{(0)}=\log\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{j=1}^{s}A_{ij}^{(0)}\tilde{f}\left(t_{n}+c_{j}^{(0)}h,\exp\left(H_{j}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}\frac{I_{(1,0)}}{h}.
-\]
+\begin{equation}
+H_{i}^{(0)}=\log\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{j=1}^{s}A_{ij}^{(0)}\tilde{f}\left(t_{n}+c_{j}^{(0)}h,\exp\left(H_{j}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}\frac{I_{(1,0)}}{h}.\label{eq:AffineStep2}
+\end{equation}
 
 \end_inset
 
  Back-transforming this, we get
 \begin_inset Formula 
-\[
-X_{n+1}=\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)\exp\left(\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right)+\frac{\sigma_{A}}{\sigma_{M}}
-\]
+\begin{equation}
+X_{n+1}=\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)\exp\left(\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right)+\frac{\sigma_{A}}{\sigma_{M}}\label{eq:AffineUpdate}
+\end{equation}
 
 \end_inset
 
@@ -1298,9 +1331,9 @@ For diagonal noise, we will use the mean-square definition of stability.
 
  on the test equation
 \begin_inset Formula 
-\[
-dX_{t}=\mu X_{t}dt+\sigma X_{t}dW_{t}.
-\]
+\begin{equation}
+dX_{t}=\mu X_{t}dt+\sigma X_{t}dW_{t}.\label{eq:multtest}
+\end{equation}
 
 \end_inset
 
@@ -1309,21 +1342,21 @@ In matrix form we can re-write our method as given by
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-X_{n+1}=X_{n}+\mu h\left(\alpha\cdot H^{(0)}\right)+\sigma I_{(1)}\left(\beta^{(1)}\cdot H^{(1)}\right)+\sigma\frac{I_{(1,1)}}{\sqrt{h}}\left(\beta^{(2)}\cdot H^{(1)}\right)+\sigma\frac{I_{(1,0)}}{h}\left(\beta^{(3)}\cdot H^{(1)}\right)+\sigma\frac{I_{(1,1,1)}}{h}\left(\beta^{(4)}\cdot H^{(1)}\right)
-\]
+\begin{equation}
+X_{n+1}=X_{n}+\mu h\left(\alpha\cdot H^{(0)}\right)+\sigma I_{(1)}\left(\beta^{(1)}\cdot H^{(1)}\right)+\sigma\frac{I_{(1,1)}}{\sqrt{h}}\left(\beta^{(2)}\cdot H^{(1)}\right)+\sigma\frac{I_{(1,0)}}{h}\left(\beta^{(3)}\cdot H^{(1)}\right)+\sigma\frac{I_{(1,1,1)}}{h}\left(\beta^{(4)}\cdot H^{(1)}\right)\label{eq:matrix_method}
+\end{equation}
 
 \end_inset
 
- with stages
+with stages
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{eqnarray*}
-H^{(0)} & = & X_{n}+\mu\Delta tA^{(0)}H^{(0)}+\sigma\frac{I_{(1,0)}}{h}B^{(0)}H^{(1)},\\
-H^{(1)} & = & X_{n}+\mu\Delta tA^{(1)}H^{(0)}+\sigma\sqrt{\Delta t}B^{(1)}H^{(1)}
-\end{eqnarray*}
+\begin{eqnarray}
+H^{(0)} & = & X_{n}+\mu\Delta tA^{(0)}H^{(0)}+\sigma\frac{I_{(1,0)}}{h}B^{(0)}H^{(1)},\label{eq:matrix_stages}\\
+H^{(1)} & = & X_{n}+\mu\Delta tA^{(1)}H^{(0)}+\sigma\sqrt{\Delta t}B^{(1)}H^{(1)}\nonumber 
+\end{eqnarray}
 
 \end_inset
 
@@ -1344,10 +1377,10 @@ where
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{eqnarray*}
-H^{(0)} & = & \left(I-hA^{(0)}\right)^{-1}\left(\hat{X_{n}}+\sigma\frac{I_{(1,0)}}{h}B^{(0)}H^{(1)}\right),\\
-H^{(1)} & = & \left(I-\sigma\sqrt{h}B^{(1)}\right)^{-1}\left(\hat{X_{n}}+\mu hA^{(1)}H^{(0)}\right)
-\end{eqnarray*}
+\begin{eqnarray}
+H^{(0)} & = & \left(I-hA^{(0)}\right)^{-1}\left(\hat{X_{n}}+\sigma\frac{I_{(1,0)}}{h}B^{(0)}H^{(1)}\right),\label{matrx_stages_solve}\\
+H^{(1)} & = & \left(I-\sigma\sqrt{h}B^{(1)}\right)^{-1}\left(\hat{X_{n}}+\mu hA^{(1)}H^{(0)}\right)\nonumber 
+\end{eqnarray}
 
 \end_inset
 
@@ -1358,13 +1391,13 @@ By the derivation in the appendix, we receive the equation
 
 \size tiny
 \begin_inset Formula 
-\begin{eqnarray*}
-S=E\left[\frac{U_{n+1}^{2}}{U_{n}^{2}}\right] & = & \{1+\mu ht\left(\alpha\cdot\left[\left(I-\mu\Delta tA^{(0)}-\mu\sigma I_{(1,0)}A^{(1)}B^{(0)}\left(I-\sigma\sqrt{h}B^{(1)}\right)^{-1}\right)^{-1}\left(I+\sigma\frac{I_{(1,0)}}{h}B^{(0)}\left(I-\sigma\sqrt{h}B^{(1)}\right)^{-1}\right)\right]\right)\\
- &  & +\sigma I_{(1)}\left(\beta^{(1)}\cdot\left[\left(I-\sigma\sqrt{h}B^{(1)}-\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{h}B^{(0)}\right)^{-1}\left(I+\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\right)\right]\right)\\
- &  & +\sigma\frac{I_{(1,1)}}{\sqrt{h}}\left(\beta^{(2)}\cdot\left[\left(I-\sigma\sqrt{h}B^{(1)}-\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{h}B^{(0)}\right)^{-1}\left(I+\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\right)\right]\right)\\
- &  & +\sigma\frac{I_{(1,0)}}{h}\left(\beta^{(3)}\cdot\left[\left(I-\sigma\sqrt{h}B^{(1)}-\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{h}B^{(0)}\right)^{-1}\left(I+\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\right)\right]\right)\\
- &  & +\sigma\frac{I_{(1,1,1)}}{h}\left(\beta^{(4)}\cdot\left[\left(I-\sigma\sqrt{h}B^{(1)}-\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{h}B^{(0)}\right)^{-1}\left(I+\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\right)\right]\right)\}^{2}
-\end{eqnarray*}
+\begin{eqnarray}
+S=E\left[\frac{U_{n+1}^{2}}{U_{n}^{2}}\right] & = & \{1+\mu ht\left(\alpha\cdot\left[\left(I-\mu\Delta tA^{(0)}-\mu\sigma I_{(1,0)}A^{(1)}B^{(0)}\left(I-\sigma\sqrt{h}B^{(1)}\right)^{-1}\right)^{-1}\left(I+\sigma\frac{I_{(1,0)}}{h}B^{(0)}\left(I-\sigma\sqrt{h}B^{(1)}\right)^{-1}\right)\right]\right)\label{eq:stability_solve}\\
+ &  & +\sigma I_{(1)}\left(\beta^{(1)}\cdot\left[\left(I-\sigma\sqrt{h}B^{(1)}-\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{h}B^{(0)}\right)^{-1}\left(I+\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\right)\right]\right)\nonumber \\
+ &  & +\sigma\frac{I_{(1,1)}}{\sqrt{h}}\left(\beta^{(2)}\cdot\left[\left(I-\sigma\sqrt{h}B^{(1)}-\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{h}B^{(0)}\right)^{-1}\left(I+\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\right)\right]\right)\nonumber \\
+ &  & +\sigma\frac{I_{(1,0)}}{h}\left(\beta^{(3)}\cdot\left[\left(I-\sigma\sqrt{h}B^{(1)}-\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{h}B^{(0)}\right)^{-1}\left(I+\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\right)\right]\right)\nonumber \\
+ &  & +\sigma\frac{I_{(1,1,1)}}{h}\left(\beta^{(4)}\cdot\left[\left(I-\sigma\sqrt{h}B^{(1)}-\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{h}B^{(0)}\right)^{-1}\left(I+\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\right)\right]\right)\}^{2}\nonumber 
+\end{eqnarray}
 
 \end_inset
 
@@ -1375,10 +1408,10 @@ We apply the substitutions from the Appendix and let
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{align*}
-z & =\mu h,\\
-w & =\sigma\sqrt{h}.
-\end{align*}
+\begin{align}
+z & =\mu h,\label{eq:axis}\\
+w & =\sigma\sqrt{h}.\nonumber 
+\end{align}
 
 \end_inset
 
@@ -1441,9 +1474,9 @@ We wish to determine the coefficients for the additive and diagonal SRK
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-f\left(z,w;N,M\right)=\int_{-M}^{M}\int_{-N}^{1}\chi_{S(z,w)\leq1}(z,w)dzdw.
-\]
+\begin{equation}
+f\left(z,w;N,M\right)=\int_{-M}^{M}\int_{-N}^{1}\chi_{S(z,w)\leq1}(z,w)dzdw.\label{eq:SRIarea}
+\end{equation}
 
 \end_inset
 
@@ -1462,10 +1495,10 @@ Notice that for
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{align*}
-\max_{A^{(i)},B^{(i)},\beta^{(i)},\alpha} & f(z,w)\\
-\text{subject to: } & \text{Order Constraints}
-\end{align*}
+\begin{align}
+\max_{A^{(i)},B^{(i)},\beta^{(i)},\alpha} & f(z,w)\label{eq:opt}\\
+\text{subject to: } & \text{Order Constraints}\nonumber 
+\end{align}
 
 \end_inset
 
@@ -1668,8 +1701,22 @@ Adding only the inequality constraints on the
 \begin_inset Formula $c_{3}^{(1)}=c_{4}^{(1)}=1$
 \end_inset
 
-, a property whose use will be explained in Section X.
- 
+, a property whose use will be explained in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:StabilityDetection"
+
+\end_inset
+
+.
+ The stability regions for these methods is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:SOSRI-Stability-Regions."
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -1737,6 +1784,13 @@ SOSRI Stability Regions.
 -plane.
  In addition, the regions for Euler-Maruyama, SRIW1, and SRIW2 are shown
  for comparison.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:SOSRI-Stability-Regions."
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1751,6 +1805,13 @@ SOSRI Stability Regions.
 
 \begin_layout Subsection
 Approximately-Optimal Methods with Stability Detection and Switching Behaviors
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:StabilityDetection"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1795,9 +1856,9 @@ The basis for our method is a straight-forward extension of a method proposed
 
  sufficiently small,
 \begin_inset Formula 
-\[
-\left|\lambda_{D}\right|\approx\frac{\Vert f(t,x+v)-f(t,x)\Vert}{\Vert v\Vert},\thinspace\thinspace\thinspace\left|\lambda_{N}\right|\approx\frac{\Vert g(t,x+v)-g(t,x)\Vert}{\Vert v\Vert}
-\]
+\begin{equation}
+\left|\lambda_{D}\right|\approx\frac{\Vert f(t,x+v)-f(t,x)\Vert}{\Vert v\Vert},\thinspace\thinspace\thinspace\left|\lambda_{N}\right|\approx\frac{\Vert g(t,x+v)-g(t,x)\Vert}{\Vert v\Vert}\label{eq:eigen}
+\end{equation}
 
 \end_inset
 
@@ -1829,9 +1890,9 @@ The basis for our method is a straight-forward extension of a method proposed
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-\left|\lambda_{D}\right|\approx\frac{\Vert f(t+c_{i}^{(0)}h,H_{i}^{(0)})-f(t+c_{j}^{(0)}h,H_{j}^{(0)})\Vert}{\Vert H_{i}^{(0)}-H_{j}^{(0)}\Vert},\thinspace\thinspace\thinspace\left|\lambda_{N}\right|\approx\frac{\Vert f(t+c_{i}^{(1)}h,H_{i}^{(1)})-f(t+c_{j}^{(1)}h,H_{j}^{(1)})\Vert}{\Vert H_{i}^{(1)}-H_{j}^{(1)}\Vert}
-\]
+\begin{equation}
+\left|\lambda_{D}\right|\approx\frac{\Vert f(t+c_{i}^{(0)}h,H_{i}^{(0)})-f(t+c_{j}^{(0)}h,H_{j}^{(0)})\Vert}{\Vert H_{i}^{(0)}-H_{j}^{(0)}\Vert},\thinspace\thinspace\thinspace\left|\lambda_{N}\right|\approx\frac{\Vert f(t+c_{i}^{(1)}h,H_{i}^{(1)})-f(t+c_{j}^{(1)}h,H_{j}^{(1)})\Vert}{\Vert H_{i}^{(1)}-H_{j}^{(1)}\Vert}\label{eq:local_eigen}
+\end{equation}
 
 \end_inset
 
@@ -1888,9 +1949,9 @@ Hairer noted that, for ODEs, if a RK method has
 
 , then it follows that
 \begin_inset Formula 
-\[
-\rho=\frac{\Vert k_{i}-k_{j}\Vert}{\Vert g_{i}-g_{j}\Vert}
-\]
+\begin{equation}
+\rho=\frac{\Vert k_{i}-k_{j}\Vert}{\Vert g_{i}-g_{j}\Vert}\label{eq:rho}
+\end{equation}
 
 \end_inset
 
@@ -1908,9 +1969,9 @@ Hairer noted that, for ODEs, if a RK method has
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-\left|\lambda_{D}\right|\approx\frac{\Vert f\left(t_{n}+c_{4}^{(0)}h,H_{4}^{(0)}\right)-f\left(t_{n}+c_{3}^{(0)}h,H_{3}^{(0)}\right)\Vert}{\Vert H_{4}^{(0)}-H_{3}^{(0)}\Vert},\thinspace\thinspace\thinspace\left|\lambda_{N}\right|\approx\frac{\Vert g\left(t_{n}+c_{4}^{(0)}h,H_{4}^{(1)}\right)-g\left(t_{n}+c_{3}^{(0)}h,H_{3}^{(1)}\right)\Vert}{\Vert H_{4}^{(1)}-H_{3}^{(1)}\Vert}
-\]
+\begin{equation}
+\left|\lambda_{D}\right|\approx\frac{\Vert f\left(t_{n}+c_{4}^{(0)}h,H_{4}^{(0)}\right)-f\left(t_{n}+c_{3}^{(0)}h,H_{3}^{(0)}\right)\Vert}{\Vert H_{4}^{(0)}-H_{3}^{(0)}\Vert},\thinspace\thinspace\thinspace\left|\lambda_{N}\right|\approx\frac{\Vert g\left(t_{n}+c_{4}^{(0)}h,H_{4}^{(1)}\right)-g\left(t_{n}+c_{3}^{(0)}h,H_{3}^{(1)}\right)\Vert}{\Vert H_{4}^{(1)}-H_{3}^{(1)}\Vert}\label{eq:sriopt2_eigen}
+\end{equation}
 
 \end_inset
 
@@ -1981,15 +2042,15 @@ The denominator is chosen as a reasonable approximation to the edge of the
 \end_layout
 
 \begin_layout Standard
-We end by noting that SRSRA2 has the same property, allowing stiffness detection
+We end by noting that SOSRA2 has the same property, allowing stiffness detection
  via
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-\left|\lambda_{D}\right|\approx\frac{\Vert f\left(t_{n}+c_{3}^{(0)}h,H_{3}^{(0)}\right)-f\left(t_{n}+c_{2}^{(0)}h,H_{2}^{(0)}\right)\Vert}{\Vert H_{3}^{(0)}-H_{2}^{(0)}\Vert}
-\]
+\begin{equation}
+\left|\lambda_{D}\right|\approx\frac{\Vert f\left(t_{n}+c_{3}^{(0)}h,H_{3}^{(0)}\right)-f\left(t_{n}+c_{2}^{(0)}h,H_{2}^{(0)}\right)\Vert}{\Vert H_{3}^{(0)}-H_{2}^{(0)}\Vert}\label{eq:SOSRA_eigen}
+\end{equation}
 
 \end_inset
 
@@ -2052,8 +2113,8 @@ X_{t}=\frac{1}{\sqrt{1+t}}X_{0}+\frac{\beta}{\sqrt{1+t}}\left(t+\alpha W_{t}\rig
  To test the efficiency we plotted a work-precision diagram against the
  SRA1, SRA2, SRA3, and the fixed timestep Euler-Maruyama and a Runge-Kutta
  Milstein scheme.
- The results, as depicted in Figure X, show that there is a minimal difference
- in efficiency between the SRA algorithms for errors in the interval 
+ The results show that there is a minimal difference in efficiency between
+ the SRA algorithms for errors in the interval 
 \begin_inset Formula $\left[10^{-6},10^{-2}\right]$
 \end_inset
 
@@ -2062,7 +2123,14 @@ X_{t}=\frac{1}{\sqrt{1+t}}X_{0}+\frac{\beta}{\sqrt{1+t}}\left(t+\alpha W_{t}\rig
 \begin_inset Formula $<10^{-4}$
 \end_inset
 
-.
+ (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:SOSRI-Stability-Regions."
+
+\end_inset
+
+).
  To show that the SOSRA methods indeed achieve the appropriate strong order,
  a convergence test was conducted and it was shown that four separate measures
  of error converged at a rate 2.0 (it has previously been noted that SRA
@@ -2070,7 +2138,14 @@ X_{t}=\frac{1}{\sqrt{1+t}}X_{0}+\frac{\beta}{\sqrt{1+t}}\left(t+\alpha W_{t}\rig
  The authors have noticed this phonomena elsewere as well).
  These results show that in the regime of mild accuracy, these methods are
  much more efficient than low order methods yet achieve the same efficiency
- as the non-stability optimized SRA variants.
+ as the non-stability optimized SRA variants (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:SOSRA-efficiency-and"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Standard
@@ -2167,6 +2242,13 @@ Depicted are the results of a convergence test on the SOSRA and SOSRA2 methods.
  The strong error is averaged over 10 trajectories, which is the same number
  of trajectories used to compute the weak error estimate.
  
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:SOSRA-efficiency-and"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2212,9 +2294,16 @@ dx & =ydt
 \end_inset
 
  as a semi-stiff test case.
- Figure X shows the ODE solved using the Tsit5 explicit Runge-Kutta algorithm
- and demonstrates the mild stiffness which is still well-handled by explicit
- methods.
+ The ODE case, solved using the Tsit5 explicit Runge-Kutta algorithm, and
+ demonstrates the mild stiffness which is still well-handled by explicit
+ methods (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:AdditiveVanDerPol"
+
+\end_inset
+
+A).
  We extend this model to the driven Van der Pol model with additive noise:
 \begin_inset Formula 
 \begin{align*}
@@ -2251,8 +2340,14 @@ where
 \begin_inset Formula $reltol=1/2^{1}$
 \end_inset
 
-), SOSRA is able to reproduce this qualitative behavior as shown in Figure
- X, and SOSRA2 producing similar results at the same tolerances a factor
+), SOSRA is able to reproduce this qualitative behavior (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:AdditiveVanDerPol"
+
+\end_inset
+
+B), and SOSRA2 producing similar results at the same tolerances a factor
  of two lower.
  However, even at tolerances of 
 \begin_inset Formula $abstol=1/2^{3}$
@@ -2262,17 +2357,36 @@ where
 \begin_inset Formula $reltol=1/2^{3}$
 \end_inset
 
- SRA3 was unable to reproduce the correct qualitative behavior as shown
- in Figure X.
+ SRA3 was unable to reproduce the correct qualitative behavior (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:AdditiveVanDerPol"
+
+\end_inset
+
+C).
  Thus we decreased the tolerances by factors of 2 until it was able to reproduce
- the correct qualitative results as shown in Figure X.
+ the correct qualitative results (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:AdditiveVanDerPol"
+
+\end_inset
+
+D).
  This shows that the SOSRA are more reliable on models with transient stiffness.
- To test the impact on the runtime of tha algorithms, each of the algorithms
+ To test the impact on the runtime of the algorithms, each of the algorithms
  were run 100 times with the tolerance setup that allows them to most efficientl
 y generate correct qualitative results.
- The runtimes are shown in Table X, which show that SRA1 takes nearly 5
- times and SRA3 nearly 4 times as long as the SOSRA methods to generate
- a correct result.
+ The runtimes are shown in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:SRA-Runtimes-on-Van"
+
+\end_inset
+
+, which show that SRA1 takes nearly 5 times and SRA3 nearly 4 times as long
+ as the SOSRA methods to generate a correct result.
 \end_layout
 
 \begin_layout Standard
@@ -2450,6 +2564,13 @@ SRA3
 SRA Runtimes on Van der Pol with additive noise.
  The additive noise Van der Pol equation was solved 100 times using the
  respective algorithms.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:SRA-Runtimes-on-Van"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2518,6 +2639,13 @@ Solution to the SDE with tolerances
 \end_inset
 
  with SRA3.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:AdditiveVanDerPol"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2539,10 +2667,17 @@ In addition to testing efficiency, we used this to test the stiffness detection
 
 , we added only two lines of code to make the algorithm print out the timings
  for which the algorithm predicts stiffness.
- The results on two trajectories are shown in Figure X and The authors note
- that the algorithms are surprisingly robust without any tweaking being
- done and are shown to not give almost any false positives nor false negatives
- on this test problem.
+ The results on two trajectories were computed (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Stiffness-detection-in-additive"
+
+\end_inset
+
+).
+ The authors note that the algorithms are surprisingly robust without any
+ tweaking being done and are shown to not give almost any false positives
+ nor false negatives on this test problem.
  While this safety factor is set somewhat high in comparison to traditional
  ODE stiffness detection, we note that these algorithms were designed to
  efficiently handle mild stiffness and thus we see it as a benefit that
@@ -2576,6 +2711,14 @@ Stiffness detection in the Van der Pol equations with additive noise.
  Two representative trajectories to the Van der Pol equations are plotted.
  The green dots indicate timepoints where the stiffness detection algorithm
  detected stiffness.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Stiffness-detection-in-additive"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2625,8 +2768,8 @@ X_{t}=X_{0}e^{\left(\beta-\frac{\alpha^{2}}{2}\right)t+\alpha W_{t}}.\label{eq:s
 To test the efficiency we plotted a work-precision diagram against the SRIW1,
  SOSRI, SOSRI2, and the fixed timestep Euler-Maruyama and a Runge-Kutta
  Milstein schemes.
- The results, as depicted in Figure X, show that there is a minimal difference
- in efficiency between the SRI algorithms for errors over the interval 
+ The results show that there is a minimal difference in efficiency between
+ the SRI algorithms for errors over the interval 
 \begin_inset Formula $\left[10^{-6},10^{-2}\right]$
 \end_inset
 
@@ -2635,10 +2778,24 @@ To test the efficiency we plotted a work-precision diagram against the SRIW1,
 \begin_inset Formula $<10^{-2}$
 \end_inset
 
-.
+ (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:SOSRI-efficiency-and"
+
+\end_inset
+
+A).
  To show that the SOSRA methods indeed achieve the appropriate strong order,
  a convergence test was conducted and it was shown that four separate measures
- of error converged at a rate 1.5 as depicted in Figure X.
+ of error converged at a rate 1.5 (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:SOSRI-efficiency-and"
+
+\end_inset
+
+B).
  These results show that in the regime of mild accuracy, these methods are
  much more efficient than low order methods yet achieve the same efficiency
  as the non-stability optimized SRI variants.
@@ -2738,6 +2895,13 @@ Depicted are the results of a convergence test on the SOSRA and SOSRA2 methods.
  The strong error is averaged over 10 trajectories, which is the same number
  of trajectories used to compute the weak error estimate.
  
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:SOSRI-efficiency-and"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2769,11 +2933,17 @@ To test the real consequences of the enhanced stability, we use the Oval2
  largest values that were stable.
  In order to test the raw efficiency of the methods, we used the same tableau-ba
 sed implementation and only replaced the coefficients.
- The results are depcited in Table X.
  Since SOSRI demonstrated that its stability is much higher than even SOSRI2,
  we show the effect of tolerance changes on SOSRI as well.
  The results show that at similar tolerances the SRI methods take nearly
- the same amount of time.
+ the same amount of time (Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:SRI-times-for-Oval2"
+
+\end_inset
+
+).
  However, there is an upper bound on the tolerances before the adaptivity
  is no longer able to help keep the method stable.
  For SRIW1, this bound is much lower, causing it to run more than 15x slower
@@ -2787,7 +2957,8 @@ sed implementation and only replaced the coefficients.
  Instead, SOSRI can achieve around 2 digits of accuracy in each trajectory
  in a time that is an order of magnitude faster.
  Since weak order is higher and weak error is usually lower, this represents
- more than enough accuracy to adequately solve the problem.
+ more than enough accuracy to adequately solve the problem and get good
+ measurements of moments.
  We note that the maximal tolerances which is stable for SOSRI2 is lower
  than that for SOSRI, meaning that it is able to handle less stiff problems
  as well, but note that it includes a stiffness detection algorithm similar
@@ -2808,8 +2979,8 @@ sed implementation and only replaced the coefficients.
 \end_inset
 
 .
- Figure X shows that the stability region for fixed stepsize Euler-Maruyama
- is strictly smaller than SRIW1 and thus would require around 
+ The stability region for fixed stepsize Euler-Maruyama is strictly smaller
+ than SRIW1 and thus would require around 
 \begin_inset Formula $5\times10^{12}$
 \end_inset
 
@@ -2817,7 +2988,14 @@ sed implementation and only replaced the coefficients.
 \begin_inset Formula $t=500$
 \end_inset
 
-.
+ (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:SOSRI-Stability-Regions."
+
+\end_inset
+
+).
  Thus, given it takes on our setup extrapolating the time given 170 seconds
  for 
 \begin_inset Formula $2^{20}$
@@ -3283,6 +3461,12 @@ SRI times for the the Oval2 model on
 .
  The equations were solve 10,000 times with the given tolerances to completion
  and the elapsed time was recorded.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:SRI-times-for-Oval2"
+
+\end_inset
+
  
 \end_layout
 
@@ -3301,8 +3485,14 @@ We then timed the runtime to solve 10 trajectories in the
 \begin_inset Formula $t\in\left[0,500\right]$
 \end_inset
 
- case.
- The results are shown in Table X.
+ case (Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:SRI-times-for-Oval2-long"
+
+\end_inset
+
+).
  This time we found the optimal tolerance in terms of powers of 
 \begin_inset Formula $10$
 \end_inset
@@ -3322,7 +3512,7 @@ We then timed the runtime to solve 10 trajectories in the
 \begin_layout Standard
 As another test we applied the methods to a method of lines (MOL) discretization
  of a stochastic partial differential equation (SPDE) describing the spatial
- regulation of the zebrafish hindbrain via retinoic acid signaling.
+ regulation of the zebrafish hindbrain via retinoic acid signaling (CITE).
  The model was solved nearly to steady state using a second order Rosenbrock
  method on the PDE described by the drift term.
  Starting from steady state, noise was added to the gradient by solving
@@ -3332,7 +3522,14 @@ As another test we applied the methods to a method of lines (MOL) discretization
 
 .
  Each of the methods solved the problem at the highest tolerance possible
- and the timings are noted in Table X.
+ and the timings (Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:SRI-times-for-SPDE"
+
+\end_inset
+
+).
  Since this problem starts from the only positive steady state, it is only
  semi-stiff.
  Yet we receieve similar results as the other problems, signaling that the
@@ -3742,6 +3939,13 @@ SRI times for the the Oval2 model on
  The equations were solve 10,000 times with the given tolerances to completion
  and the elapsed time was recorded.
  
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:SRI-times-for-Oval2-long"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3997,6 +4201,13 @@ SRI times for the the RA SPDE model on
  and the elapsed time was recorded.
  Note that none of the timings varied by more than 1% of the total runtime.
  
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:SRI-times-for-SPDE"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -4016,7 +4227,7 @@ Discussion
 \begin_layout Standard
 In this work we derived stability-optimized SRK methods for additive and
  diagonal noise equations, and used a transformation to allow the additive
- noise methods to solve multiplicative noise problems.
+ noise methods to solve affine noise problems.
  Many other equations can be reduced to the additive noise case as well
  using the same means.
  Importantly, our derivation methods utilized heavy computational tools
@@ -4040,19 +4251,15 @@ In this work we derived stability-optimized SRK methods for additive and
 \end_layout
 
 \begin_layout Standard
-In this work we also derived an A-L stable method for additive (and thus
- multiplicative) noise equations, and computationally could not find an
- A-B-L stable method.
+In this work we also derived L stable methods for additive (and thus multiplicat
+ive) noise equations, and computationally could not find an A-B-L stable
+ method.
  While our method does not prove that no 2-stage A-B-L method exists, we
  have at least drastically narrowed down its possibility.
- However, the results clearly showed that the methods with higher number
- of stages were more efficient, a phonomena seen in other types of Runge-Kutta
- methods like symplectic RK methods.
- Thus one interesting avenue of future research would be in the development
- of 3-stage implicit methods for additive noise equations.
- While the complexity of the constraints would be higher, the same general
- approach should yield satisfactory results.
- 
+ Additionally an extension of a well-known ESDIRK method to additive noise
+ was developed.
+ We note that the stability analysis here only applies to additive noise
+ and thus will likely not extend well to diagonal noise.
 \end_layout
 
 \begin_layout Standard
@@ -4062,14 +4269,14 @@ Our timings convincingly show that the current high order SRK methods are
  effort is lost to generating more accurate than neccessary solutions in
  order to satisfy stability constraints.
  For additive noise problems we were able to obtain solutions about 4x faster
- and for diagonal noise 8x-15x than the current methods.
+ and for diagonal noise 8x-15x than the current methods (SRA1, SRA3, SRIW1).
  We note that the popular Euler-Maruyama and (derivative-free) Milstein
  methods were previously compared in X and were shown to be more than 12x
  slower than the SRIW1 method on the Oval2 model for 
 \begin_inset Formula $t\in\left[0,1\right]$
 \end_inset
 
-.
+ and is thus a large improvement over what's available in most software.
  We have also shown that these methods are very robust even at high tolerances
  and have a tendency to produce the correct qualitative results (via plots)
  even when the user chosen accuracy is low.
@@ -4079,6 +4286,9 @@ Our timings convincingly show that the current high order SRK methods are
  sufficiently correct.
  We note that these methods are not efficient at low tolerances, and other
  methods such as SRA3 (or higher order SRK methods) should be used instead.
+ However, in many cases like integrating to find steady distributions of
+ bistable parameter regimes, this ability to quickly get a more course estimate
+ is valuable.
 \end_layout
 
 \begin_layout Standard
@@ -5076,7 +5286,8 @@ Appendix II: Derivation Details
 \left(I-\mu\Delta tA^{(0)}\right)H^{(0)} & = & U_{n}+\sigma\frac{I_{(1,0)}}{\Delta t}B^{(0)}\left(I-\sigma\sqrt{\Delta t}B^{(1)}\right)^{-1}\left(U_{n}+\mu\Delta tA^{(1)}H^{(0)}\right),\\
 \left(I-\mu\Delta tA^{(0)}\right)H^{(0)}-\left[\sigma\frac{I_{(1,0)}}{\Delta t}B^{(0)}\left(I-\sigma\sqrt{\Delta t}B^{(1)}\right)^{-1}\right]\mu\Delta tA^{(1)}H^{(0)} & = & U_{n}+\sigma\frac{I_{(1,0)}}{\Delta t}B^{(0)}\left(I-\sigma\sqrt{\Delta t}B^{(1)}\right)^{-1}U_{n}\\
 \left(I-\mu\Delta tA^{(0)}-\mu\Delta tA^{(1)}\sigma\frac{I_{(1,0)}}{\Delta t}B^{(0)}\left(I-\sigma\sqrt{\Delta t}B^{(1)}\right)^{-1}\right)H^{(0)} & = & \left(I+\sigma\frac{I_{(1,0)}}{\Delta t}B^{(0)}\left(I-\sigma\sqrt{\Delta t}B^{(1)}\right)^{-1}\right)U_{n}\\
-H^{(0)} & = & \left(I-\mu\Delta tA^{(0)}-\mu\sigma I_{(1,0)}A^{(1)}B^{(0)}\left(I-\sigma\sqrt{\Delta t}B^{(1)}\right)^{-1}\right)^{-1}\left(I+\sigma\frac{I_{(1,0)}}{\Delta t}B^{(0)}\left(I-\sigma\sqrt{\Delta t}B^{(1)}\right)^{-1}\right)U_{n}
+H^{(0)} & = & \left(I-\mu\Delta tA^{(0)}-\mu\sigma I_{(1,0)}A^{(1)}B^{(0)}\left(I-\sigma\sqrt{\Delta t}B^{(1)}\right)^{-1}\right)^{-1}\\
+ &  & \left(I+\sigma\frac{I_{(1,0)}}{\Delta t}B^{(0)}\left(I-\sigma\sqrt{\Delta t}B^{(1)}\right)^{-1}\right)U_{n}
 \end{eqnarray*}
 
 \end_inset
@@ -5087,7 +5298,8 @@ H^{(0)} & = & \left(I-\mu\Delta tA^{(0)}-\mu\sigma I_{(1,0)}A^{(1)}B^{(0)}\left(
 \left(I-\sigma\sqrt{\Delta t}B^{(1)}\right)H^{(1)} & = & U_{n}+\mu\Delta tA^{(1)}\left(I-\mu\Delta tA^{(0)}\right)^{-1}\left(U_{n}+\sigma\frac{I_{(1,0)}}{\Delta t}B^{(0)}H^{(1)}\right)\\
 \left(I-\sigma\sqrt{\Delta t}B^{(1)}-\mu\Delta tA^{(1)}\left(I-\mu\Delta tA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{\Delta t}B^{(0)}\right)H^{(1)} & = & U_{n}+\mu\Delta tA^{(1)}\left(I-\mu\Delta tA^{(0)}\right)^{-1}U_{n}\\
 \left(I-\sigma\sqrt{\Delta t}B^{(1)}-\mu\Delta tA^{(1)}\left(I-\mu\Delta tA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{\Delta t}B^{(0)}\right)H^{(1)} & = & \left(I+\mu\Delta tA^{(1)}\left(I-\mu\Delta tA^{(0)}\right)^{-1}\right)U_{n}\\
-H^{(1)} & = & \left(I-\sigma\sqrt{\Delta t}B^{(1)}-\mu\Delta tA^{(1)}\left(I-\mu\Delta tA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{\Delta t}B^{(0)}\right)^{-1}\left(I+\mu\Delta tA^{(1)}\left(I-\mu\Delta tA^{(0)}\right)^{-1}\right)U_{n}
+H^{(1)} & = & \left(I-\sigma\sqrt{\Delta t}B^{(1)}-\mu\Delta tA^{(1)}\left(I-\mu\Delta tA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{\Delta t}B^{(0)}\right)^{-1}\\
+ &  & \left(I+\mu\Delta tA^{(1)}\left(I-\mu\Delta tA^{(0)}\right)^{-1}\right)U_{n}
 \end{eqnarray*}
 
 \end_inset
