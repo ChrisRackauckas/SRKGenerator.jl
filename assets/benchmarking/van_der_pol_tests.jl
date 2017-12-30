@@ -1,6 +1,6 @@
 using StochasticDiffEq, Plots, DiffEqDevTools, DiffEqProblemLibrary
 using ParameterizedFunctions, DiffEqMonteCarlo, Base.Test, OrdinaryDiffEq
-using Plots; plotly()
+using Plots; gr()
 using BenchmarkTools
 
 ################################################################################
@@ -17,17 +17,18 @@ end μ=>1.
     du[i] = 3.0 #Additive
   end
 end
+
+ode_prob = ODEProblem(VanDerPol2(μ=1e5),[0;2.],(0.0,6.3))
+prob = SDEProblem(VanDerPol2(μ=1e5),σ,[0;2.],(0.0,6.3))
 monte_prob = MonteCarloProblem(prob)
 N = 100; fails = zeros(5,4); times = zeros(5,4)
 offset = 0
 
 #####
 
-prob = ODEProblem(VanDerPol2(μ=1e5),[0;2.],(0.0,6.3))
-@time sol0 =solve(prob,Tsit5();abstol=1e-6,reltol=1e-3)
+@time sol0 =solve(ode_prob,Tsit5();abstol=1e-6,reltol=1e-3)
 p0 = plot(sol0,plotdensity=20000,denseplot=true,ylims=[-10,10],title="ODE Solution")
 
-prob = SDEProblem(VanDerPol2(μ=1e5),σ,[0;2.],(0.0,6.3))
 @time sol1 =solve(prob,SOSRA();abstol=1,reltol=1/2^1)
 p1 = plot(sol1,plotdensity=20000,denseplot=true,ylims=[-10,10],title="High tolerance SOSRA Solution")
 @time sol2 =solve(prob,SOSRA2();abstol=1/2,reltol=1/2^2)
