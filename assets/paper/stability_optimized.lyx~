@@ -399,17 +399,17 @@ with a constant step size
 \begin_layout Standard
 The additive SRK method can be written as
 \begin_inset Formula 
-\[
-X_{n+1}^{h}=X_{n}^{h}+z\left(\alpha\cdot H^{(0)}\right)+\beta^{(1)}\sigma I_{(1)}+\sigma\beta^{(2)}\frac{I_{(1,0)}}{h}
-\]
+\begin{equation}
+X_{n+1}^{h}=X_{n}^{h}+z\left(\alpha\cdot H^{(0)}\right)+\beta^{(1)}\sigma I_{(1)}+\sigma\beta^{(2)}\frac{I_{(1,0)}}{h}\label{eq:SRK_stab_step1}
+\end{equation}
 
 \end_inset
 
  where
 \begin_inset Formula 
-\[
-H^{(0)}=\left(I-zA^{(0)}\right)^{-1}\left(\hat{X_{n}^{h}}+B^{(0)}e\sigma\frac{I_{(1,0)}}{h}\right)
-\]
+\begin{equation}
+H^{(0)}=\left(I-zA^{(0)}\right)^{-1}\left(\hat{X_{n}^{h}}+B^{(0)}e\sigma\frac{I_{(1,0)}}{h}\right)\label{eq:SRK_stab_step}
+\end{equation}
 
 \end_inset
 
@@ -432,9 +432,9 @@ where
 .
  By substitution we receive
 \begin_inset Formula 
-\[
-X_{n+1}^{h}=X_{n}^{h}\left(1+z\left(\alpha\cdot\left(I-zA^{(0)}\right)^{-1}\right)\right)+\left(I-zA^{(0)}\right)^{-1}B^{(0)}e\sigma\frac{I_{(1,0)}}{h}+\beta^{(1)}\sigma I_{(1)}+\sigma\beta^{(2)}\frac{I_{(1,0)}}{h}
-\]
+\begin{equation}
+X_{n+1}^{h}=X_{n}^{h}\left(1+z\left(\alpha\cdot\left(I-zA^{(0)}\right)^{-1}\right)\right)+\left(I-zA^{(0)}\right)^{-1}B^{(0)}e\sigma\frac{I_{(1,0)}}{h}+\beta^{(1)}\sigma I_{(1)}+\sigma\beta^{(2)}\frac{I_{(1,0)}}{h}\label{eq:SRK_stab_sub}
+\end{equation}
 
 \end_inset
 
@@ -450,9 +450,9 @@ This set of equations decouples to the form of Equation ## since the iterated
 .
  Thus the stability condition is determined by the equation
 \begin_inset Formula 
-\[
-G(z)=1+z\alpha\cdot\left(I-zA^{(0)}\right)^{-1}
-\]
+\begin{equation}
+G(z)=1+z\alpha\cdot\left(I-zA^{(0)}\right)^{-1}\label{eq:SRA_stab}
+\end{equation}
 
 \end_inset
 
@@ -485,9 +485,9 @@ For explicit methods, the
 
  are lower diagonal and we receive the simplified stability function 
 \begin_inset Formula 
-\[
-G(z)=1+A_{21}z^{2}\alpha_{2}+z\left(\alpha_{1}+\alpha_{2}\right)
-\]
+\begin{equation}
+G(z)=1+A_{21}z^{2}\alpha_{2}+z\left(\alpha_{1}+\alpha_{2}\right)\label{eq:SRA_stab_2}
+\end{equation}
 
 \end_inset
 
@@ -552,7 +552,7 @@ G(z)=1+A_{21}z^{2}\alpha_{2}+z\left(\alpha_{1}+\alpha_{2}\right)
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{align*}
+\begin{align}
 A^{(0)} & =\left(\begin{array}{cc}
 0 & 0\\
 \frac{3}{4} & 0
@@ -562,7 +562,7 @@ A^{(0)} & =\left(\begin{array}{cc}
 \end{array}\right),\thinspace\thinspace\thinspace\thinspace\alpha=\left(\begin{array}{c}
 \frac{1}{3}\\
 \frac{2}{3}
-\end{array}\right)\\
+\end{array}\right)\nonumber \\
 \beta^{(1)} & =\left(\begin{array}{c}
 1\\
 0
@@ -575,8 +575,8 @@ A^{(0)} & =\left(\begin{array}{cc}
 \end{array}\right),\,\,\,c^{(1)}=\left(\begin{array}{c}
 1\\
 0
-\end{array}\right)
-\end{align*}
+\end{array}\right)\label{eq:SRA1}
+\end{align}
 
 \end_inset
 
@@ -590,9 +590,9 @@ Stability-Optimal 3-Stage Explicit SRA Methods
 \begin_layout Standard
 For the 3-stage SRA method, we recieve the simplified stability function
 \begin_inset Formula 
-\[
-G(z)=A_{21}A_{31}\alpha_{3}z^{3}+A_{21}\alpha_{2}z^{2}+A_{31}\alpha_{3}z^{2}+A_{32}\alpha_{3}z^{2}+\alpha_{1}z+\alpha_{2}z+\alpha_{3}z+1
-\]
+\begin{equation}
+G(z)=A_{21}A_{31}\alpha_{3}z^{3}+A_{21}\alpha_{2}z^{2}+A_{31}\alpha_{3}z^{2}+A_{32}\alpha_{3}z^{2}+\alpha_{1}z+\alpha_{2}z+\alpha_{3}z+1\label{eq:SRA_stab_3}
+\end{equation}
 
 \end_inset
 
@@ -614,9 +614,9 @@ on which will be employed in later sections as well.
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-f\left(z,w;N,M\right)=\int_{D}\chi_{G(z)\leq1}(z)dz
-\]
+\begin{equation}
+f\left(z,w;N,M\right)=\int_{D}\chi_{G(z)\leq1}(z)dz\label{eq:SRA_integral}
+\end{equation}
 
 \end_inset
 
@@ -635,10 +635,10 @@ Notice that for
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{align*}
-\max_{A^{(i)},B^{(i)},\beta^{(i)},\alpha} & f(z)\\
-\text{subject to: } & \text{Order Constraints}
-\end{align*}
+\begin{align}
+\max_{A^{(i)},B^{(i)},\beta^{(i)},\alpha} & f(z)\label{eq:SRA_maximize}\\
+\text{subject to: } & \text{Order Constraints}\nonumber 
+\end{align}
 
 \end_inset
 
@@ -774,9 +774,9 @@ It's clear that, as in the case for deterministic equations, the explicit
  However, the implicit two-stage additive noise SRK method is determined
  by
 \begin_inset Formula 
-\[
-G(z)=\frac{z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{12}z(\alpha_{1}-A_{21})+A_{21}\ensuremath{\alpha_{2}}z-A_{22}(\alpha_{1}z+1)+\alpha_{1}+\alpha_{2})+1}{A_{11}z(A_{22}z-1)-z(A_{12}A_{21}z+A_{22})+1}
-\]
+\begin{equation}
+G(z)=\frac{z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{12}z(\alpha_{1}-A_{21})+A_{21}\ensuremath{\alpha_{2}}z-A_{22}(\alpha_{1}z+1)+\alpha_{1}+\alpha_{2})+1}{A_{11}z(A_{22}z-1)-z(A_{12}A_{21}z+A_{22})+1}\label{eq:SRA_stab2_implicit}
+\end{equation}
 
 \end_inset
 
@@ -786,9 +786,9 @@ G(z)=\frac{z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{12}z(\alpha_{1}-A_{21})+A_{21}\ens
 
 -stable if 
 \begin_inset Formula 
-\[
-A_{11}z(A_{22}z-1)-z(A_{12}A_{21}z+A_{22})+1>z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{12}z(\alpha_{1}-A_{21})+A_{21}\ensuremath{\alpha_{2}}z-A_{22}(\alpha_{1}z+1)+\alpha_{1}+\alpha_{2})+1.
-\]
+\begin{equation}
+A_{11}z(A_{22}z-1)-z(A_{12}A_{21}z+A_{22})+1>z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{12}z(\alpha_{1}-A_{21})+A_{21}\ensuremath{\alpha_{2}}z-A_{22}(\alpha_{1}z+1)+\alpha_{1}+\alpha_{2})+1.\label{eq:SRA_stab2_ineq}
+\end{equation}
 
 \end_inset
 
@@ -798,9 +798,9 @@ A_{11}z(A_{22}z-1)-z(A_{12}A_{21}z+A_{22})+1>z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{
 
  or
 \begin_inset Formula 
-\[
-z=\frac{\alpha_{1}+\alpha_{2}}{\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2}}.
-\]
+\begin{equation}
+z=\frac{\alpha_{1}+\alpha_{2}}{\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2}}.\label{eq:SRA_stab2_z}
+\end{equation}
 
 \end_inset
 
@@ -840,11 +840,11 @@ From the order conditions we know that
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{align*}
-\left(A_{11}+A_{12}\right)\alpha_{1}+\left(A_{21}+A_{22}\right)\alpha_{2} & =\frac{1}{2}\\
-\alpha_{1}+\alpha_{2} & =1\\
-0<\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2} & <1
-\end{align*}
+\begin{align}
+\left(A_{11}+A_{12}\right)\alpha_{1}+\left(A_{21}+A_{22}\right)\alpha_{2} & =\frac{1}{2}\label{eq:SRA_stab2_conds}\\
+\alpha_{1}+\alpha_{2} & =1\nonumber \\
+0<\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2} & <1\nonumber 
+\end{align}
 
 \end_inset
 
@@ -854,17 +854,17 @@ However, A-stability is not sufficient for most ODE integrators to properly
 ty.
  The straightforward extension of L-stability is the condition
 \begin_inset Formula 
-\[
-\lim_{z\rightarrow\infty}G(z)=0.
-\]
+\begin{equation}
+\lim_{z\rightarrow\infty}G(z)=0.\label{eq:SRA_L}
+\end{equation}
 
 \end_inset
 
 This implies that
 \begin_inset Formula 
-\[
-\frac{-A_{11}A_{22}+A_{11}\alpha_{2}+A_{12}A_{21}-A_{12}\alpha_{1}-A_{21}\alpha_{2}+A_{22}\alpha_{2}\alpha_{1}}{A_{12}A_{21}-A_{11}A_{22}}=0
-\]
+\begin{equation}
+\frac{-A_{11}A_{22}+A_{11}\alpha_{2}+A_{12}A_{21}-A_{12}\alpha_{1}-A_{21}\alpha_{2}+A_{22}\alpha_{2}\alpha_{1}}{A_{12}A_{21}-A_{11}A_{22}}=0\label{eq:SRA_Lcond}
+\end{equation}
 
 \end_inset
 
@@ -920,12 +920,12 @@ Recalling that
 
  are approximated respectively, we wish to impose
 \begin_inset Formula 
-\begin{align*}
-c_{1}^{(0)} & =0\\
-c_{2}^{(0)} & =1\\
-c_{1}^{(1)} & =0\\
-c_{2}^{(1)} & =1
-\end{align*}
+\begin{align}
+c_{1}^{(0)} & =0\label{eq:SRA_ccond}\\
+c_{2}^{(0)} & =1\nonumber \\
+c_{1}^{(1)} & =0\nonumber \\
+c_{2}^{(1)} & =1\nonumber 
+\end{align}
 
 \end_inset
 
@@ -961,7 +961,7 @@ c_{2}^{(1)} & =1
 
 , we find an A-L stable method:
 \begin_inset Formula 
-\begin{align*}
+\begin{align}
 A^{(0)} & =\left(\begin{array}{cc}
 -1 & 1\\
 0 & \frac{3}{4}
@@ -971,7 +971,7 @@ A^{(0)} & =\left(\begin{array}{cc}
 \end{array}\right),\thinspace\thinspace\thinspace\thinspace\alpha=\left(\begin{array}{c}
 \frac{1}{3}\\
 \frac{2}{3}
-\end{array}\right)\\
+\end{array}\right)\label{eq:LSRA}\\
 \beta^{(1)} & =\left(\begin{array}{c}
 0\\
 1
@@ -984,8 +984,8 @@ A^{(0)} & =\left(\begin{array}{cc}
 \end{array}\right),\,\,\,c^{(1)}=\left(\begin{array}{c}
 0\\
 1
-\end{array}\right)
-\end{align*}
+\end{array}\right)\nonumber 
+\end{align}
 
 \end_inset
 
@@ -1061,17 +1061,17 @@ Since the stability region of the SRA methods is completely determined by
 
 ) but adding the absolute size of the stochastic portions 
 \begin_inset Formula 
-\[
-E_{N}=\left|\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right|
-\]
+\begin{equation}
+E_{N}=\left|\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right|\label{eq:EN}
+\end{equation}
 
 \end_inset
 
  leading to the error estimator
 \begin_inset Formula 
-\[
-E=\delta E_{D}+E_{N}.
-\]
+\begin{equation}
+E=\delta E_{D}+E_{N}.\label{eq:E}
+\end{equation}
 
 \end_inset
 
@@ -1102,22 +1102,22 @@ But, the 4-stage 3rd order ODE method due to Kennedy and Carpenter (cite)
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{align*}
+\begin{align}
 A^{(0)} & =\left(\begin{array}{cccc}
 0 & 0 & 0 & 0\\
 \frac{1767732205903}{4055673282236} & \frac{1767732205903}{4055673282236} & 0 & 0\\
 \frac{2746238789719}{10658868560708} & -\frac{640167445237}{6845629431997} & \frac{1767732205903}{4055673282236} & 0\\
 \frac{1471266399579}{7840856788654} & -\frac{4482444167858}{7529755066697} & \frac{11266239266428}{11593286722821} & \frac{1767732205903}{4055673282236}
-\end{array}\right),\\
-B_{2,1}^{(0)} & =\frac{\frac{87294609440832483406992237\left(-53983406399371387722712393713535786276-26826820\sqrt{6853072660943221216270384658311461343029149665543510113394397}\right)}{4868738516734691891458097}-354038415192410790619483213666362001932}{210758174113231167877981435258781706648},\\
-B_{4,3}^{(0)} & =\frac{-53983406399371387722712393713535786276-26826820\sqrt{6853072660943221216270384658311461343029149665543510113394397}}{8606625878152317177894269252900546591},\\
-B_{i,j}^{(0)} & =0\thinspace o.w.,\\
+\end{array}\right),\label{eq:KenCarp4}\\
+B_{2,1}^{(0)} & =\frac{\frac{87294609440832483406992237\left(-53983406399371387722712393713535786276-26826820\sqrt{6853072660943221216270384658311461343029149665543510113394397}\right)}{4868738516734691891458097}-354038415192410790619483213666362001932}{210758174113231167877981435258781706648},\nonumber \\
+B_{4,3}^{(0)} & =\frac{-53983406399371387722712393713535786276-26826820\sqrt{6853072660943221216270384658311461343029149665543510113394397}}{8606625878152317177894269252900546591},\nonumber \\
+B_{i,j}^{(0)} & =0\thinspace o.w.,\nonumber \\
 \alpha & =\left(\begin{array}{c}
 \frac{1471266399579}{7840856788654}\\
 -\frac{4482444167858}{7529755066697}\\
 \frac{11266239266428}{11593286722821}\\
 \frac{1767732205903}{4055673282236}
-\end{array}\right)\\
+\end{array}\right)\nonumber \\
 \beta^{(1)} & =\left(\begin{array}{c}
 0\\
 0\\
@@ -1138,8 +1138,8 @@ B_{i,j}^{(0)} & =0\thinspace o.w.,\\
 0\\
 0\\
 1
-\end{array}\right)
-\end{align*}
+\end{array}\right)\nonumber 
+\end{align}
 
 \end_inset
 
@@ -1181,9 +1181,9 @@ g efficient methods for more general noise processes is to use a transform
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-dX_{t}=f(t,X_{t})dt+\sigma(t,X_{t})R(t)dW_{t}
-\]
+\begin{equation}
+dX_{t}=f(t,X_{t})dt+\sigma(t,X_{t})R(t)dW_{t}\label{eq:Lamperti}
+\end{equation}
 
 \end_inset
 
@@ -1197,25 +1197,25 @@ dX_{t}=f(t,X_{t})dt+\sigma(t,X_{t})R(t)dW_{t}
 
  has the transformation
 \begin_inset Formula 
-\[
-Z_{i,t}=\psi_{i}(t,X_{i,t})=\int\sigma_{i}^{-1}(x,t)dx\mid_{x=X_{i,t}}
-\]
+\begin{equation}
+Z_{i,t}=\psi_{i}(t,X_{i,t})=\int\sigma_{i}^{-1}(x,t)dx\mid_{x=X_{i,t}}\label{eq:LampertiIntegral}
+\end{equation}
 
 \end_inset
 
 which will result in an Ito process with the ith element given by
 \begin_inset Formula 
-\[
-dZ_{i,t}=\left(\frac{\partial}{\partial t}\psi_{i}(t,x)\mid_{x=\psi^{-1}(t,Z_{i,t})}+\frac{f_{i}(\psi^{-1}(t,Z_{t}),t)}{\frac{1}{2}\frac{\partial}{\partial x}\sigma_{i}\left(\psi_{i}^{-1}\left(t,Z_{i,t}\right)\right)}\right)dt+\sum_{j=1}^{n}r_{ij}(t)dw_{j,t}
-\]
+\begin{equation}
+dZ_{i,t}=\left(\frac{\partial}{\partial t}\psi_{i}(t,x)\mid_{x=\psi^{-1}(t,Z_{i,t})}+\frac{f_{i}(\psi^{-1}(t,Z_{t}),t)}{\frac{1}{2}\frac{\partial}{\partial x}\sigma_{i}\left(\psi_{i}^{-1}\left(t,Z_{i,t}\right)\right)}\right)dt+\sum_{j=1}^{n}r_{ij}(t)dw_{j,t}\label{eq:LampertiTransform}
+\end{equation}
 
 \end_inset
 
  with
 \begin_inset Formula 
-\[
-X_{t}=\psi^{-1}\left(t,Z_{t}\right).
-\]
+\begin{equation}
+X_{t}=\psi^{-1}\left(t,Z_{t}\right).\label{eq:LampertiInv}
+\end{equation}
 
 \end_inset
 
@@ -1240,7 +1240,7 @@ X_{t}=\psi^{-1}\left(t,Z_{t}\right).
 
  and
 \begin_inset Formula 
-\[
+\begin{equation}
 d\left[\begin{array}{c}
 Z_{1}\\
 Z_{2}
@@ -1250,8 +1250,8 @@ a_{2}-\frac{1}{2}\left(r_{21}^{2}+r_{22}^{2}\right)
 \end{array}\right]dt+\left[\begin{array}{cc}
 r_{11} & r_{12}\\
 r_{21} & r_{22}
-\end{array}\right]dW_{t}.
-\]
+\end{array}\right]dW_{t}.\label{eq:AdditveLamperti}
+\end{equation}
 
 \end_inset
 
@@ -1263,9 +1263,9 @@ r_{21} & r_{22}
  However, in the case of mixed multiplicative and additive noise (affine
  noise): 
 \begin_inset Formula 
-\[
-dX_{t}=f(t,X_{t})dt+\left(\sigma_{M}X_{t}+\sigma_{A}\right)dW_{t}
-\]
+\begin{equation}
+dX_{t}=f(t,X_{t})dt+\left(\sigma_{M}X_{t}+\sigma_{A}\right)dW_{t}\label{eq:LampertiAffine}
+\end{equation}
 
 \end_inset
 
@@ -1279,10 +1279,10 @@ dX_{t}=f(t,X_{t})dt+\left(\sigma_{M}X_{t}+\sigma_{A}\right)dW_{t}
 
  and thus 
 \begin_inset Formula 
-\begin{align*}
-d\log\left(X_{t}-\frac{\sigma_{A}}{\sigma_{M}}\right) & =\tilde{f}(t,X_{t})dt+\sigma_{M}dW_{t}\\
-\tilde{f}(t,X_{t}) & =\frac{1}{2}\frac{f(t,X_{t})}{X_{t}-\frac{\sigma_{A}}{\sigma_{M}}}
-\end{align*}
+\begin{align}
+d\log\left(X_{t}-\frac{\sigma_{A}}{\sigma_{M}}\right) & =\tilde{f}(t,X_{t})dt+\sigma_{M}dW_{t}\label{eq:LampertiAffineSol}\\
+\tilde{f}(t,X_{t}) & =\frac{1}{2}\frac{f(t,X_{t})}{X_{t}-\frac{\sigma_{A}}{\sigma_{M}}}\nonumber 
+\end{align}
 
 \end_inset
 
@@ -1290,25 +1290,25 @@ where the log and division are considered element-wise, and the subtraction
  is considered against the diagonal vector.
  Thus we can modify the additive SRK method to be in the form
 \begin_inset Formula 
-\[
-\log\left(X_{n+1}-\frac{\sigma_{A}}{\sigma_{M}}\right)=\log\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)
-\]
+\begin{equation}
+\log\left(X_{n+1}-\frac{\sigma_{A}}{\sigma_{M}}\right)=\log\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\label{eq:AffineStep}
+\end{equation}
 
 \end_inset
 
 with stages
 \begin_inset Formula 
-\[
-H_{i}^{(0)}=\log\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{j=1}^{s}A_{ij}^{(0)}\tilde{f}\left(t_{n}+c_{j}^{(0)}h,\exp\left(H_{j}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}\frac{I_{(1,0)}}{h}.
-\]
+\begin{equation}
+H_{i}^{(0)}=\log\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{j=1}^{s}A_{ij}^{(0)}\tilde{f}\left(t_{n}+c_{j}^{(0)}h,\exp\left(H_{j}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}\frac{I_{(1,0)}}{h}.\label{eq:AffineStep2}
+\end{equation}
 
 \end_inset
 
  Back-transforming this, we get
 \begin_inset Formula 
-\[
-X_{n+1}=\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)\exp\left(\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right)+\frac{\sigma_{A}}{\sigma_{M}}
-\]
+\begin{equation}
+X_{n+1}=\left(X_{n}-\frac{\sigma_{A}}{\sigma_{M}}\right)\exp\left(\sum_{i=1}^{s}\alpha_{i}\tilde{f}\left(t_{n}+c_{i}^{(0)}h,\exp\left(H_{i}^{(0)}\right)+\frac{\sigma_{A}}{\sigma_{M}}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right)+\frac{\sigma_{A}}{\sigma_{M}}\label{eq:AffineUpdate}
+\end{equation}
 
 \end_inset
 
