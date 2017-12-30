@@ -1,6 +1,6 @@
 using StochasticDiffEq, Plots, DiffEqDevTools, DiffEqProblemLibrary
 using ParameterizedFunctions, DiffEqMonteCarlo, Base.Test, OrdinaryDiffEq
-using Plots; plotly()
+using Plots; gr()
 using BenchmarkTools
 
 ################################################################################
