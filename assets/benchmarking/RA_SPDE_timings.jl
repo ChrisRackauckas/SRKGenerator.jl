@@ -1,6 +1,6 @@
 using SpecialMatrices
 using EllipsisNotation
-using DiffEqBase, OrdinaryDiffEq, StochasticDiffEq
+using DiffEqBase, OrdinaryDiffEq, StochasticDiffEq, Sundials
 using Plots; plotly()
 
 ############ Spatial Parameters
@@ -95,7 +95,7 @@ println("Solve the ODE")
 tspan = (0.0,5000.0)
 prob = ODEProblem(ra_gradient,u0,tspan)
 @time ra_sol = solve(prob,CVODE_BDF(linear_solver = :GMRES),save_everystep=false,
-                     force_dtmin=true,progress=true,abstol=1e-2,reltol=1e-1)
+                     abstol=1e-7,reltol=1e-4)
 
 ################ Add Stochasticity
 
@@ -120,24 +120,15 @@ prob = SDEProblem(ra_gradient,ra_noise,u0,tspan2)
 
 @time noisy_ra_sol = solve(prob,SRIW1(),
                            save_everystep=false,progress_steps=10_000,
-                           progress=true,abstol=1e-2,reltol=1e-2)
-
-# 41371.219813 seconds (14.50 G allocations: 10.829 TiB, 5.29% gc time)
-# 41443.449064 seconds (14.49 G allocations: 10.828 TiB, 5.17% gc time)
+                           progress=true,abstol=1e-5,reltol=1e-3)
 
 @time noisy_ra_sol = solve(prob,SOSRI(),
                            save_everystep=false,progress_steps=10_000,
                            progress=true,abstol=1e-1,reltol=1e-1)
 
-#4154.146107 seconds (1.48 G allocations: 1.107 TiB, 4.37% gc time)
-#4146.011089 seconds (1.48 G allocations: 1.107 TiB, 4.28% gc time)
-
 @time noisy_ra_sol = solve(prob,SOSRI2(),
                            save_everystep=false,progress_steps=10_000,
-                           progress=true,abstol=1e-1,reltol=1e-1)
-
-#17450.158677 seconds (6.27 G allocations: 4.685 TiB, 4.17% gc time)
-#17676.379480 seconds (6.27 G allocations: 4.685 TiB, 4.21% gc time)
+                           progress=true,abstol=1e-1,reltol=1e-2)
 
 @time noisy_ra_sol = solve(prob,EM(),dt=1/200000,
                            save_everystep=false,progress_steps=10_000,
