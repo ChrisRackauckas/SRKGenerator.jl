@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    186313,       3544]
-NotebookOptionsPosition[    185215,       3503]
-NotebookOutlinePosition[    185590,       3519]
-CellTagsIndexPosition[    185547,       3516]
+NotebookDataLength[    188081,       3581]
+NotebookOptionsPosition[    186982,       3540]
+NotebookOutlinePosition[    187358,       3556]
+CellTagsIndexPosition[    187315,       3553]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -2155,6 +2155,15 @@ Cell[BoxData[{
        RowBox[{"-", "1.4102107084476505"}]}], ",", 
       RowBox[{"\[Beta]44", " ", "\[Rule]", " ", "0.9930041932449877"}]}], 
      "}"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetOptions", "[", 
+   RowBox[{"RegionPlot", ",", 
+    RowBox[{"BaseStyle", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"FontFamily", "\[Rule]", "\"\<Ariel\>\""}], ",", 
+       RowBox[{"FontSize", "\[Rule]", "22"}]}], "}"}]}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
  RowBox[{"RegionPlot", "[", 
   RowBox[{
    RowBox[{"{", 
@@ -2180,8 +2189,18 @@ Cell[BoxData[{
    RowBox[{"PlotLegends", "\[Rule]", 
     RowBox[{"{", 
      RowBox[{
-      RowBox[{"Euler", "-", "Maruyama"}], ",", "SRIW1", ",", "SRIW2", ",", 
-      "SOSRI", ",", "SOSRI2"}], "}"}]}]}], "]"}]}], "Input",
+      RowBox[{"Style", "[", 
+       RowBox[{
+        RowBox[{"Euler", "-", "Maruyama"}], ",", "22"}], "]"}], ",", 
+      RowBox[{"Style", "[", 
+       RowBox[{"SRIW1", ",", "22"}], "]"}], ",", 
+      RowBox[{"Style", "[", 
+       RowBox[{"SRIW2", ",", "22"}], "]"}], ",", 
+      RowBox[{"Style", "[", 
+       RowBox[{"SOSRI", ",", "22"}], "]"}], ",", 
+      RowBox[{"Style", "[", 
+       RowBox[{"SOSRI2", ",", "22"}], "]"}]}], "}"}]}]}], 
+  "]"}], "\[IndentingNewLine]"}], "Input",
  CellChangeTimes->{
   3.7086225702675*^9, {3.7086230334674406`*^9, 3.7086230352000737`*^9}, {
    3.7086230666296167`*^9, 3.708623127232869*^9}, {3.708623179875167*^9, 
@@ -2190,7 +2209,9 @@ Cell[BoxData[{
    3.708623816881872*^9}, {3.708623848946355*^9, 3.7086238637153234`*^9}, {
    3.70862420487724*^9, 3.7086242260918493`*^9}, 3.7086579849420795`*^9, 
    3.7086582872108974`*^9, {3.7086583204742103`*^9, 3.708658320588616*^9}, {
-   3.723831068787915*^9, 3.723831072731851*^9}}],
+   3.723831068787915*^9, 3.723831072731851*^9}, {3.7239802852992935`*^9, 
+   3.723980344778445*^9}, {3.723980413956562*^9, 3.723980458194107*^9}, {
+   3.7239806136202817`*^9, 3.723980622784852*^9}}],
 
 Cell[BoxData[
  TemplateBox[{GraphicsBox[
@@ -2868,8 +2889,9 @@ f/4H1bqBsQ==
         TagBox["z", HoldForm], TraditionalForm], 
        FormBox[
         TagBox["w", HoldForm], TraditionalForm]}, 
-     AxesOrigin -> {Automatic, Automatic}, DisplayFunction :> Identity, 
-     Frame -> {{None, None}, {None, None}}, 
+     AxesOrigin -> {Automatic, Automatic}, 
+     BaseStyle -> {FontFamily -> "Ariel", FontSize -> 22}, DisplayFunction :> 
+     Identity, Frame -> {{None, None}, {None, None}}, 
      FrameLabel -> {{None, None}, {None, None}}, 
      FrameTicks -> {{Automatic, Automatic}, {Automatic, Automatic}}, 
      GridLinesStyle -> Directive[
@@ -2884,8 +2906,13 @@ f/4H1bqBsQ==
         Scaled[0.02]}}, Ticks -> {Automatic, Automatic}}],FormBox[
     FormBox[
      TemplateBox[{
-       RowBox[{"Euler", "-", "Maruyama"}], "SRIW1", "SRIW2", "SOSRI", 
-       "SOSRI2"}, "SwatchLegend", DisplayFunction -> (FormBox[
+       StyleBox[
+        RowBox[{"Euler", "-", "Maruyama"}], 22, StripOnInput -> False], 
+       StyleBox["SRIW1", 22, StripOnInput -> False], 
+       StyleBox["SRIW2", 22, StripOnInput -> False], 
+       StyleBox["SOSRI", 22, StripOnInput -> False], 
+       StyleBox["SOSRI2", 22, StripOnInput -> False]}, "SwatchLegend", 
+      DisplayFunction -> (FormBox[
         StyleBox[
          StyleBox[
           PaneBox[
@@ -2895,7 +2922,7 @@ f/4H1bqBsQ==
                 GridBox[{{
                    GraphicsBox[{
                     Directive[
-                    PointSize[0.5], 
+                    PointSize[0.5], FontSize -> 22, 
                     EdgeForm[
                     Directive[
                     Opacity[1], 
@@ -2910,7 +2937,7 @@ f/4H1bqBsQ==
                     BaselinePosition -> (Scaled[0.1] -> Baseline)], #}, {
                    GraphicsBox[{
                     Directive[
-                    PointSize[0.5], 
+                    PointSize[0.5], FontSize -> 22, 
                     EdgeForm[
                     Directive[
                     Opacity[1], 
@@ -2925,7 +2952,7 @@ f/4H1bqBsQ==
                     BaselinePosition -> (Scaled[0.1] -> Baseline)], #2}, {
                    GraphicsBox[{
                     Directive[
-                    PointSize[0.5], 
+                    PointSize[0.5], FontSize -> 22, 
                     EdgeForm[
                     Directive[
                     Opacity[1], 
@@ -2940,7 +2967,7 @@ f/4H1bqBsQ==
                     BaselinePosition -> (Scaled[0.1] -> Baseline)], #3}, {
                    GraphicsBox[{
                     Directive[
-                    PointSize[0.5], 
+                    PointSize[0.5], FontSize -> 22, 
                     EdgeForm[
                     Directive[
                     Opacity[1], 
@@ -2955,7 +2982,7 @@ f/4H1bqBsQ==
                     BaselinePosition -> (Scaled[0.1] -> Baseline)], #4}, {
                    GraphicsBox[{
                     Directive[
-                    PointSize[0.5], 
+                    PointSize[0.5], FontSize -> 22, 
                     EdgeForm[
                     Directive[
                     Opacity[1], 
@@ -2992,6 +3019,7 @@ f/4H1bqBsQ==
              RowBox[{
                RowBox[{"Directive", "[", 
                  RowBox[{
+                   RowBox[{"FontSize", "\[Rule]", "22"}], ",", 
                    RowBox[{"EdgeForm", "[", 
                     RowBox[{"Directive", "[", 
                     RowBox[{
@@ -3084,6 +3112,7 @@ f/4H1bqBsQ==
                    RowBox[{"Opacity", "[", "0.3`", "]"}]}], "]"}], ",", 
                RowBox[{"Directive", "[", 
                  RowBox[{
+                   RowBox[{"FontSize", "\[Rule]", "22"}], ",", 
                    RowBox[{"EdgeForm", "[", 
                     RowBox[{"Directive", "[", 
                     RowBox[{
@@ -3175,6 +3204,7 @@ f/4H1bqBsQ==
                    RowBox[{"Opacity", "[", "0.3`", "]"}]}], "]"}], ",", 
                RowBox[{"Directive", "[", 
                  RowBox[{
+                   RowBox[{"FontSize", "\[Rule]", "22"}], ",", 
                    RowBox[{"EdgeForm", "[", 
                     RowBox[{"Directive", "[", 
                     RowBox[{
@@ -3266,6 +3296,7 @@ f/4H1bqBsQ==
                    RowBox[{"Opacity", "[", "0.3`", "]"}]}], "]"}], ",", 
                RowBox[{"Directive", "[", 
                  RowBox[{
+                   RowBox[{"FontSize", "\[Rule]", "22"}], ",", 
                    RowBox[{"EdgeForm", "[", 
                     RowBox[{"Directive", "[", 
                     RowBox[{
@@ -3358,6 +3389,7 @@ f/4H1bqBsQ==
                    RowBox[{"Opacity", "[", "0.3`", "]"}]}], "]"}], ",", 
                RowBox[{"Directive", "[", 
                  RowBox[{
+                   RowBox[{"FontSize", "\[Rule]", "22"}], ",", 
                    RowBox[{"EdgeForm", "[", 
                     RowBox[{"Directive", "[", 
                     RowBox[{
@@ -3473,7 +3505,9 @@ f/4H1bqBsQ==
      RowBox[{#, ",", 
        RowBox[{"Placed", "[", 
          RowBox[{#2, ",", "After"}], "]"}]}], "]"}]& )]], "Output",
- CellChangeTimes->{{3.7238310566418123`*^9, 3.723831074282775*^9}}]
+ CellChangeTimes->{{3.7238310566418123`*^9, 3.723831074282775*^9}, {
+   3.723980315211007*^9, 3.723980346360469*^9}, {3.7239804401505537`*^9, 
+   3.72398045980003*^9}, 3.7239805631403675`*^9, 3.7239806247461505`*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -3487,7 +3521,9 @@ Cell[BoxData[
 Cell[BoxData["\<\"DiagonalStability.pdf\"\>"], "Output",
  CellChangeTimes->{
   3.7086584167241335`*^9, {3.7238309340093083`*^9, 3.7238309417421637`*^9}, {
-   3.7238310290642977`*^9, 3.7238310405122657`*^9}, 3.7238310779558144`*^9}]
+   3.7238310290642977`*^9, 3.7238310405122657`*^9}, 3.7238310779558144`*^9, {
+   3.7239804652649207`*^9, 3.7239804673032265`*^9}, 3.723980564465143*^9, 
+   3.723980628169428*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -3497,12 +3533,13 @@ Cell[BoxData[
  CellChangeTimes->{{3.723830988493076*^9, 3.7238310137742324`*^9}}],
 
 Cell[BoxData["\<\"D:\\\\OneDrive\\\\Computer\\\\Documents\"\>"], "Output",
- CellChangeTimes->{{3.7238309923738565`*^9, 3.7238310140104747`*^9}}]
+ CellChangeTimes->{{3.7238309923738565`*^9, 3.7238310140104747`*^9}, 
+   3.7239804802974777`*^9}]
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{1920, 997},
-WindowMargins->{{-8, Automatic}, {Automatic, 0}},
+WindowSize->{1904, 987},
+WindowMargins->{{-8, Automatic}, {Automatic, 10}},
 Magnification:>1.2 Inherited,
 FrontEndVersion->"10.0 for Microsoft Windows (64-bit) (December 4, 2014)",
 StyleDefinitions->"Default.nb"
@@ -3534,16 +3571,16 @@ Cell[90226, 1699, 8069, 148, 453, "Output"]
 }, Open  ]],
 Cell[98310, 1850, 294, 6, 60, "Input"],
 Cell[CellGroupData[{
-Cell[98629, 1860, 15700, 332, 637, "Input"],
-Cell[114332, 2194, 70044, 1281, 458, "Output"]
+Cell[98629, 1860, 16503, 353, 706, "Input"],
+Cell[115135, 2215, 70878, 1294, 474, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[184413, 3480, 231, 4, 36, "Input"],
-Cell[184647, 3486, 231, 3, 36, "Output"]
+Cell[186050, 3514, 231, 4, 36, "Input"],
+Cell[186284, 3520, 333, 5, 36, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[184915, 3494, 125, 2, 36, "Input"],
-Cell[185043, 3498, 144, 1, 36, "Output"]
+Cell[186654, 3530, 125, 2, 36, "Input"],
+Cell[186782, 3534, 172, 2, 36, "Output"]
 }, Open  ]]
 }, Open  ]]
 }

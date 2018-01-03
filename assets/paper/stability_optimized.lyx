@@ -85,6 +85,35 @@ Stability-Optimized High Order Methods and Stiffness Detection for Pathwise
 Chris Rackauckas and Qing Nie
 \end_layout
 
+\begin_layout Abstract
+Stochastic differential equation (SDE) models of biochemical networks and
+ physical phonomena often exhibit large random transitions.
+ This property, which we denote as pathwise stiffness, requires that numerical
+ integration techniques are stable during these transitions in order to
+ give a correct solution.
+ However, this limits the allowed stepsize for common fixed timestep explicit
+ and drift-implicit integrators, making this problem computationally difficult.
+ In this manuscript we propose four separate methods to efficiently handle
+ this stiffness.
+ First, we develop a novel computational technique to derive strong order
+ 1.5 stability-optimized explicit adaptive Runge-Kutta methods for stochastic
+ differential equations with additive, affine, and diagonal noise.
+ Secondly, we define an extension of L-stability to additive noise stochastic
+ differential equations and derive two strong order 1.5 adaptive implicit
+ methods: a fully-implicit Runge-Kutta (FIRK) method and an extension of
+ a deterministic singly-diagonally implicit Runge-Kutta (ESDIRK) method.
+ As a third approach, we developed an adaptive implicit-explicit (IMEX)
+ extension of the ESDIRK method and show numerically that it can achieve
+ strong order 1.5.
+ Lastly, we develop a method for stiffness detection in SDE integrators
+ and demonstrate the robustness of the technique.
+ These methods are benchmarked against previous methods on a system of 19
+ chemical reaction networks and on a discretization of a stochastic reaction-dif
+fusion equation to demonstrate efficiency gains between 5x-60x against a
+ previous adaptive integrator and show the computationally infeasibility
+ of fixed timestep integrators on these problems.
+\end_layout
+
 \begin_layout Section
 Introduction
 \end_layout
@@ -188,7 +217,7 @@ key "RN3790"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -1000,7 +1029,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename ../obj_poly_solve/SOSRA_stability.pdf
+	filename ../paper_figures/SOSRA_stability.pdf
 	scale 50
 
 \end_inset
@@ -1272,14 +1301,14 @@ key "RN3806"
 \begin_inset Formula 
 \begin{align}
 A^{(0)} & =\left(\begin{array}{cc}
--1 & 1\\
-0 & \frac{3}{4}
+1 & \frac{-41}{64}\\
+\frac{32}{41} & \frac{9}{41}
 \end{array}\right),\thinspace\thinspace\thinspace B^{(0)}=\left(\begin{array}{cc}
-0 & 0\\
-\frac{3}{2} & 0
+\frac{5}{8} & 0\\
+0 & \frac{7}{3}
 \end{array}\right),\thinspace\thinspace\thinspace\thinspace\alpha=\left(\begin{array}{c}
-\frac{1}{3}\\
-\frac{2}{3}
+\frac{32}{41}\\
+\frac{9}{41}
 \end{array}\right)\label{eq:LSRA}\\
 \beta^{(1)} & =\left(\begin{array}{c}
 0\\
@@ -1288,8 +1317,8 @@ A^{(0)} & =\left(\begin{array}{cc}
 1\\
 -1
 \end{array}\right),\thinspace\thinspace\thinspace c^{(0)}=\left(\begin{array}{c}
-0\\
-\frac{3}{4}
+\frac{23}{64}\\
+1
 \end{array}\right),\,\,\,c^{(1)}=\left(\begin{array}{c}
 0\\
 1
@@ -1316,6 +1345,64 @@ which we denote LSRA.
 \end_inset
 
 ), and there does not exist a 2-stage A-L stable SDIRK method in that case.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../paper_figures/ImplicitStability.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Implicit SRA Stability Regions.
+ The stability regions (
+\begin_inset Formula $\left|G(z)\right|<1$
+\end_inset
+
+) are plotted in the 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+-plane for 
+\begin_inset Formula $z=x+iy$
+\end_inset
+
+.
+ Shown are the SRA methods LSRA and SKenCarp.
+ Note that LSRA's stability region is strictly larger than SKenCarp's and
+ thus the region shown for SKenCarp is equivalent to the overlap.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Implicit-Stability-Regions"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -2297,7 +2384,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename ../solution_examples/DiagonalStability.pdf
+	filename ../paper_figures/DiagonalStability.pdf
 	scale 50
 
 \end_inset
@@ -3019,7 +3106,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename ../paper_figures/SRA_efficiency.pdf
-	scale 50
+	scale 43
 
 \end_inset
 
@@ -3278,7 +3365,8 @@ where
 \begin_inset Formula $reltol=1/2^{1}$
 \end_inset
 
-), SOSRA is able to reproduce this qualitative behavior (Figure 
+), SOSRA is able to reproduce this qualitative behavior of the low tolerance
+ solutions (Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:AdditiveVanDerPol"
@@ -3335,7 +3423,7 @@ reference "tab:SRA-Runtimes-on-Van"
  We note that we attempted to solve the equations using a fixed time step
  implicit method as well (implicit Euler-Maruyama), though during the zero-cross
 ing events the quasi-Newton steps would diverge even when 
-\begin_inset Formula $dt=10^{-6}$
+\begin_inset Formula $\Delta t=10^{-6}$
 \end_inset
 
  (using an efficient and numerically robust implementation found in common
@@ -3587,7 +3675,9 @@ SRA1
 \begin_layout Plain Layout
 SRA Run times on Van der Pol with additive noise.
  The additive noise Van der Pol equation was solved 100 times using the
- respective algorithms.
+ respective algorithms at the highest tolerance by powers of two which match
+ the low tolerance solution to plotting accuracy.
+ 
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:SRA-Runtimes-on-Van"
@@ -3617,7 +3707,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename ../paper_figures/additive_vanderpol.pdf
+	filename ../paper_figures/additive_van_der_pol.pdf
 	scale 50
 
 \end_inset
@@ -3631,6 +3721,8 @@ status open
 \begin_layout Plain Layout
 Representative trajectories for solutions to the Van der Pol equations with
  additive noise.
+ Each of these trajectories are solved with the same underlying Brownian
+ process.
  
 \series bold
 (A)
@@ -3720,7 +3812,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename ../paper_figures/sde_stiffness_detection.pdf
-	scale 50
+	scale 60
 
 \end_inset
 
@@ -3862,7 +3954,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename ../paper_figures/SRI_efficiency.pdf
-	scale 50
+	scale 43
 
 \end_inset
 

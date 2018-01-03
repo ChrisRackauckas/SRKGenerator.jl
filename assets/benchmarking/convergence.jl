@@ -16,6 +16,9 @@ sim3 = test_convergence(dts,prob,RackKenCarp(),numMonte=Int(1e3))
 
 p1 = plot(dts,[sim1.errors[:l2],sim2.errors[:l2],sim3.errors[:l2]],
           title="Additive Convergence Tests",label=["SOSRA" "SOSRA2" "SKenCarp"],
+          xtickfont = font(16, "Ariel"),titlefont = font(20, "Ariel"),
+          ytickfont = font(16, "Ariel"),guidefont = font(18, "Ariel"),
+          legendfont = font(14, "Ariel"),
           ylabel = "Error", xlabel="dt",
           yscale=:log10,xscale=:log10,lw=3)
 
@@ -33,6 +36,9 @@ sim2 = test_convergence(dts,prob,SOSRI2(),numMonte=1000)
 p2 = plot(dts,[sim1.errors[:l2],sim2.errors[:l2]],
           title="Linear Convergence Tests",label=["SOSRI" "SOSRI2"],
           ylabel = "Error", xlabel="dt",
+          xtickfont = font(16, "Ariel"),titlefont = font(20, "Ariel"),
+          ytickfont = font(16, "Ariel"),guidefont = font(18, "Ariel"),
+          legendfont = font(14, "Ariel"),
           yscale=:log10,xscale=:log10,lw=3)
 
 dts = 1./2.^(7:-1:4) #14->7 good plot
@@ -53,6 +59,9 @@ sim = test_convergence(dts,prob,RackKenCarp(),numMonte=Int(1e3))
 p3 = plot(dts,sim.errors[:l2],
           title="IMEX Convergence Tests",label="IMEX SKenCarp",
           ylabel = "Error", xlabel="dt",
+          xtickfont = font(16, "Ariel"),titlefont = font(20, "Ariel"),
+          ytickfont = font(16, "Ariel"),guidefont = font(18, "Ariel"),
+          legendfont = font(14, "Ariel"),
           yscale=:log10,xscale=:log10,lw=3)
 
 ref = dts.^2 * 1e-4
