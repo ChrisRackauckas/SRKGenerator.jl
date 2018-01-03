@@ -31,6 +31,9 @@ p0 = plot(sol0,plotdensity=20000,denseplot=true,ylims=[-10,10],title="ODE Soluti
 
 @time sol1 =solve(prob,SOSRA();abstol=1,reltol=1/2^1)
 p1 = plot(sol1,plotdensity=20000,denseplot=true,ylims=[-10,10],title="High tolerance SOSRA Solution")
+
+@time sol1 =solve(prob,ImplicitEM();dt=1/1000000) # Errors
+
 @time sol2 =solve(prob,SOSRA2();abstol=1/2,reltol=1/2^2)
 plot(sol2,plotdensity=20000,denseplot=true,ylims=[-10,10])
 @time sol3 =solve(prob,SRA1();abstol=1/2^7,reltol=1/2^5)
