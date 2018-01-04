@@ -3475,36 +3475,7 @@ Run-time (seconds)
 \begin_inset Text
 
 \begin_layout Plain Layout
-Relative Time (vs SKenCarp)
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-SKenCarp
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-116.238533
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1x
+Relative Time (vs SOSRA)
 \end_layout
 
 \end_inset
@@ -3524,7 +3495,7 @@ SOSRA
 \begin_inset Text
 
 \begin_layout Plain Layout
-220.318093 
+315.589018
 \end_layout
 
 \end_inset
@@ -3533,7 +3504,7 @@ SOSRA
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.895x
+1x
 \end_layout
 
 \end_inset
@@ -3553,7 +3524,7 @@ SOSRA2
 \begin_inset Text
 
 \begin_layout Plain Layout
-229.158667 
+394.823544
 \end_layout
 
 \end_inset
@@ -3562,7 +3533,7 @@ SOSRA2
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.971x
+1.251x
 \end_layout
 
 \end_inset
@@ -3606,7 +3577,7 @@ SRA3
 \uwave off
 \noun off
 \color none
-2222.266499 
+1385.666700
 \end_layout
 
 \end_inset
@@ -3627,7 +3598,36 @@ SRA3
 \uwave off
 \noun off
 \color none
-19.12x
+4.390x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SKenCarp
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2648.749583
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8.393x
 \end_layout
 
 \end_inset
@@ -3647,7 +3647,7 @@ SRA1
 \begin_inset Text
 
 \begin_layout Plain Layout
-7381.638625 
+3397.667796
 \end_layout
 
 \end_inset
@@ -3656,7 +3656,7 @@ SRA1
 \begin_inset Text
 
 \begin_layout Plain Layout
-63.50x
+10.77x
 \end_layout
 
 \end_inset
@@ -5555,8 +5555,11 @@ reference "tab:SRI-times-for-SPDE"
 \begin_inset Formula $\Delta t$
 \end_inset
 
- for the Euler-Maruyama and Runge-Kutta Milstein methods could not be found
- (must be 
+ for the Euler-Maruyama, Runge-Kutta Milstein, and stochstic 
+\begin_inset Formula $\theta$
+\end_inset
+
+-methods could not be found (must be 
 \begin_inset Formula $<10^{-6}$
 \end_inset
 
@@ -5874,12 +5877,21 @@ ive and affine) noise equations, and computationally could not find an A-B-L
  that it may achieve the sufficient condition.
  As an adaptive high order IMEX method, the ODE version of the method is
  a common choice for large discretizations of PDEs.
- Thus this method presents itself as a potentially automatic and efficient
+ Thus this method could present itself as a potentially automatic and efficient
  option for discretizations of large affine noise SPDEs by being able to
  use a low number of time steps while minimizing the amount of work required
  to solve the implicit equation.
- More work could compare this method to other implicit solvers for additive
- noise SDEs to determine the problem domain which is is efficient.
+ However, while being much more efficient than the common stochastic theta
+ methods, the benchmark results were less than adequate on the chosen test
+ problems.
+ In particular, the stepsize restrictions imposed by divergence of the quasi-New
+ton steps posed a particular issue.
+ Further studies could design stage prediction algorithms to potentially
+ alleviate this issue.
+ In addition, a more strict stability condtions such as B-stability may
+ be required for large time steps on the pathwise stiff problems of our
+ investigation.
+ 
 \end_layout
 
 \begin_layout Standard

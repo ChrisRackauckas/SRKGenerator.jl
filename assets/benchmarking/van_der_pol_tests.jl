@@ -65,8 +65,8 @@ p3 = plot(sol42,plotdensity=20000,denseplot=true,ylims=[-10,10],title="Low Toler
           ytickfont = font(16, "Ariel"),guidefont = font(18, "Ariel"),
           legendfont = font(14, "Ariel"))
 
-@time sol52 =solve(fixed_noise_prob,RackKenCarp();abstol=1/2^6,reltol=1/2^6)
-p5 = plot(sol52,plotdensity=20000,denseplot=true,ylims=[-10,10])
+#@time sol52 =solve(fixed_noise_prob,RackKenCarp();abstol=1/2^6,reltol=1/2^6)
+#p5 = plot(sol52,plotdensity=20000,denseplot=true,ylims=[-10,10])
 
 plot(p0,p1,p2,p3,layout=grid(2,2),size=(1200,800))
 
@@ -83,33 +83,16 @@ savefig("additive_van_der_pol.pdf")
 @time sol5 =solve(prob,RackKenCarp();abstol=1,reltol=1)
 
 #### Monte Carlo
+println("SOSRA time")
 @time sol1 =solve(monte_prob,SOSRA();num_monte=N,abstol=10,reltol=1/2^1,verbose=false,save_everystep=false)
+println("SOSRA2 time")
 @time sol2 =solve(monte_prob,SOSRA2();num_monte=N,abstol=1,reltol=1/2^2,verbose=false,save_everystep=false)
+println("SRA1 time")
 @time sol3 =solve(monte_prob,SRA1();num_monte=N,abstol=1/2^6,reltol=1/2^(5),verbose=false,save_everystep=false)
+println("SRA3 time")
 @time sol4 =solve(monte_prob,SRA3();num_monte=N,abstol=1/2^6,reltol=1/2^3,verbose=false,save_everystep=false)
-@time sol5 =solve(monte_prob,RackKenCarp();num_monte=N,abstol=10,reltol=1/2,verbose=false,save_everystep=false)
-
-for i in 1:5
-  sol1 =solve(monte_prob,SRA1();num_monte=N,abstol=10,reltol=1/2^(2),verbose=false)
-  sol2 =solve(monte_prob,SRA3();num_monte=N,abstol=10,reltol=1/2^(offset+i),verbose=false)
-  sol3 =solve(monte_prob,SOSRA();num_monte=N,abstol=10,reltol=1/2^(offset+i),verbose=false)
-  sol4 =solve(monte_prob,SOSRA2();num_monte=N,abstol=10,reltol=1/2^(offset+i),verbose=false)
-  fails[i,1] = N - sum([sol1[i].retcode == :Success for i in 1:N])
-  fails[i,2] = N - sum([sol2[i].retcode == :Success for i in 1:N])
-  fails[i,3] = N - sum([sol3[i].retcode == :Success for i in 1:N])
-  fails[i,4] = N - sum([sol4[i].retcode == :Success for i in 1:N])
-  times[i,1] = sol1.elapsedTime
-  times[i,2] = sol2.elapsedTime
-  times[i,3] = sol3.elapsedTime
-  times[i,4] = sol4.elapsedTime
-end
-
-
-
-@benchmark sol =solve(prob,SOSRA();abstol=10,reltol=1/2^1,timeseries_steps=10)
-@benchmark sol =solve(prob,SOSRA2();abstol=1/2^1,reltol=1/2^2,timeseries_steps=10)
-@benchmark sol2 =solve(prob,SRA1();abstol=1/2^6,reltol=1/2^5,timeseries_steps=10)
-@benchmark sol2 =solve(prob,SRA3();abstol=1/2^3,reltol=1/2^3,timeseries_steps=10)
+println("RackKenCarp time")
+@time sol5 =solve(monte_prob,RackKenCarp();num_monte=N,abstol=1/2^6,reltol=1/2^6,verbose=false,save_everystep=false)
 
 #######
 
