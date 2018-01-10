@@ -2,42 +2,30 @@ using StochasticDiffEq, Plots, DiffEqDevTools, DiffEqProblemLibrary
 using ParameterizedFunctions, DiffEqMonteCarlo, Base.Test, OrdinaryDiffEq
 using Plots; pyplot()
 using BenchmarkTools
-names = ["Euler-Maruyama","SRA1","SRA2","SRA3","SOSRA","SOSRA2","SKenCarp"]
+names = ["EM","RKMil","SRIW1","SRIW2","SOSRI","SOSRI2"]
 
 ################################################################################
 
-## Additive
+prob = prob_sde_2Dlinear
 
-prob = prob_sde_additive
-
-reltols = 1.0./10.0.^(-2:4)
+reltols = 1.0./10.0.^(1:5)
 abstols = reltols#[0.0 for i in eachindex(reltols)]
 
-setups = [Dict(:alg=>EM(),:dts=>1.0./5.0.^((1:length(reltols)) - 2))
-          Dict(:alg=>SRA1())
-          Dict(:alg=>SRA2())
-          Dict(:alg=>SRA3())
-          Dict(:alg=>SOSRA())
-          Dict(:alg=>SOSRA2())
-          Dict(:alg=>RackKenCarp())
+setups = [Dict(:alg=>EM(),:dts=>1.0./5.0.^((1:length(reltols)) + 2))
+          Dict(:alg=>RKMil(),:dts=>1.0./5.0.^((1:length(reltols)) + 2))
+          Dict(:alg=>SRIW1())
+          Dict(:alg=>SRIW2())
+          Dict(:alg=>SOSRI())
+          Dict(:alg=>SOSRI2())
           ]
 
-wp = WorkPrecisionSet(prob,abstols,reltols,setups;numruns=10000,names=names,error_estimate=:l2)
+wp = WorkPrecisionSet(prob,abstols,reltols,setups;numruns=1000,names=names,error_estimate=:l2)
 
-p1 = plot(wp,legend=false,
-          title="Additive Strong Error",
+p1 = plot(wp,legend=false,title="Linear Strong Error",
           xtickfont = font(16, "Ariel"),titlefont = font(20, "Ariel"),
           ytickfont = font(16, "Ariel"),guidefont = font(18, "Ariel"))
 
-setups = [Dict(:alg=>EM(),:dts=>1.0./5.0.^((1:length(reltols)) - 2))
-          Dict(:alg=>SRA1())
-          Dict(:alg=>SRA2())
-          Dict(:alg=>SRA3())
-          Dict(:alg=>SOSRA())
-          Dict(:alg=>SOSRA2())
-          Dict(:alg=>RackKenCarp())
-          ]
-wp2 = WorkPrecisionSet(prob,abstols,reltols,setups;numruns=10000,names=names,error_estimate=:weak_final,legend=false)
+wp2= WorkPrecisionSet(prob,abstols,reltols,setups;numruns=1000,names=names,error_estimate=:weak_final)
 
 sample_size = Int[10;1e2;1e3;1e4;1e5]
 test_dt = 1e-2
@@ -45,7 +33,7 @@ appxsol_setup = Dict(:alg=>SOSRA(),:abstol=>1e-4,:reltol=>1e-4)
 se1 = get_sample_errors(prob,test_dt,appxsol_setup=appxsol_setup,
           parallel_type = :threads, numruns=sample_size, std_estimation_runs = Int(1e3))
 
-p2 = plot(wp2;legend=false,title="Additive Weak Error",
+p2 = plot(wp2;legend=false,title="Linear Weak Error",
           xtickfont = font(16, "Ariel"),titlefont = font(20, "Ariel"),
           ytickfont = font(16, "Ariel"),guidefont = font(18, "Ariel"),
           plot_sample_error = false)
@@ -54,9 +42,7 @@ times = [minimum(minimum(t) for t in times),maximum(maximum(t) for t in times)]
 plot!(p2,[se1[2];se1[2]],times,color=:red,linestyle=:dash,label="Sample Error: 100",lw=3)
 plot!(p2,[se1[end];se1[end]],times,color=:orange,linestyle=:dash,label="Sample Error: 10000",lw=3)
 
-################################################################################
-
-### Additve Lotka-Volterra
+### Lotka
 
 f = @ode_def LotkaVolterraTest begin
   dx = a*x - b*x*y
@@ -64,7 +50,7 @@ f = @ode_def LotkaVolterraTest begin
 end a=>1.5 b=1.0 c=3.0 d=1.0
 
 function g(t,u,du)
-  du .= 0.01
+  @. du = 0.01u
 end
 u0 = [1.0;1.0]
 tspan = (0.0,10.0)
@@ -72,27 +58,23 @@ prob = SDEProblem(f,g,u0,tspan);
 
 reltols = 1.0./4.0.^(2:4)
 abstols = reltols#[0.0 for i in eachindex(reltols)]
-
-setups = [Dict(:alg=>EM(),:dts=>1.0./12.0.^((1:length(reltols)) + 1.5))
-          Dict(:alg=>SRA1())
-          Dict(:alg=>SRA2())
-          Dict(:alg=>SRA3())
-          Dict(:alg=>SOSRA())
-          Dict(:alg=>SOSRA2())
-          Dict(:alg=>RackKenCarp())
+setups = [Dict(:alg=>SRIW1())
+          Dict(:alg=>EM(),:dts=>1.0./12.0.^((1:length(reltols)) + 1.5))
+          Dict(:alg=>RKMil(),:dts=>1.0./12.0.^((1:length(reltols)) + 1.5))
+          Dict(:alg=>SRIW2())
+          Dict(:alg=>SOSRI())
+          Dict(:alg=>SOSRI2())
           ]
-test_dt = 1e-2
-appxsol_setup = Dict(:alg=>SOSRA(),:abstol=>1e-4,:reltol=>1e-4)
-
+test_dt = 1/10^2
+appxsol_setup = Dict(:alg=>SRIW1(),:abstol=>1e-4,:reltol=>1e-4)
 wp3 = WorkPrecisionSet(prob,abstols,reltols,setups,test_dt;
                                      names = names,
                                      verbose=false,save_everystep=false,
                                      parallel_type = :threads,
                                      appxsol_setup = appxsol_setup,
                                      numruns_error=100,error_estimate=:final)
-
-p3 = plot(wp3,legend=false,
-          title="Lotka-Volterra Strong Error",
+plot(wp3)
+p3 = plot(wp3,legend=false,title="Lotka-Volterra Strong Error",
           xtickfont = font(16, "Ariel"),titlefont = font(20, "Ariel"),
           ytickfont = font(16, "Ariel"),guidefont = font(18, "Ariel"))
 
@@ -102,6 +84,7 @@ wp4 = WorkPrecisionSet(prob,abstols,reltols,setups,test_dt;
                                      parallel_type = :threads,
                                      appxsol_setup = appxsol_setup,
                                      numruns_error=100,error_estimate=:weak_final)
+plot(wp4)
 sample_size = Int[10;1e2;1e3;1e4;1e5]
 test_dt = 1e-2
 appxsol_setup = Dict(:alg=>SOSRA(),:abstol=>1e-4,:reltol=>1e-4)
@@ -124,5 +107,5 @@ plot!(p4,[se2[end];se2[end]],times,color=:orange,linestyle=:dash,label="Sample E
 
 plot(p1,p2,p3,p4,layout=(2,2),size=(1200,800))
 
-savefig("SRA_efficiency.png")
-savefig("SRA_efficiency.pdf")
+savefig("SRI_efficiency.png")
+savefig("SRI_efficiency.pdf")
