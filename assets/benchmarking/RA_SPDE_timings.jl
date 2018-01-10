@@ -1,5 +1,3 @@
-using SpecialMatrices
-using EllipsisNotation
 using DiffEqBase, OrdinaryDiffEq, StochasticDiffEq, Sundials
 using Plots; plotly()
 
@@ -39,19 +37,18 @@ const d = 1
 const e = 1
 const Vbp = 1e-3
 const Vr = 2e-2
-const ϵout = 0.005
-const ϵin = 0.005
-const ϵR = 0.005
+const ϵout = 0.1
+const ϵin = 0.1
+const ϵR = 0.1
 
 ############ Setup Diffusion Matrices
-
-Ax = -full(Strang(N))
-Ay = -full(Strang(M))
+const Ax = Tridiagonal([1.0 for i in 1:N-1],[-2.0 for i in 1:N],[1.0 for i in 1:N-1])
+const Ay = Tridiagonal([1.0 for i in 1:M-1],[-2.0 for i in 1:M],[1.0 for i in 1:M-1])
 Ax[2,1] = 2
 Ax[end-1,end] = 2
-Ax[end,end] = -2*(1+dx*kA)
 Ay[1,2] = 2
 Ay[end,end-1] = 2
+
 Ax ./= dx^2
 Ay ./= dy^2
 
@@ -64,6 +61,10 @@ no_cyp(x) = ifelse(x<0 || (xf-40<x && x<=xf),true,false)
 const NCYP_kmax = no_cyp.(X)
 
 u0 = zeros(M,N,6)
+
+const Ax_cache = zeros(M,N)
+const Ay_cache = zeros(M,N)
+const diffRA = zeros(M,N)
 
 function ra_gradient(t,u,du)
   RAout = @view u[:,:,1]
@@ -79,23 +80,20 @@ function ra_gradient(t,u,du)
   dBP = @view du[:,:,5]
   dRABP = @view du[:,:,6]
 
-  diffRA = DRA.*(RAout*Ax + Ay*RAout)
-  @. dRAout  = VRA - β*RAout + kp*RAin + diffRA
-  @. dRAin = β*RAout - kp*RAin - kdeg*(RAR/(gamma+RAR))*RAin - mon*RAin.*BP + moff*RABP - rdeg1*RAin
-  @. dR      = Vr - rdeg2*R- jalpha*RABP.*R + jbeta*BP.*RAR
-  @. dRAR    = jalpha*RABP.*R - jbeta*BP.*RAR
-  @. dBP     = Vbp - bpdeg1*BP - mon*RAin.*BP + moff*RABP + jalpha*RABP.*R - jbeta*BP.*RAR + ((d.*RAR)./(e+RAR))
-  @. dRABP   = mon*RAin*BP - moff*RABP - jalpha*RABP*R + jbeta*BP*RAR
+  A_mul_B!(Ax_cache,RAout,Ax)
+  A_mul_B!(Ay_cache,Ay,RAout)
+
+  Threads.@threads for i in eachindex(RAin)
+    @inbounds diffRA[i] = DRA*(Ax_cache[i] + Ay_cache[i])
+    @inbounds dRAout[i]  = VRA[i] - β*RAout[i] + kp*RAin[i] + diffRA[i]
+    @inbounds dRAin[i] = β*RAout[i] - kp*RAin[i] - kdeg*(RAR[i]/(gamma+RAR[i]))*RAin[i] - mon*RAin[i].*BP[i] + moff*RABP[i] - rdeg1*RAin[i]
+    @inbounds dR[i]    = Vr - rdeg2*R[i]- jalpha*RABP[i].*R[i] + jbeta*BP[i].*RAR[i]
+    @inbounds dRAR[i]    = jalpha*RABP[i].*R[i] - jbeta*BP[i].*RAR[i]
+    @inbounds dBP[i]     = Vbp - bpdeg1*BP[i] - mon*RAin[i].*BP[i] + moff*RABP[i] + jalpha*RABP[i].*R[i] - jbeta*BP[i].*RAR[i] + ((d.*RAR[i])./(e+RAR[i]))
+    @inbounds dRABP[i]   = mon*RAin[i]*BP[i] - moff*RABP[i] - jalpha*RABP[i]*R[i] + jbeta*BP[i]*RAR[i]
+  end
   nothing
 end
-
-################ Solve ODE
-
-println("Solve the ODE")
-tspan = (0.0,5000.0)
-prob = ODEProblem(ra_gradient,u0,tspan)
-@time ra_sol = solve(prob,CVODE_BDF(linear_solver = :GMRES),save_everystep=false,
-                     abstol=1e-7,reltol=1e-4)
 
 ################ Add Stochasticity
 
@@ -114,22 +112,54 @@ function ra_noise(t,u,du)
   nothing
 end
 
-u0 = ra_sol[end]
-tspan2 = (0.0,50.0)
+u0 = zeros(M,N,6)
+tspan2 = (0.0,500.0)
 prob = SDEProblem(ra_gradient,ra_noise,u0,tspan2)
+
+println("Solve with SOSRI")
+@time noisy_ra_sol = solve(prob,SOSRI(),
+                           save_everystep=false,progress_steps=10_000,
+                           progress=true,abstol=1e-1,reltol=1e-2)
 
 @time noisy_ra_sol = solve(prob,SRIW1(),
                            save_everystep=false,progress_steps=10_000,
                            progress=true,abstol=1e-5,reltol=1e-3)
 
-@time noisy_ra_sol = solve(prob,SOSRI(),
-                           save_everystep=false,progress_steps=10_000,
-                           progress=true,abstol=1e-1,reltol=1e-1)
-
 @time noisy_ra_sol = solve(prob,SOSRI2(),
                            save_everystep=false,progress_steps=10_000,
-                           progress=true,abstol=1e-1,reltol=1e-2)
+                           progress=true,abstol=1e-3,reltol=1e-3)
 
-@time noisy_ra_sol = solve(prob,EM(),dt=1/200000,
-                           save_everystep=false,progress_steps=10_000,
-                           progress=true)
+println("Solve with EM")
+# dt = 1/10000 fails
+for i in 1:10
+    @time noisy_ra_sol = solve(prob,EM(),dt=1/20000,
+                              save_everystep=false,progress_steps=10_000,
+                              progress=true)
+end
+
+# Instead try to estimate the total time
+
+tspan3 = (0.0,1/100)
+prob2 = SDEProblem(ra_gradient,ra_noise,u0,tspan3)
+
+# LOL No.
+
+@time noisy_ra_sol = solve(prob2,ImplicitEM(),dt=1/80000,
+                          save_everystep=false,progress_steps=1,
+                          progress=true)
+
+@time noisy_ra_sol = solve(prob2,ImplicitRKMil(),dt=1/80000,
+                        save_everystep=false,progress_steps=1,
+                        progress=true)
+
+################ Solve ODE
+
+println("Solve the ODE")
+tspan = (0.0,500.0)
+prob_ode = ODEProblem(ra_gradient,u0,tspan)
+@time ra_sol = solve(prob_ode,CVODE_BDF(linear_solver = :GMRES),save_everystep=false,
+                     abstol=1e-7,reltol=1e-4)
+
+du = zeros(N,M,6)
+ra_gradient(0.0,ra_sol[end],du)
+maximum(du)
