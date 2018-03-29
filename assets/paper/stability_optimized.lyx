@@ -82,36 +82,70 @@ Stability-Optimized High Order Methods and Stiffness Detection for Pathwise
 \end_layout
 
 \begin_layout Author
-Chris Rackauckas and Qing Nie
+Chris Rackauckas
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Department of Mathematics, University of California, Irvine, Irvine, CA
+ 92697, USA
+\end_layout
+
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Center for Complex Biological Systems, University of California, Irvine,
+ Irvine, CA 92697, USA
+\end_layout
+
+\end_inset
+
+ and Qing Nie 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Department of Developmental and Cell Biology, University of California,
+ Irvine, Irvine, CA 92697, USA
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Abstract
-Stochastic differential equation (SDE) models of biochemical networks and
- physical phonomena often exhibit large random transitions.
- This property, which we denote as pathwise stiffness, requires that numerical
- integration techniques are stable during these transitions in order to
- give a correct solution.
- However, this limits the allowed stepsize for common fixed timestep explicit
- and drift-implicit integrators, making this problem computationally difficult.
- In this manuscript we propose four separate methods to efficiently handle
- this stiffness.
- First, we develop a novel computational technique to derive strong order
- 1.5 stability-optimized explicit adaptive Runge-Kutta methods for stochastic
- differential equations with additive, affine, and diagonal noise.
- Secondly, we define an extension of L-stability to additive noise stochastic
- differential equations and derive two strong order 1.5 adaptive implicit
- methods: a fully-implicit Runge-Kutta (FIRK) method and an extension of
- a deterministic singly-diagonally implicit Runge-Kutta (ESDIRK) method.
- As a third approach, we developed an adaptive implicit-explicit (IMEX)
- extension of the ESDIRK method and show numerically that it can achieve
- strong order 1.5.
- Lastly, we develop a method for stiffness detection in SDE integrators
- and demonstrate the robustness of the technique.
- These methods are benchmarked against previous methods on a system of 19
- chemical reaction networks and on a discretization of a stochastic reaction-dif
-fusion equation to demonstrate efficiency gains between 5x-60x against a
- previous adaptive integrator and show the computationally infeasibility
- of fixed timestep integrators on these problems.
+Stochastic differential equations (SDE) often exhibit large random transitions.
+ This property, which we denote as pathwise stiffness, causes transient
+ bursts of stiffness which limit the allowed step size for common fixed
+ time step explicit and drift-implicit integrators.
+ We present four separate methods to efficiently handle this stiffness.
+ First, we utilize a computational technique to derive stability-optimized
+ adaptive methods of strong order 1.5 for SDEs.
+ The resulting explicit methods are shown to exhibit substantially enlarged
+ stability regions which allows for them to solve pathewise stiff biological
+ models orders of magnitude more efficiently than previous methods like
+ SRIW1 and Euler-Maruyama.
+ Secondly, these integrators include a stiffness estimator which allows
+ for automatically switching between implicit and explicit schemes based
+ on the current stiffness.
+ In addition, adaptive L-stable strong order 1.5 implicit integrators for
+ SDEs and stochastic differential algebraic equations (SDAEs) in mass-matrix
+ form with additive noise are derived and are demonstrated as more efficient
+ than the explicit methods on stiff chemical reaction networks by nearly
+ 8x.
+ Lastly.
+ we developed an adaptive implicit-explicit (IMEX) integration method based
+ off of a common method for diffusion-reaction-convection PDEs and show
+ numerically that it can achieve strong order 1.5.
+ These methods are benchmarked on a range of problems varying from non-stiff
+ to extreme pathwise stiff and demonstrate speedups between 5x-6000x while
+ showing computationally infeasibility of fixed time step integrators on
+ many of these test equations.
 \end_layout
 
 \begin_layout Section
@@ -119,13 +153,50 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-The unique features of stochastic models in many cases are pathwise-dependent.
- An ODE model of a chemical reaction network may stay at a constant steady
- state, but in the presence of randomness the trajectories may be switching
- between various steady states.
- These pathwise properties are of interest because they capture effects
- which cannot be found in deterministic models.
- However, these same effects cause numerical difficulties.
+Stochastic differential equations (SDEs) are dynamic equations of the form
+\begin_inset Formula 
+\[
+dX_{t}=f(t,X_{t})dt+g(t,X_{t})dW_{t},
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $X_{t}$
+\end_inset
+
+ is a 
+\begin_inset Formula $d$
+\end_inset
+
+-dimensional vector, 
+\begin_inset Formula $f:\mathbb{R}^{d}\rightarrow\mathbb{R}^{d}$
+\end_inset
+
+ is the drift coefficient, and 
+\begin_inset Formula $g:\mathbb{R}^{d}\rightarrow\mathbb{R}^{d\times m}$
+\end_inset
+
+ is the diffusion coefficient which describes the amount and mixtures of
+ the noise process 
+\begin_inset Formula $W_{t}$
+\end_inset
+
+ which is a 
+\begin_inset Formula $m$
+\end_inset
+
+-dimensional Brownian motion.
+ SDEs are of interest in scientific disciplines because they can exhibit
+ behaviors which are not found in deterministic models.
+ For example, An ODE model of a chemical reaction network may stay at a
+ constant steady state, but in the presence of randomness the trajectories
+ may be switching between various steady states.
+ In many cases, these unique features of stochastic models are pathwise-dependen
+t and are thus not a property of the evolution of the mean trajectory.
+ However, these same effects cause random events of high numerical stiffness,
+ which we denote as pathwise stiffness, which can cause difficulties for
+ numerical integration methods.
  
 \end_layout
 
@@ -160,8 +231,12 @@ reference "fig:pathwise_stiff"
 
 , which the solution switches between when the noise is sufficiently large.
  While near a steady state the derivative is approximately zero making the
- problem non-stiff, during these transitions the derivative of the deterministic
- portion reaches a maximum of 1000.
+ problem non-stiff, during these transitions the derivative of the drift
+ term reaches a maximum of 
+\begin_inset Formula $\approx400$
+\end_inset
+
+.
  This means that in order to be stable, explicit Stochastic Runge-Kutta
  (SRK) must have a small 
 \begin_inset Formula $\Delta t$
@@ -172,11 +247,11 @@ reference "fig:pathwise_stiff"
  trajectory causes stochastic bursts of numerical stiffness, a phenomena
  which we will denote pathwise stiffness.
  The fixed time step Euler-Maruyama method would require 
-\begin_inset Formula $dt<10^{-4}$
+\begin_inset Formula $dt<4\times10^{-3}$
 \end_inset
 
  to be stable for most trajectories, thus requiring greater than 
-\begin_inset Formula $5\times10^{4}$
+\begin_inset Formula $2\times10^{4}$
 \end_inset
 
  steps to solve this 1-dimensional SDE.
@@ -188,15 +263,16 @@ reference "fig:pathwise_stiff"
 
 .
  Yet even if these switches are only a small portion of the total time,
- the stability requirement imposed by their existence dominates the computationa
-l cost.
+ the stability requirement imposed by their existence determines the possible
+ stepsizes and thus has a large contribution to the overall computational
+ cost.
  While implicit methods can be used to increase the stability range, this
  can vastly increase the overall computational cost of each step, especially
  in the case large systems of SDEs like discretizations of stochastic reaction-d
 iffusion equations.
  In addition, implicit solvers have in practice a smaller stability region
- than the theory due to requiring convergence of the quasi-Newton solvers
- for the implicit steps.
+ due to requiring convergence of the quasi-Newton solvers for the implicit
+ steps.
  This problem is mitigated in ODE software by high-quality stage predictors
  given by extrapolation algorithms for good initial conditions for the Newton
  steps 
@@ -208,9 +284,10 @@ key "RN3790"
 
 .
  However, there are no known algorithms for stage predictors in the presence
- of large noise bursts and thus implicit solvers have a form of instability.
- Thus (we will show) both fixed time step explicit and implicit solvers
- are inadequate for handling this common class of SDEs.
+ of large noise bursts and thus we will demonstrate that classic implicit
+ solvers have a form of instability.
+ Thus both fixed time step explicit and implicit solvers are inadequate
+ for efficiently handling this common class of SDEs.
 \end_layout
 
 \begin_layout Standard
@@ -281,7 +358,7 @@ key "RN3787"
 .
  This demonstrated that the key to solving these equations efficiently required
  controlling the time steps in a pathwise manner.
- However, the methods were still largely stability-bound, as in the chosen
+ However, the methods were still largely stability-bound, meaning the chosen
  tolerances to solve the model were determined by what was necessary for
  stability and was far below the error necessary for the application.
  The purpose of this investigation is to develop numerical methods with
@@ -338,7 +415,8 @@ ed SRK methods can adequately solve transiently stiff equations without
 
 \begin_layout Standard
 On the other hand, to handle extreme stiffness we develop implicit RK methods
- for additive noise SDEs.
+ for SDEs and stochastic differential algebraic equations (SDAEs) in mass
+ matrix form with additive noise.
  We extend the definition of L-stability to additive noise SDEs and develop
  two strong order 1.5 methods: a fully implicit 2-stage L-stable method and
  an extension of the a well-known L-stable explicit first stage singly diagonall
@@ -352,7 +430,7 @@ key "RN3792"
 
 .
  To the author's knowledge, these are the first high order adaptive L-stable
- methods for SDEs.
+ methods for SDEs and the first adaptive proposed SDAE integrators.
  In addition, to extend the utility of these additive noise methods, we
  derive an extension of the methods for additive SDEs to affine SDEs (mixed
  multiplicative and additive noise terms) through a Lamperti transformation
@@ -402,72 +480,8 @@ Adaptive Strong Order 1.0/1.5 SRK Methods for Additive and Diagonal Noise
 \end_layout
 
 \begin_layout Standard
-Take stochastic differential equations of the general form:
-\begin_inset Formula 
-\[
-dX_{t}=f(t,X_{t})dt+g(t,X_{t})dW_{t}
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $X_{t}$
-\end_inset
-
- is a 
-\begin_inset Formula $d$
-\end_inset
-
--dimensional vector, where 
-\begin_inset Formula $f:\mathbb{R}^{d}\rightarrow\mathbb{R}^{d}$
-\end_inset
-
- is the drift coefficient and 
-\begin_inset Formula $g:\mathbb{R}^{d}\rightarrow\mathbb{R}^{d\times m}$
-\end_inset
-
- is a matrix equation known as the diffusion coefficient which describes
- the amount and mixtures of the noise process 
-\begin_inset Formula $W_{t}$
-\end_inset
-
- which is a 
-\begin_inset Formula $m$
-\end_inset
-
--dimensional Brownian motion.
- In many models, noise is added to deterministic equations phenomenologically.
- These models are numerically simulated for their qualitative behavior:
- scientists are interested not in their high accuracy numerical predictions
- but to understand the general phenomena which only occurs in the presence
- of stochasticity, like random switching between cell types.
- In these cases, the noise process can be modeled as exogenous to the system
- and thus not dependent the system itself, leading to the assumption that
- 
-\begin_inset Formula $g(t,X_{t})\equiv g(t)$
-\end_inset
-
- which is known as additive noise.
- Another common case is multiplicative noise, where to each deterministic
- equation a noise term 
-\begin_inset Formula $\sigma_{i}X_{t}^{i}dW_{t}$
-\end_inset
-
- is added to give proportional amounts of randomness added to the dynamics.
- This results in 
-\begin_inset Formula $g(t,X_{t})$
-\end_inset
-
- being the diagonal matrix 
-\begin_inset Formula $\left(\sigma_{i}X_{t}^{i}\right)$
-\end_inset
-
- and thus falls into the more general category of diagonal noise.
-\end_layout
-
-\begin_layout Standard
 The class of methods we wish to study are the adaptive strong order 1.5 SRK
- methods 
+ methods for diagonal noise 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "RN2707,RN3787"
@@ -475,6 +489,16 @@ key "RN2707,RN3787"
 \end_inset
 
 .
+ Diagonal noise is the case where the diffusion term 
+\begin_inset Formula $g$
+\end_inset
+
+ is diagonal matrix 
+\begin_inset Formula $\left(\sigma_{i}X_{t}^{i}\right)$
+\end_inset
+
+ and includes phenomenological noise models like multiplicative and affine
+ noise.
  The diagonal noise methods utilize the same general form and order conditions
  as the methods for scalar noise so we use their notation for simplicity.
  The strong order 1.5 methods for scalar noise are of the form
@@ -510,7 +534,12 @@ key "RN3175"
 \end_inset
 
 .
- In the case of additive noise, this reduces to the form
+ In the case of additive noise, defined as having the diffusion coefficient
+ satisfy 
+\begin_inset Formula $g(t,X_{t})\equiv g(t)$
+\end_inset
+
+ , reduces to the form
 \end_layout
 
 \begin_layout Standard
@@ -1633,8 +1662,163 @@ key "RN3169"
 ).
 \end_layout
 
+\begin_layout Subsubsection
+Note on Implementation and Stage Prediction
+\end_layout
+
+\begin_layout Standard
+One has to be careful with the implementation to avoid accumulation of floating
+ point error for highly stiff equations.
+ For our implementation, we used a method similar to that described in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "RN3793"
+
+\end_inset
+
+.
+ The implicit stages were defined in terms of
+\begin_inset Formula 
+\begin{equation}
+z_{i}=hf\left(t+c_{i}^{(0)},H_{j}^{(0)}\right)\label{eq:zi}
+\end{equation}
+
+\end_inset
+
+ where 
+\begin_inset Formula $X_{0}$
+\end_inset
+
+ is the previous step, and thus the iterations become
+\begin_inset Formula 
+\begin{equation}
+H_{j}^{(0)}=\gamma z_{i}+\sum_{j=1}^{i-1}A_{ij}^{(0)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{i-1}B_{ij}^{(0)}g\left(t_{n}+c_{j}^{(1)}h\right)\frac{I_{(1,0)}}{h}=\gamma z_{i}+\alpha_{i}.\label{eq:z}
+\end{equation}
+
+\end_inset
+
+This gives the implicit system for the residual:
+\begin_inset Formula 
+\[
+G(z_{i})=z_{i}-hf\left(t_{n}+c_{i}^{(0)}h,\gamma z_{i}+\alpha_{i}\right)
+\]
+
+\end_inset
+
+which has a Jacobian 
+\begin_inset Formula $I-\gamma hJ$
+\end_inset
+
+ where 
+\begin_inset Formula $J$
+\end_inset
+
+ is the Jacobian of 
+\begin_inset Formula $f$
+\end_inset
+
+ and thus is the same for each stage.
+ For choosing the values to start the Newton iterations, also known as stage
+ prediction, we tested two methods.
+ The first is the trivial stage predictor which is 
+\begin_inset Formula $z_{i}=z_{j}$
+\end_inset
+
+ for the 
+\begin_inset Formula $j$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula $j<i$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{j}<c_{i}$
+\end_inset
+
+, i.e.
+ using the closest derivative estimate.
+ The other method that was tested is what we denote the stochastic minimal
+ residual estimate given by 
+\begin_inset Formula $H_{j}^{(0)}=\alpha_{i}$
+\end_inset
+
+ or 
+\begin_inset Formula $z_{i}=0$
+\end_inset
+
+.
+ This method takes into account the stochastic bursts at a given step and
+ thus demonstrated much better stability.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Note on Mass Matrices
+\end_layout
+
+\begin_layout Standard
+We note that these methods also apply to solving ODEs with mass-matrices
+ of the form:
+\begin_inset Formula 
+\[
+MdX_{t}=f(t,X_{t})dt+Mg(t,X_{t})dW_{t}.
+\]
+
+\end_inset
+
+ The derivation of the method is the same, except in this case we receive
+ the implicit system
+\begin_inset Formula 
+\[
+G(z_{i})=Mz_{i}-hf\left(t_{n}+c_{i}^{(0)}h,\gamma z_{i}+\alpha_{i}\right)
+\]
+
+\end_inset
+
+ which has a Jacobian 
+\begin_inset Formula $M-\gamma hJ$
+\end_inset
+
+.
+ Like in the ODE case, these implicit methods can thus solve DAEs in mass-matrix
+ form (the case where 
+\begin_inset Formula $M$
+\end_inset
+
+ is singular), though we leave discussion of convergence for future research.
+ One interesting property to note is that a zero row in the mass matrix
+ corresponds to a constraint equation which is only dependent on the output
+ of 
+\begin_inset Formula $f$
+\end_inset
+
+ since the multiplication of 
+\begin_inset Formula $g$
+\end_inset
+
+ by 
+\begin_inset Formula $M$
+\end_inset
+
+ is zero in that same corresponding row.
+ Thus when a singular mass matrix is applied to the noise equation, the
+ corresponding constraints are purely deterministic relations.
+ Thus while this is a constrained form, properties like conservation of
+ energy in physical models can still be placed on the solution using this
+ mass-matrix formulation.
+\end_layout
+
 \begin_layout Section
-Optimized-Stability Methods for Affine Noise via Transformation
+Optimized-Stability Methods for Affine Noise via Transformation 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Affine-Transformation"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3414,27 +3598,17 @@ reference "tab:SRA-Runtimes-on-Van"
 
 \end_inset
 
-, which show that SRA1 takes more than 60 times and SRA3 nearly 20 times
+, which show that SRA1 takes more than 10 times and SRA3 nearly 4 times
  as long as the SOSRA methods.
  In this case the implicit method SKenCarp is the fastest by besting the
- SOSRA methods by 2x while achieving similar qualitative results.
+ SOSRA methods by more than 8x while achieving similar qualitative results.
  This shows that as stiffness comes into play, the SOSRA methods along with
  the implicit SKenCarp method are more robust and efficient.
- We note that we attempted to solve the equations using a fixed time step
- implicit method as well (implicit Euler-Maruyama), though during the zero-cross
-ing events the quasi-Newton steps would diverge even when 
-\begin_inset Formula $\Delta t=10^{-6}$
-\end_inset
-
- (using an efficient and numerically robust implementation found in common
- stiff methods for ODEs 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "RN3790"
-
-\end_inset
-
-).
+ The fixed time step methods were far less efficient.
+ Adaptive timestepping via rejection sampling was crucial to the success
+ of the SKenCarp method because it required the ability to pull back to
+ a smaller timestep when Newton iterations diverged, otherwise it resulted
+ in time estimates around 5x slower than SOSRA.
 \end_layout
 
 \begin_layout Standard
@@ -3447,7 +3621,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="3">
+<lyxtabular version="3" rows="8" columns="3">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -3475,7 +3649,36 @@ Run-time (seconds)
 \begin_inset Text
 
 \begin_layout Plain Layout
-Relative Time (vs SOSRA)
+Relative Time (vs SKenCarp)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SKenCarp
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+37.233331 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1x
 \end_layout
 
 \end_inset
@@ -3504,7 +3707,7 @@ SOSRA
 \begin_inset Text
 
 \begin_layout Plain Layout
-1x
+8.476x
 \end_layout
 
 \end_inset
@@ -3533,7 +3736,7 @@ SOSRA2
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.251x
+10.60x
 \end_layout
 
 \end_inset
@@ -3586,19 +3789,7 @@ SRA3
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-4.390x
+37.22x
 \end_layout
 
 \end_inset
@@ -3606,35 +3797,6 @@ SRA3
 </row>
 <row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-SKenCarp
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2648.749583
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-8.393x
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -3643,7 +3805,7 @@ SRA1
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -3652,11 +3814,77 @@ SRA1
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+91.25x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Euler-Maruyama
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5949.195151 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+159.8x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Drift-Implicit Stochastic 
+\begin_inset Formula $\theta$
+\end_inset
+
+-Method 
+\begin_inset Formula $\left(\theta=\frac{1}{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+229111.15122
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-10.77x
+6153x
 \end_layout
 
 \end_inset
@@ -3677,6 +3905,34 @@ SRA Run times on Van der Pol with additive noise.
  The additive noise Van der Pol equation was solved 100 times using the
  respective algorithms at the highest tolerance by powers of two which match
  the low tolerance solution to plotting accuracy.
+ The fixed time step methods had their 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+ determined as the largest 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+ in increments of powers of 2 that produced no unstable trajectories.
+ This resulted in 
+\begin_inset Formula $\Delta t=5e-8$
+\end_inset
+
+ for both the Euler-Maruyama the Drift-Implicit Stochastic 
+\begin_inset Formula $\theta$
+\end_inset
+
+-methods.
+ Note that the total time of the drift-implicit stochastic 
+\begin_inset Formula $\theta$
+\end_inset
+
+-method and the Euler-Maruyama method were determined by extrapolating the
+ time from a single stable trajectory on 
+\begin_inset Formula $t\in[0,1]$
+\end_inset
+
+ due to time constraints.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -4160,7 +4416,7 @@ reference "subsec:Epithelial-Mesenchymal-Transitio"
  Since SOSRI demonstrated that its stability is much higher than even SOSRI2,
  we show the effect of tolerance changes on SOSRI as well.
  The results show that at similar tolerances the SOSRI method takes nearly
- the same amount of time as SRIW1 (Table 
+ 5x less time than SRIW1 (Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:SRI-times-for-Oval2"
@@ -4892,8 +5148,11 @@ reference "tab:SRI-times-for-Oval2-long"
 .
  Once again, SRIW1 needed a lower tolerance than is necessary in order to
  stay stable.
- SOSRI is able to solve the problem only asking for around 2 digits of accuracy,
- while the others require more (especially in absolute tolerance as there
+ SOSRI is able to solve the problem only asking for around 
+\begin_inset Formula $tol=10^{-2}$
+\end_inset
+
+, while the others require more (especially in absolute tolerance as there
  is a stiff reactant whose values travel close to zero).
  One interesting point to note is that at similar tolerances both SOSRI
  and SOSRI2 receive similar timings and both over 6 times faster than the
@@ -5342,61 +5601,6 @@ SRIW1
 \begin_inset Text
 
 \begin_layout Plain Layout
-Drift-Implicit Stochastic 
-\begin_inset Formula $\theta$
-\end_inset
-
--Method 
-\begin_inset Formula $\left(\theta=\frac{1}{2}\right)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-8796.472603
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-391.4x
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 Drift-Implicit 
 \begin_inset Formula $\theta$
 \end_inset
@@ -5410,7 +5614,7 @@ Drift-Implicit
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -5419,7 +5623,7 @@ Drift-Implicit
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -5428,7 +5632,7 @@ Drift-Implicit
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -5437,11 +5641,66 @@ Drift-Implicit
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 328.3x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Drift-Implicit Stochastic 
+\begin_inset Formula $\theta$
+\end_inset
+
+-Method 
+\begin_inset Formula $\left(\theta=\frac{1}{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8796.472603
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+391.4x
 \end_layout
 
 \end_inset
@@ -5506,18 +5765,18 @@ name "tab:SRI-times-for-Oval2-long"
 \begin_layout Standard
 As another test we applied the methods to a method of lines discretization
  of a stochastic partial differential equation (SPDE) describing the spatial
- regulation of the zebrafish hindbrain via retinoic acid signaling 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "RN3805"
-
-\end_inset
-
-.
- The model is described in Section 
+ regulation of the zebrafish hindbrain via retinoic acid signaling ( Section
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "subsec:Retinoic-Acid-SPDE"
+
+\end_inset
+
+) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "RN3805"
 
 \end_inset
 
@@ -5527,44 +5786,58 @@ reference "subsec:Retinoic-Acid-SPDE"
 \end_inset
 
  SDEs.
- The model was solved nearly to steady state on the PDE described by the
- drift term.
- Starting from the ODE steady state, noise was added to the gradient by
- solving the extension to an SPDE with multiplicative noise on 
-\begin_inset Formula $t\in\left[0,50\right]$
+ Starting from an initial zero state, a concentration gradient emerges over
+ 
+\begin_inset Formula $t\in\left[0,500\right]$
 \end_inset
 
 .
- Each of the methods solved the problem at the highest tolerance possible
- and the timings (Table 
+ Each of the methods solved the problem at the highest tolerance that was
+ stable giving the results in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:SRI-times-for-SPDE"
 
 \end_inset
 
-).
- Since this problem starts from the only positive steady state, it is only
- semi-stiff.
- Yet we receive similar results as the other problems with the SOSRI methods
- able to compute steady state stochastic gradients nearly 6x faster than
- SRIW1, signaling that the expanded stability domain can lead to speedups
- against other high order SRK methods even to equations which only exhibit
- slight amounts of stiffness.
- A stable 
-\begin_inset Formula $\Delta t$
+.
+ Time stepping for this problem is heavily limited by the high diffusion
+ constant which results in a strict CFL condition for the 2nd order finite
+ difference discretization that is used (in the PDE sense), making this
+ problem's stepping stability-bound for explicit methods.
+ Because of this stiffness in the real axis, we found that the previous
+ high order adaptive method SRIW1 did not perform well on this problem in
+ comparison to Euler-Maruyama because the drift term is expensive and the
+ extra function calls outweighed the slightly larger timesteps.
+ However, the enhanced stability of the SOSRI and SOSRI2 methods allowed
+ for much larger time steps while keeping the same number of 
+\begin_inset Formula $f$
 \end_inset
 
- for the Euler-Maruyama, Runge-Kutta Milstein, and stochstic 
+ calls per step, resulting in a more efficient solution when high accuracy
+ is not necessary.
+ We note that the drift-implicit stochastic 
 \begin_inset Formula $\theta$
 \end_inset
 
--methods could not be found (must be 
-\begin_inset Formula $<10^{-6}$
+-method and drift implicit 
+\begin_inset Formula $\theta$
 \end_inset
 
- and too long to a true estimate).
- 
+Runge-Kutta Milstein methods were too inefficient to estimate since their
+ time steps were constrained to be near that of the Euler-Maruyama equation
+ due to divergence of the Newton iterations.
+ This SPDE could also be solved via SKenCarp by using the transformation
+ of Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Affine-Transformation"
+
+\end_inset
+
+, but from experiments on the PDE we note that efficient solution of the
+ implicit equations would require using a preconditioned Krylov method due
+ to the size of the system and thus it is left for future investigation.
 \end_layout
 
 \begin_layout Standard
@@ -5577,7 +5850,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="4" columns="5">
+<lyxtabular version="3" rows="5" columns="5">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -5657,7 +5930,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $10^{-1}$
+\begin_inset Formula $10^{-2}$
 \end_inset
 
 
@@ -5669,7 +5942,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-1845.5754615
+700.763721
 \end_layout
 
 \end_inset
@@ -5698,7 +5971,7 @@ SOSRI2
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $10^{-1}$
+\begin_inset Formula $10^{-3}$
 \end_inset
 
 
@@ -5710,7 +5983,7 @@ SOSRI2
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $10^{-1}$
+\begin_inset Formula $10^{-3}$
 \end_inset
 
 
@@ -5722,7 +5995,7 @@ SOSRI2
 \begin_inset Text
 
 \begin_layout Plain Layout
-2420.1778155
+1016.6079645
 \end_layout
 
 \end_inset
@@ -5731,7 +6004,54 @@ SOSRI2
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.311x
+1.451x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Euler-Maruyama
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1758.849929
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.510x
 \end_layout
 
 \end_inset
@@ -5775,7 +6095,7 @@ SRIW1
 \begin_inset Text
 
 \begin_layout Plain Layout
-11174.834712 
+4205.517206
 \end_layout
 
 \end_inset
@@ -5784,7 +6104,7 @@ SRIW1
 \begin_inset Text
 
 \begin_layout Plain Layout
-6.055x
+6.001x
 \end_layout
 
 \end_inset
@@ -5802,7 +6122,7 @@ SRIW1
 
 \begin_layout Plain Layout
 SRI times for the the retinoic acid SPDE model on 
-\begin_inset Formula $t\in\left[0,50\right]$
+\begin_inset Formula $t\in\left[0,500\right]$
 \end_inset
 
 .
@@ -5812,6 +6132,15 @@ SRI times for the the retinoic acid SPDE model on
  not diverge (going up by powers of 10).
  Note that none of the cases did the two timings vary by more than 1% of
  the total run time.
+ Euler-Maruyama used time steps of 
+\begin_inset Formula $\Delta t=1/20000$
+\end_inset
+
+ since we note that at 
+\begin_inset Formula $\Delta t=1/10000$
+\end_inset
+
+ approximately half of the trajectories (simulating 10) were unstable.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -5848,10 +6177,10 @@ In this work we derived stability-optimized SRK methods for additive and
  and by incorporating the coefficients for higher conditions, efficiency
  can be optimized as well by adding the norm of the principle error coefficients
  to the optimization function.
- We note that the majority of the search was performed using global optimizers
- in massive parallel using a hand-optimized CUDA kernel for the numerical
- integral of the characteristic function, replacing man-hours with core-hours
- and effectively optimizing the method.
+ The majority of the search was performed using global optimizers in massive
+ parallel using a hand-optimized CUDA kernel for the numerical integral
+ of the characteristic function, replacing man-hours with core-hours and
+ effectively optimizing the method.
  The clear next steps are to find SRA and SRI methods with minimal error
  estimates and sensible stability regions for the cases in which lower strong
  error matters, and similar optimizations on SRK methods developed for small
@@ -5867,9 +6196,13 @@ In this work we also derived L-stable methods for additive (and thus multiplicat
 ive and affine) noise equations, and computationally could not find an A-B-L
  stable method.
  While our method does not prove that no 2-stage A-B-L method exists, we
- have at least drastically narrowed down its possibility.
+ have at least narrowed down its possibility.
  Additionally an extension of a well-known ESDIRK method to additive noise
  was developed.
+ These ESDIRK methods have an extension which allows for mass-matrices in
+ the problem formulation.
+ Using singular mass matrices, these methods also present themselves as
+ integrators for a form of SDAEs with deterministic constraints.
  This method has an implicit-explicit (IMEX) extension and the stochastic
  extension was compatible with both tableaus.
  We showed that this IMEX version of the method could numerically converge
@@ -5881,17 +6214,60 @@ ive and affine) noise equations, and computationally could not find an A-B-L
  option for discretizations of large affine noise SPDEs by being able to
  use a low number of time steps while minimizing the amount of work required
  to solve the implicit equation.
- However, while being much more efficient than the common stochastic theta
- methods, the benchmark results were less than adequate on the chosen test
- problems.
- In particular, the stepsize restrictions imposed by divergence of the quasi-New
-ton steps posed a particular issue.
- Further studies could design stage prediction algorithms to potentially
- alleviate this issue.
- In addition, a more strict stability condtions such as B-stability may
- be required for large time steps on the pathwise stiff problems of our
- investigation.
+ We note that adaptivity along with efficient stage predictors was required
+ to be more efficient than the common stochastic theta methods since divergence
+ of quasi-Newton steps can be common if care is not taken.
+ After engineering the method with all of the components together, the benchmark
+ results showed large efficiency gains over both the previous drift-implicit
+ and stability-optimized explicit methods.
+ While previous literature questioned the applicability of L-stable integrators
+ to stochastic differential equations due to high error in the slow variables
  
+\begin_inset CommandInset citation
+LatexCommand cite
+key "RN3811"
+
+\end_inset
+
+, our computations show that this analysis may be mislead by analyzing strong
+ order 0.5 methods.
+ With our higher strong order methods we see sufficiently accurate results
+ on real stiff problems, and this is greatly helped by time stepping adaptivity.
+\end_layout
+
+\begin_layout Standard
+The main caveat for our methods is the restrictions on the form of noise.
+ While we have shown that an enlarged class of problems (affine noise) can
+ handled by the integrators for additive noise problems, this is still a
+ very special case in the scope of possible SDEs.
+ Diagonal noise is a much expanded scope but is still constrained, and our
+ implicit methods were only derived for the additive noise case.
+ Further research should focus on the expansion of this these techniques
+ to high order adaptive ESDIRK diagonal noise integrators.
+ In addition, when 
+\begin_inset Formula $g$
+\end_inset
+
+ is non-zero a 
+\begin_inset Quotes eld
+\end_inset
+
+diagonal noise
+\begin_inset Quotes erd
+\end_inset
+
+ problem over the complex plane does not have diagonal noise (due to the
+ mixing of real and complex parts from complex multiplication, and reinterpretat
+ion as a 
+\begin_inset Formula $2n$
+\end_inset
+
+ real system).
+ Thus these methods are not applicable to problems defined in the complex
+ plane with complex Wiener processes.
+ Development of similar integrators for commutative noise problems could
+ allow for similar performance benefits on such problems and is a topic
+ for future research.
 \end_layout
 
 \begin_layout Standard
@@ -5900,32 +6276,34 @@ Our timings show that the current high order SRK methods are stability-bound
  accuracy in stochastic simulations, most of the computational effort is
  lost to generating more accurate than necessary solutions in order to satisfy
  stability constraints.
- For additive noise problems we were able to obtain solutions about 20x-60x
+ For additive noise problems we were able to obtain solutions about 5x-30x
  faster and for diagonal noise approximately 6x than the current adaptive
  methods (SRA1, SRA3, SRIW1), while common methods like Euler-Maruyama and
  Drift-Implicit 
 \begin_inset Formula $\theta$
 \end_inset
 
- Runge-Kutta Milstein were 100x slower or in many cases could not even finish.
+ Runge-Kutta Milstein were in many cases hundreds of times slower or in
+ many cases could not even finish.
  We have also shown that these methods are very robust even at high tolerances
  and have a tendency to produce the correct qualitative results on semi-stiff
  equations (via plots) even when the user chosen accuracy is low.
- Given that the required user input is minimal, we see these as very strong
- candidates for default general purpose solvers for problem-solving environments
- such as MATLAB and Julia since they can easily and efficiently produce
- results which are sufficiently correct.
- We note that the SOSRA and SOSRA2 methods are not as efficient at low tolerance
-s as SRA3, so SRA3 should be used when high accuracy is necessary (on additive
- or affine noise problems).
+ Given that the required user input is minimal and work over a large range
+ of stiffness, we see these as very strong candidates for default general
+ purpose solvers for problem-solving environments such as MATLAB and Julia
+ since they can easily and efficiently produce results which are sufficiently
+ correct.
+ Due to a choice in the optimization, the SOSRA and SOSRA2 methods are not
+ as efficient at low tolerances as SRA3, so SRA3 should be used when high
+ accuracy is necessary (on additive or affine noise problems).
  However, in many cases like integrating to find steady distributions of
  bistable parameter regimes or generating trajectories of phonomenological
  models, this ability to quickly get a more course estimate is valuable.
 \end_layout
 
 \begin_layout Standard
-We note that the stiffness detection in SDEs is a novel addition which we
- have demonstrated can act very robustly.
+The stiffness detection in SDEs is a novel addition which we have demonstrated
+ can act very robustly.
  It has a control parameter 
 \begin_inset Formula $\omega$
 \end_inset
@@ -5945,9 +6323,27 @@ We note that the stiffness detection in SDEs is a novel addition which we
  the Jacobian must still be computed), and thus this can be paired with
  a stiff solver to allow for automatic switching between stiff and non-stiff
  solvers.
- Given that the cost for such stiffness checks is minimal, we are interested
- in future studies on the efficiency of such methods due to the stochastic
- nature of stiffness in SDEs.
+ Given that the cost for such stiffness checks is minimal and the demonstrated
+ efficiency of the implicit methods on stiff equations, we are interested
+ in future studies on the efficiency of such composite method due to the
+ stochastic nature of stiffness in SDEs.
+\end_layout
+
+\begin_layout Section
+Acknowledgments 
+\end_layout
+
+\begin_layout Standard
+This work was partially supported by NIH grants R01GM107264 and P50GM76516
+ and NSF grants DMS1562176 and DMS1161621.
+ This material is based upon work supported by the National Science Foundation
+ Graduate Research Fellowship under Grant No.
+ DGE-1321846, the National Academies of Science, Engineering, and Medicine
+ via the Ford Foundation, and the National Institutes of Health Award T32
+ EB009418.
+ Its contents are solely the responsibility of the authors and do not necessaril
+y represent the official views of the NIH.
+ 
 \end_layout
 
 \begin_layout Section
@@ -8496,7 +8892,7 @@ Value
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.03
+0.1
 \end_layout
 
 \end_inset

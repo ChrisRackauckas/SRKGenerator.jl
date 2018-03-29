@@ -40,7 +40,7 @@ brownian_values2 = cumsum([[zeros(size(prob.u0))];[sqrt(test_dt)*randn(size(prob
 np = NoiseGrid(t,brownian_values,brownian_values2)
 fixed_noise_prob = SDEProblem(VanDerPol2(μ=1e5),σ,[0;2.],(0.0,6.3),noise=np)
 
-@time sol1 =solve(fixed_noise_prob,SOSRA();abstol=1,reltol=1/2^1,seed=5)
+@time sol1 =solve(fixed_noise_prob,SOSRA();abstol=1,reltol=1/2^1)
 p1 = plot(sol1,plotdensity=20000,denseplot=true,ylims=[-10,10],title="High tolerance SOSRA",
           legend = false,
           xtickfont = font(16, "Ariel"),titlefont = font(20, "Ariel"),
@@ -65,8 +65,10 @@ p3 = plot(sol42,plotdensity=20000,denseplot=true,ylims=[-10,10],title="Low Toler
           ytickfont = font(16, "Ariel"),guidefont = font(18, "Ariel"),
           legendfont = font(14, "Ariel"))
 
-#@time sol52 =solve(fixed_noise_prob,RackKenCarp();abstol=1/2^6,reltol=1/2^6)
-#p5 = plot(sol52,plotdensity=20000,denseplot=true,ylims=[-10,10])
+@time sol52 =solve(fixed_noise_prob,RackKenCarp();abstol=16,reltol=16)
+p5 = plot(sol52,plotdensity=20000,denseplot=true,ylims=[-10,10])
+
+diff(sol52.t)
 
 plot(p0,p1,p2,p3,layout=grid(2,2),size=(1200,800))
 
@@ -82,6 +84,25 @@ savefig("additive_van_der_pol.pdf")
 @time sol4 =solve(prob,SRA3();abstol=1/2^6,reltol=1/2^3)
 @time sol5 =solve(prob,RackKenCarp();abstol=1,reltol=1)
 
+#### Estimates
+
+prob_quick = SDEProblem(VanDerPol2(μ=1e5),σ,[0;2.],(0.0,1.0))
+@time sol6 =solve(prob_quick,EM();dt=5e-7) # Unstable
+@time sol6 =solve(prob_quick,EM();dt=1e-7) # Stable?
+
+42.087122 *6.3 * 100 # 7 hours 21 minutes....
+
+@time sol6 =solve(prob,EM();dt=1e-7) # Stable?
+
+346.117152 * 100 # 9 hours 36 minutes 52 seconds
+
+@time sol6 =solve(prob,EM();dt=5e-8) # Stable?
+
+@time sol6 =solve(prob_quick,ImplicitEM();dt=1e-7) # Unstable
+@time sol6 =solve(prob_quick,ImplicitEM();dt=5e-8) # Stable?
+
+363.668494 * 6.3 * 100 # 2 days 15 hours 38 minutes and 31 seconds...
+
 #### Monte Carlo
 println("SOSRA time")
 @time sol1 =solve(monte_prob,SOSRA();num_monte=N,abstol=10,reltol=1/2^1,verbose=false,save_everystep=false)
@@ -92,7 +113,24 @@ println("SRA1 time")
 println("SRA3 time")
 @time sol4 =solve(monte_prob,SRA3();num_monte=N,abstol=1/2^6,reltol=1/2^3,verbose=false,save_everystep=false)
 println("RackKenCarp time")
-@time sol5 =solve(monte_prob,RackKenCarp();num_monte=N,abstol=1/2^6,reltol=1/2^6,verbose=false,save_everystep=false)
+@time sol5 =solve(monte_prob,RackKenCarp();num_monte=N,abstol=16,reltol=16,verbose=false,save_everystep=false)
+
+sum(sol.retcode == :Success for sol in sol5)
+
+@time sol5 =solve(monte_prob,RackKenCarp();num_monte=N,abstol=4,reltol=4,verbose=false,save_everystep=false)
+
+sum(sol.retcode == :Success for sol in sol5)
+
+@time sol5 =solve(monte_prob,RackKenCarp(extrapolant=:trivial);num_monte=N,
+                  abstol=4,reltol=4,verbose=false,save_everystep=false)
+
+sum(sol.retcode == :Success for sol in sol5)
+
+println("EM time")
+# dt = 1e-7 has 15 failures
+@time sol5 =solve(monte_prob,EM();num_monte=N,dt=1e-8,save_everystep=false)
+
+sum(sol.retcode == :Success for sol in sol5)
 
 #######
 
