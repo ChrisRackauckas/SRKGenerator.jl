@@ -71,21 +71,3 @@ plot(p1,p2,p3,layout=(3,1),size=(600,800))
 
 savefig("convergence.png")
 savefig("convergence.pdf")
-
-font("LM Roman 12",20)
-
-
-
-
-
-
-
-
-
-
-
-
-using Plots; pyplot()
-plot(rand(10,10),title="My Title",titlefont = font(20))
-plot(rand(10,10),title="My Title",titlefont = font("CMU Sans Serif",20))
-plot(rand(10,10),title="My Title",titlefont = font(20,"LM Roman"))
