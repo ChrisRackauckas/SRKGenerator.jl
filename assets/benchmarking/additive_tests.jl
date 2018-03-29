@@ -22,12 +22,15 @@ setups = [Dict(:alg=>EM(),:dts=>1.0./5.0.^((1:length(reltols)) - 2))
           Dict(:alg=>SKenCarp())
           ]
 
-wp = WorkPrecisionSet(prob,abstols,reltols,setups;numruns=10000,names=names,error_estimate=:l2)
+wp = WorkPrecisionSet(prob,abstols,reltols,setups;
+                      numruns=10000,names=names,error_estimate=:l2)
 
 p1 = plot(wp,legend=false,
           title="Additive Strong Error",
-          xtickfont = font(16, "Latin Modern Roman"),titlefont = font(20, "Latin Modern Roman"),
-          ytickfont = font(16, "Latin Modern Roman"),guidefont = font(18, "Latin Modern Roman"))
+          xtickfont = font(16, "Latin Modern Roman"),
+          titlefont = font(20, "Latin Modern Roman"),
+          ytickfont = font(16, "Latin Modern Roman"),
+          guidefont = font(18, "Latin Modern Roman"))
 
 setups = [Dict(:alg=>EM(),:dts=>1.0./5.0.^((1:length(reltols)) - 2))
           Dict(:alg=>SRA1())
@@ -37,7 +40,9 @@ setups = [Dict(:alg=>EM(),:dts=>1.0./5.0.^((1:length(reltols)) - 2))
           Dict(:alg=>SOSRA2())
           Dict(:alg=>SKenCarp())
           ]
-wp2 = WorkPrecisionSet(prob,abstols,reltols,setups;numruns=10000,names=names,error_estimate=:weak_final,legend=false)
+wp2 = WorkPrecisionSet(prob,abstols,reltols,setups;
+                       numruns=10000,names=names,
+                       error_estimate=:weak_final,legend=false)
 
 sample_size = Int[10;1e2;1e3;1e4;1e5]
 test_dt = 1e-2
@@ -46,13 +51,17 @@ se1 = get_sample_errors(prob,test_dt,appxsol_setup=appxsol_setup,
           parallel_type = :threads, numruns=sample_size, std_estimation_runs = Int(1e3))
 
 p2 = plot(wp2;legend=false,title="Additive Weak Error",
-          xtickfont = font(16, "Latin Modern Roman"),titlefont = font(20, "Latin Modern Roman"),
-          ytickfont = font(16, "Latin Modern Roman"),guidefont = font(18, "Latin Modern Roman"),
+          xtickfont = font(16, "Latin Modern Roman"),
+          titlefont = font(20, "Latin Modern Roman"),
+          ytickfont = font(16, "Latin Modern Roman"),
+          guidefont = font(18, "Latin Modern Roman"),
           plot_sample_error = false)
 times = [wp2[i].times for i in 1:length(wp)]
 times = [minimum(minimum(t) for t in times),maximum(maximum(t) for t in times)]
-plot!(p2,[se1[2];se1[2]],times,color=:red,linestyle=:dash,label="Sample Error: 100",lw=3)
-plot!(p2,[se1[end];se1[end]],times,color=:orange,linestyle=:dash,label="Sample Error: 10000",lw=3)
+plot!(p2,[se1[2];se1[2]],times,color=:red,
+      linestyle=:dash,label="Sample Error: 100",lw=3)
+plot!(p2,[se1[end];se1[end]],times,color=:orange,
+      linestyle=:dash,label="Sample Error: 10000",lw=3)
 
 ################################################################################
 
@@ -94,8 +103,10 @@ wp3 = WorkPrecisionSet(prob,abstols,reltols,setups,test_dt;
 
 p3 = plot(wp3,legend=false,
           title="Lotka-Volterra Strong Error",
-          xtickfont = font(16, "Latin Modern Roman"),titlefont = font(20, "Latin Modern Roman"),
-          ytickfont = font(16, "Latin Modern Roman"),guidefont = font(18, "Latin Modern Roman"))
+          xtickfont = font(16, "Latin Modern Roman"),
+          titlefont = font(20, "Latin Modern Roman"),
+          ytickfont = font(16, "Latin Modern Roman"),
+          guidefont = font(18, "Latin Modern Roman"))
 
 wp4 = WorkPrecisionSet(prob,abstols,reltols,setups,test_dt;
                                      names = names,
@@ -111,13 +122,17 @@ se2 = get_sample_errors(prob,test_dt,appxsol_setup=appxsol_setup,
 
 p4 = plot(wp4;legend=:topleft,title="Lotka-Volterra Weak Error",
           plot_sample_error = false,
-          xtickfont = font(16, "Latin Modern Roman"),titlefont = font(20, "Latin Modern Roman"),
-          ytickfont = font(16, "Latin Modern Roman"),guidefont = font(18, "Latin Modern Roman"),
+          xtickfont = font(16, "Latin Modern Roman"),
+          titlefont = font(20, "Latin Modern Roman"),
+          ytickfont = font(16, "Latin Modern Roman"),
+          guidefont = font(18, "Latin Modern Roman"),
           legendfont = font(14, "Latin Modern Roman"))
 times = [wp4[i].times for i in 1:length(wp4)]
 times = [minimum(minimum(t) for t in times),maximum(maximum(t) for t in times)]
-plot!(p4,[se2[2];se2[2]],times,color=:red,linestyle=:dash,label="Sample Error: 100",lw=3)
-plot!(p4,[se2[end];se2[end]],times,color=:orange,linestyle=:dash,label="Sample Error: 10000",lw=3)
+plot!(p4,[se2[2];se2[2]],times,color=:red,
+      linestyle=:dash,label="Sample Error: 100",lw=3)
+plot!(p4,[se2[end];se2[end]],times,color=:orange,
+      linestyle=:dash,label="Sample Error: 10000",lw=3)
 
 ################################################################################
 

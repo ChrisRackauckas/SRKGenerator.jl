@@ -308,7 +308,11 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Example of a pathwise stiff solution.
+
+\series bold
+Example of a Pathwise Stiff Solution
+\series default
+.
  Depicted is a sample trajectory of Equation 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -316,7 +320,11 @@ reference "eq:pathwise_stiff"
 
 \end_inset
 
- solved using the SOSRI methods developed in this manuscript.
+ solved using the SOSRI methods developed in this manuscript with 
+\begin_inset Formula $reltol=abstol=10^{-2}$
+\end_inset
+
+.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -1067,7 +1075,11 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-SOSRA Stability Regions.
+
+\series bold
+SOSRA Stability Regions
+\series default
+.
  The stability regions (
 \begin_inset Formula $\left|G(z)\right|<1$
 \end_inset
@@ -1081,10 +1093,26 @@ SOSRA Stability Regions.
 \end_inset
 
 .
- Shown are the SRA methods SRA1 and SRA3 in addition to the SOSRA and SOSRA2
- methods.
- Note that SOSRA and SOSRA2 have nearly identical stability regions, making
- it hard to discern the two in the plot.
+ 
+\series bold
+(A)
+\series default
+ SRA1.
+ 
+\series bold
+(B) 
+\series default
+SRA3.
+ 
+\series bold
+(C) 
+\series default
+SOSRA.
+ 
+\series bold
+(D)
+\series default
+ SOSRA2
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:SOSRA-Stability-Regions."
@@ -1395,7 +1423,11 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Implicit SRA Stability Regions.
+
+\series bold
+Implicit SRA Stability Regions
+\series default
+.
  The stability regions (
 \begin_inset Formula $\left|G(z)\right|<1$
 \end_inset
@@ -1409,9 +1441,16 @@ Implicit SRA Stability Regions.
 \end_inset
 
 .
- Shown are the SRA methods LSRA and SKenCarp.
- Note that LSRA's stability region is strictly larger than SKenCarp's and
- thus the region shown for SKenCarp is equivalent to the overlap.
+ 
+\series bold
+(A)
+\series default
+ LSRA.
+ 
+\series bold
+(B)
+\series default
+ SKenCarp
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Implicit-Stability-Regions"
@@ -2577,14 +2616,45 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-SOSRI Stability Regions.
- The stability regions for the SOSRI methods are plotted in the 
+
+\series bold
+SOSRI Stability Regions
+\series default
+.
+ The stability regions 
+\begin_inset Formula $\left(S(z,w)\leq1\right)$
+\end_inset
+
+for the previous and SOSRI methods are plotted in the 
 \begin_inset Formula $(z,w)$
 \end_inset
 
 -plane.
- In addition, the regions for Euler-Maruyama, SRIW1, and SRIW2 are shown
- for comparison.
+ 
+\series bold
+(A) 
+\series default
+Euler-Maruyama.
+ 
+\series bold
+(B) 
+\series default
+SRIW1.
+ 
+\series bold
+(C) 
+\series default
+SRIW2.
+ 
+\series bold
+(D) 
+\series default
+SOSRI.
+ 
+\series bold
+(E) 
+\series default
+SOSRI2
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:SOSRI-Stability-Regions."
@@ -2913,31 +2983,15 @@ name "subsec:Convergence-Tests"
 
 \begin_layout Standard
 In order to test the efficiency and correctness of the SRA algorithms, we
- chose to use the additive noise test equation 
-\begin_inset Formula 
-\begin{equation}
-dX_{t}=\left(\frac{\beta}{\sqrt{1+t}}-\frac{1}{2\left(1+t\right)}X_{t}\right)dt+\frac{\alpha\beta}{\sqrt{1+t}}dW_{t},\thinspace\thinspace\thinspace X_{0}=\frac{1}{2},\label{eq:ex3}
-\end{equation}
+ chose to use the additive noise test Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ex1"
 
 \end_inset
 
- where 
-\begin_inset Formula $\alpha=\frac{1}{10}$
-\end_inset
-
- and 
-\begin_inset Formula $\beta=\frac{1}{20}$
-\end_inset
-
- with true solution
-\begin_inset Formula 
-\begin{equation}
-X_{t}=\frac{1}{\sqrt{1+t}}X_{0}+\frac{\beta}{\sqrt{1+t}}\left(t+\alpha W_{t}\right).\label{eq:sol3}
-\end{equation}
-
-\end_inset
-
-Figure 
+.
+ Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:convergence"
@@ -2954,33 +3008,14 @@ reference "eq:ex3"
 
 .
  To test the convergence of the SRI algorithms, we used the linear test
- equation
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-dX_{t}=\alpha X_{t}dt+\beta X_{t}dW_{t}\thinspace\thinspace\thinspace X_{0}=\frac{1}{2},\label{eq:ex1}
-\end{equation}
+ Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ex1"
 
 \end_inset
 
-where 
-\begin_inset Formula $\alpha=\frac{1}{10}$
-\end_inset
-
- and 
-\begin_inset Formula $\beta=\frac{1}{20}$
-\end_inset
-
- with true solution
-\begin_inset Formula 
-\begin{equation}
-X_{t}=X_{0}e^{\left(\beta-\frac{\alpha^{2}}{2}\right)t+\alpha W_{t}}.\label{eq:sol1}
-\end{equation}
-
-\end_inset
-
+.
  Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2999,50 +3034,21 @@ reference "eq:ex1"
 .
  Lastly, we tested the convergence of the IMEX version of the SKenCarp integrato
 r.
- We defined the split SDE
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-dX_{t}=\left(f_{1}(t,X_{t})+f_{2}(t,X_{t})\right)dt+\frac{\alpha\beta}{\sqrt{1+t}}dW_{t},\thinspace\thinspace\thinspace X_{0}=\frac{1}{2},\label{eq:ex3-1}
-\end{equation}
-
-\end_inset
-
- where
-\begin_inset Formula 
-\begin{align*}
-f_{1}(t,X_{t}) & =\frac{\beta}{\sqrt{1+t}}\\
-f_{2}(t,X_{t}) & =-\frac{1}{2\left(1+t\right)}X_{t}
-\end{align*}
-
-\end_inset
-
- with true solution Equation 
+ We defined the split SDE 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:sol3"
+reference "eq:ex3-1"
 
 \end_inset
 
-.
- Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:convergence"
-
-\end_inset
-
-C demonstrates that the IMEX SKenCarp method achieves strong order 2.0 on
- Equation 
+ as a modification of Equation 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:ex3"
 
 \end_inset
 
- when the 
+ where the 
 \begin_inset Formula $f_{1}$
 \end_inset
 
@@ -3051,6 +3057,14 @@ reference "eq:ex3"
 \end_inset
 
  part is solved explicitly.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:convergence"
+
+\end_inset
+
+C demonstrates that the IMEX SKenCarp method achieves strong order 2.0 .
  Note that this does not demonstrate that the method always achieves strong
  order 1.5 since sufficient conditions for the IMEX pairing are unknown,
  but it gives numerical evidence that the method can be high order.
@@ -3078,7 +3092,11 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Convergence tests.
+
+\series bold
+Additive Noise Convergence Tests.
+
+\series default
  The error is averaged over 1000 trajectories.
  Shown are the strong 
 \begin_inset Formula $l_{2}$
@@ -3089,7 +3107,7 @@ Convergence tests.
 \series bold
  (A)
 \series default
- Convergence results on Equatino 
+ Convergence results on Equation 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:ex3"
@@ -3172,6 +3190,10 @@ name "fig:convergence"
 SOSRA Numerical Efficiency Experiments
 \end_layout
 
+\begin_layout Subsubsection
+Additive Noise Lotka-Volterra (2 Non-Stiff SDEs)
+\end_layout
+
 \begin_layout Standard
 To test the efficiency we first plotted work-precision 
 \begin_inset CommandInset citation
@@ -3206,33 +3228,11 @@ reference "eq:ex3"
 
 .
  In addition, we tested using the Lotka-Volterra equation with additive
- noise:
-\begin_inset Formula 
-\begin{align}
-dx & =\left(ax-bxy\right)dt+\sigma_{A}dW_{t}^{1}\nonumber \\
-dy & =\left(-cy+dxy\right)dt+\sigma_{A}dW_{t}^{2}\label{eq:lotka_add}
-\end{align}
+ noise Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:lotka_add"
 
-\end_inset
-
-where 
-\begin_inset Formula $a=1.5$
-\end_inset
-
-, 
-\begin_inset Formula $b=1$
-\end_inset
-
-, 
-\begin_inset Formula $c=3.0$
-\end_inset
-
-, 
-\begin_inset Formula $d=1.0$
-\end_inset
-
-, 
-\begin_inset Formula $\sigma_{A}=0.01$
 \end_inset
 
 .
@@ -3298,7 +3298,11 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-SOSRA efficiency tests.
+
+\series bold
+SOSRA Efficiency Tests.
+
+\series default
  The error was taken as the average of 10,000 trajectories for Equation
  
 \begin_inset CommandInset ref
@@ -3455,15 +3459,17 @@ name "fig:SOSRA-efficiency"
 
 \end_layout
 
+\begin_layout Subsubsection
+Addtive Noise Van Der Pol (2 Stiff SDEs)
+\end_layout
+
 \begin_layout Standard
-To test how efficiently the algorithms could achieve solve semi-stiff equations,
+To test how efficiently the algorithms could achieve solve stiff equations,
  we chose to analyze the qualitative results of the driven Van der Pol equation.
- The driven Van der Pol equation is given by the system:
-\begin_inset Formula 
-\begin{align}
-dy & =μ((1-x^{2})y-x)dt\nonumber \\
-dx & =ydt\label{eq:van_der_pol}
-\end{align}
+ The driven Van der Pol equation is given by Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:van_der_pol"
 
 \end_inset
 
@@ -3510,16 +3516,15 @@ reference "fig:AdditiveVanDerPol"
 \end_inset
 
 A).
- We extend this model to the driven Van der Pol model with additive noise:
-\begin_inset Formula 
-\begin{align}
-dy & =μ((1-x^{2})y-x)dt+\rho dW_{t}^{(1)}\nonumber \\
-dx & =y+\rho dW_{t}^{(2)}\label{eq:van_der_pol_add}
-\end{align}
+ We extend this model to the driven Van der Pol model with additive noise
+ Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:van_der_pol_add"
 
 \end_inset
 
-where 
+ where 
 \begin_inset Formula $\rho=3.0$
 \end_inset
 
@@ -3898,7 +3903,11 @@ Drift-Implicit Stochastic
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+
+\series bold
 SRA Run times on Van der Pol with additive noise.
+
+\series default
  The additive noise Van der Pol equation was solved 100 times using the
  respective algorithms at the highest tolerance by powers of two which match
  the low tolerance solution to plotting accuracy.
@@ -3972,8 +3981,12 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+
+\series bold
 Representative trajectories for solutions to the Van der Pol equations with
  additive noise.
+
+\series default
  Each of these trajectories are solved with the same underlying Brownian
  process.
  
@@ -4027,6 +4040,10 @@ name "fig:AdditiveVanDerPol"
 
 \end_layout
 
+\begin_layout Subsubsection
+Additive Van Der Pol Stiffness Detection
+\end_layout
+
 \begin_layout Standard
 In addition to testing efficiency, we used this to test the stiffness detection
  in SOSRA2.
@@ -4077,6 +4094,8 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+
+\series bold
 Stiffness detection in the Van der Pol equations with additive noise Equation
  
 \begin_inset CommandInset ref
@@ -4086,7 +4105,16 @@ reference "eq:van_der_pol_add"
 \end_inset
 
 .
- Two representative trajectories to the Van der Pol equations are plotted.
+
+\series default
+ Two representative trajectories to Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:AdditiveVanDerPol"
+
+\end_inset
+
+ are plotted.
  The green dots indicate time-points where the stiffness detection algorithm
  detected stiffness.
  
@@ -4113,6 +4141,10 @@ name "fig:Stiffness-detection-in-additive"
 SOSRI Numerical Efficiency Experiments
 \end_layout
 
+\begin_layout Subsubsection
+Multiplicative Noise Lotka-Volterra (2 Non-Stiff SDEs)
+\end_layout
+
 \begin_layout Standard
 To test the efficiency we plotted a work-precision diagram with SRIW1, SOSRI,
  SOSRI2, and the fixed time step Euler-Maruyama and a Runge-Kutta Milstein
@@ -4123,33 +4155,11 @@ reference "eq:ex1"
 
 \end_inset
 
- and the multiplicative noise Lotka-Volterra equation
-\begin_inset Formula 
-\begin{align}
-dx & =\left(ax-bxy\right)dt+\sigma_{A}dW_{t}^{1}\nonumber \\
-dy & =\left(-cy+dxy\right)dt+\sigma_{A}dW_{t}^{2}\label{eq:lotka_mult}
-\end{align}
+ and the multiplicative noise Lotka-Volterra Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:lotka_mult"
 
-\end_inset
-
-where 
-\begin_inset Formula $a=1.5$
-\end_inset
-
-, 
-\begin_inset Formula $b=1$
-\end_inset
-
-, 
-\begin_inset Formula $c=3.0$
-\end_inset
-
-, 
-\begin_inset Formula $d=1.0$
-\end_inset
-
-, 
-\begin_inset Formula $\sigma_{A}=0.01$
 \end_inset
 
 .
@@ -4219,7 +4229,11 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+
+\series bold
 SOSRI efficiency on non-stiff test equations.
+
+\series default
  The error was taken as the average of 10,000 trajectories for the Equation
  
 \begin_inset CommandInset ref
@@ -4377,9 +4391,13 @@ name "fig:SOSRI-efficiency"
 
 \end_layout
 
+\begin_layout Subsubsection
+Epithelial-Mesenchymal Transition (EMT) Model (20 Pathwise Stiff SDEs) 
+\end_layout
+
 \begin_layout Standard
 To test the real consequences of the enhanced stability, we use the Epithelial-M
-esenchymal Transition (EMT) model of 19 pathwise stiff reaction equations
+esenchymal Transition (EMT) model of 20 pathwise stiff reaction equations
  introduced in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -5082,11 +5100,15 @@ Drift-Implicit Stochastic
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+
+\series bold
 SRI times for the the EMT model on 
 \begin_inset Formula $t\in\left[0,1\right]$
 \end_inset
 
 .
+
+\series default
  The equations were solved 10,000 times with the given tolerances to completion
  and the elapsed time was recorded.
  The fixed time step methods had their 
@@ -5715,11 +5737,15 @@ Drift-Implicit Stochastic
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+
+\series bold
 SRI times for the the EMT model on 
 \begin_inset Formula $t\in\left[0,500\right]$
 \end_inset
 
 .
+
+\series default
  The equations were solved 10 times with the given tolerances to completion
  and the elapsed time was recorded.
  The fixed timestep methods had their 
@@ -5758,6 +5784,12 @@ name "tab:SRI-times-for-Oval2-long"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsubsection
+Retinoic Acid Stochastic Partial Differential Equation Model (Method of
+ Lines Discretization of System of Stochastic Reaction-Diffusion Equations,
+ 6x20x100 Semi-Stiff SDEs)
 \end_layout
 
 \begin_layout Standard
@@ -6119,11 +6151,15 @@ SRIW1
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+
+\series bold
 SRI times for the the retinoic acid SPDE model on 
 \begin_inset Formula $t\in\left[0,500\right]$
 \end_inset
 
 .
+
+\series default
  The equations were solved twice with the given tolerances to completion
  and the elapsed time was recorded.
  The tolerances were chosen as the highest pair of tolerances which did
@@ -6345,7 +6381,198 @@ y represent the official views of the NIH.
 \end_layout
 
 \begin_layout Section
-Appendix I: Extended Test Equations
+Appendix I: Test Equations
+\end_layout
+
+\begin_layout Subsection
+Additive Noise Test Equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+dX_{t}=\left(\frac{\beta}{\sqrt{1+t}}-\frac{1}{2\left(1+t\right)}X_{t}\right)dt+\frac{\alpha\beta}{\sqrt{1+t}}dW_{t},\thinspace\thinspace\thinspace X_{0}=\frac{1}{2},\label{eq:ex3}
+\end{equation}
+
+\end_inset
+
+ where 
+\begin_inset Formula $\alpha=\frac{1}{10}$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta=\frac{1}{20}$
+\end_inset
+
+ with true solution
+\begin_inset Formula 
+\begin{equation}
+X_{t}=\frac{1}{\sqrt{1+t}}X_{0}+\frac{\beta}{\sqrt{1+t}}\left(t+\alpha W_{t}\right).\label{eq:sol3}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Diagonal Noise Test Equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+dX_{t}=\alpha X_{t}dt+\beta X_{t}dW_{t}\thinspace\thinspace\thinspace X_{0}=\frac{1}{2},\label{eq:ex1}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\alpha=\frac{1}{10}$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta=\frac{1}{20}$
+\end_inset
+
+ with true solution
+\begin_inset Formula 
+\begin{equation}
+X_{t}=X_{0}e^{\left(\beta-\frac{\alpha^{2}}{2}\right)t+\alpha W_{t}}.\label{eq:sol1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Split Additive Test Equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+dX_{t}=\left(f_{1}(t,X_{t})+f_{2}(t,X_{t})\right)dt+\frac{\alpha\beta}{\sqrt{1+t}}dW_{t},\thinspace\thinspace\thinspace X_{0}=\frac{1}{2},\label{eq:ex3-1}
+\end{equation}
+
+\end_inset
+
+ where
+\begin_inset Formula 
+\begin{align*}
+f_{1}(t,X_{t}) & =\frac{\beta}{\sqrt{1+t}}\\
+f_{2}(t,X_{t}) & =-\frac{1}{2\left(1+t\right)}X_{t}
+\end{align*}
+
+\end_inset
+
+ with true solution Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:sol3"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Additive Noise Lotka-Volterra
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+dx & =\left(ax-bxy\right)dt+\sigma_{A}dW_{t}^{1}\nonumber \\
+dy & =\left(-cy+dxy\right)dt+\sigma_{A}dW_{t}^{2}\label{eq:lotka_add}
+\end{align}
+
+\end_inset
+
+where 
+\begin_inset Formula $a=1.5$
+\end_inset
+
+, 
+\begin_inset Formula $b=1$
+\end_inset
+
+, 
+\begin_inset Formula $c=3.0$
+\end_inset
+
+, 
+\begin_inset Formula $d=1.0$
+\end_inset
+
+, 
+\begin_inset Formula $\sigma_{A}=0.01$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Additive Noise Van Der Pol
+\end_layout
+
+\begin_layout Standard
+The driven Van Der Pol equation is
+\begin_inset Formula 
+\begin{align}
+dy & =μ((1-x^{2})y-x)dt\nonumber \\
+dx & =ydt\label{eq:van_der_pol}
+\end{align}
+
+\end_inset
+
+ The additive noise variant is
+\begin_inset Formula 
+\begin{align}
+dy & =μ((1-x^{2})y-x)dt+\rho dW_{t}^{(1)}\nonumber \\
+dx & =y+\rho dW_{t}^{(2)}\label{eq:van_der_pol_add}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Multiplicative Noise Lotka-Volterra
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+dx & =\left(ax-bxy\right)dt+\sigma_{A}dW_{t}^{1}\nonumber \\
+dy & =\left(-cy+dxy\right)dt+\sigma_{A}dW_{t}^{2}\label{eq:lotka_mult}
+\end{align}
+
+\end_inset
+
+where 
+\begin_inset Formula $a=1.5$
+\end_inset
+
+, 
+\begin_inset Formula $b=1$
+\end_inset
+
+, 
+\begin_inset Formula $c=3.0$
+\end_inset
+
+, 
+\begin_inset Formula $d=1.0$
+\end_inset
+
+, 
+\begin_inset Formula $\sigma_{A}=0.01$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection

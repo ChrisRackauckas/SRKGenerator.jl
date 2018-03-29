@@ -2,7 +2,7 @@ using StochasticDiffEq, Plots, DiffEqDevTools, DiffEqProblemLibrary
 using ParameterizedFunctions, DiffEqMonteCarlo, Base.Test, OrdinaryDiffEq
 using Plots; pyplot()
 using BenchmarkTools
-names = ["EM","RKMil","SRIW1","SRIW2","SOSRI","SOSRI2"]
+names = ["Euler-Maruyama","RKMil","SRIW1","SRIW2","SOSRI","SOSRI2"]
 
 ################################################################################
 
@@ -68,9 +68,9 @@ prob = SDEProblem(f,g,u0,tspan,p);
 
 reltols = 1.0./4.0.^(2:4)
 abstols = reltols#[0.0 for i in eachindex(reltols)]
-setups = [Dict(:alg=>SRIW1())
-          Dict(:alg=>EM(),:dts=>1.0./12.0.^((1:length(reltols)) + 1.5))
+setups = [Dict(:alg=>EM(),:dts=>1.0./12.0.^((1:length(reltols)) + 1.5))
           Dict(:alg=>RKMil(),:dts=>1.0./12.0.^((1:length(reltols)) + 1.5))
+          Dict(:alg=>SRIW1())
           Dict(:alg=>SRIW2())
           Dict(:alg=>SOSRI())
           Dict(:alg=>SOSRI2())
