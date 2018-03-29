@@ -11,15 +11,16 @@ f = @ode_def_nohes LorenzSDE begin
   dx = σ*(y-x)
   dy = x*(ρ-z) - y
   dz = x*y - β*z
-end σ=>10. ρ=>28. β=>2.66
+end σ ρ β
 
-σ = (t,u,du) -> begin
+σ = (du,u,p,t) -> begin
   for i in 1:3
     du[i] = 10.0 #Additive
   end
 end
 
-prob_sde_lorenz = SDEProblem(f,σ,ones(3),(0.0,10.0))
+p = (10.0,28.0,2.66)
+prob_sde_lorenz = SDEProblem(f,σ,ones(3),(0.0,10.0),p)
 
 monte_prob = MonteCarloProblem(prob_sde_lorenz)
 N = 100; fails = zeros(5,4); times = zeros(5,4)

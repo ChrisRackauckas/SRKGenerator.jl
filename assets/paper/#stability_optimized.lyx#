@@ -82,32 +82,69 @@ Stability-Optimized High Order Methods and Stiffness Detection for Pathwise
 \end_layout
 
 \begin_layout Author
-Christopher Rackauckas
+Chris Rackauckas
 \begin_inset Foot
 status open
 
 \begin_layout Plain Layout
-Department of Mathematics, University of California, Irvine, Irvine, CA
- 92697, USA and Center for Complex Biological Systems, University of California,
- Irvine, Irvine, CA 92697, USA (contact@chrisrackauckas.com)
+\begin_inset CommandInset label
+LatexCommand label
+name "fn:Department-of-Mathematics,"
+
+\end_inset
+
+ Department of Mathematics, University of California, Irvine, Irvine, CA
+ 92697, USA
 \end_layout
 
 \end_inset
 
- 
+
 \begin_inset space ~
 \end_inset
 
-and Qing Nie
+
 \begin_inset Foot
 status open
 
 \begin_layout Plain Layout
-Department of Mathematics, University of California, Irvine, Irvine, CA
- 92697, USA and Center for Complex Biological Systems, University of California,
- Irvine, Irvine, CA 92697, USA and Department of Developmental and Cell
- Biology, University of California, Irvine, Irvine, CA 92697, USA (qnie@math.uci.e
-du)
+\begin_inset CommandInset label
+LatexCommand label
+name "fn:Center-for-Complex"
+
+\end_inset
+
+ Center for Complex Biological Systems, University of California, Irvine,
+ Irvine, CA 92697, USA
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+ and Qing Nie 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fn:Department-of-Mathematics,"
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fn:Center-for-Complex"
+
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Department of Developmental and Cell Biology, University of California,
+ Irvine, Irvine, CA 92697, USA
 \end_layout
 
 \end_inset

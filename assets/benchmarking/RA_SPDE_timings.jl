@@ -66,7 +66,7 @@ const Ax_cache = zeros(M,N)
 const Ay_cache = zeros(M,N)
 const diffRA = zeros(M,N)
 
-function ra_gradient(t,u,du)
+function ra_gradient(du,u,p,t)
   RAout = @view u[:,:,1]
   RAin = @view u[:,:,2]
   R = @view u[:,:,3]
@@ -98,7 +98,7 @@ end
 ################ Add Stochasticity
 
 println("Solve the gradient SDE")
-function ra_noise(t,u,du)
+function ra_noise(du,u,p,t)
   RAout = @view u[:,:,1]
   RAin = @view u[:,:,2]
   RAR = @view u[:,:,4]

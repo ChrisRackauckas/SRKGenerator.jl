@@ -82,35 +82,32 @@ Stability-Optimized High Order Methods and Stiffness Detection for Pathwise
 \end_layout
 
 \begin_layout Author
-Chris Rackauckas
+Christopher Rackauckas
 \begin_inset Foot
 status open
 
 \begin_layout Plain Layout
 Department of Mathematics, University of California, Irvine, Irvine, CA
- 92697, USA
+ 92697, USA and Center for Complex Biological Systems, University of California,
+ Irvine, Irvine, CA 92697, USA (contact@chrisrackauckas.com)
 \end_layout
 
 \end_inset
 
-
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-Center for Complex Biological Systems, University of California, Irvine,
- Irvine, CA 92697, USA
-\end_layout
-
+ 
+\begin_inset space ~
 \end_inset
 
- and Qing Nie 
+and Qing Nie
 \begin_inset Foot
 status open
 
 \begin_layout Plain Layout
-Department of Developmental and Cell Biology, University of California,
- Irvine, Irvine, CA 92697, USA
+Department of Mathematics, University of California, Irvine, Irvine, CA
+ 92697, USA and Center for Complex Biological Systems, University of California,
+ Irvine, Irvine, CA 92697, USA and Department of Developmental and Cell
+ Biology, University of California, Irvine, Irvine, CA 92697, USA (qnie@math.uci.e
+du)
 \end_layout
 
 \end_inset
@@ -311,7 +308,11 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Example of a pathwise stiff solution.
+
+\series bold
+Example of a pathwise stiff solution
+\series default
+.
  Depicted is a sample trajectory of Equation 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3669,7 +3670,7 @@ SKenCarp
 \begin_inset Text
 
 \begin_layout Plain Layout
-37.233331 
+37.23
 \end_layout
 
 \end_inset
@@ -3678,7 +3679,7 @@ SKenCarp
 \begin_inset Text
 
 \begin_layout Plain Layout
-1x
+1.0x
 \end_layout
 
 \end_inset
@@ -3698,7 +3699,7 @@ SOSRA
 \begin_inset Text
 
 \begin_layout Plain Layout
-315.589018
+315.58
 \end_layout
 
 \end_inset
@@ -3707,7 +3708,7 @@ SOSRA
 \begin_inset Text
 
 \begin_layout Plain Layout
-8.476x
+8.5x
 \end_layout
 
 \end_inset
@@ -3727,7 +3728,7 @@ SOSRA2
 \begin_inset Text
 
 \begin_layout Plain Layout
-394.823544
+394.82
 \end_layout
 
 \end_inset
@@ -3736,7 +3737,7 @@ SOSRA2
 \begin_inset Text
 
 \begin_layout Plain Layout
-10.60x
+10.6x
 \end_layout
 
 \end_inset
@@ -3780,7 +3781,7 @@ SRA3
 \uwave off
 \noun off
 \color none
-1385.666700
+1385.66
 \end_layout
 
 \end_inset
@@ -3789,7 +3790,7 @@ SRA3
 \begin_inset Text
 
 \begin_layout Plain Layout
-37.22x
+37.2x
 \end_layout
 
 \end_inset
@@ -3809,7 +3810,7 @@ SRA1
 \begin_inset Text
 
 \begin_layout Plain Layout
-3397.667796
+3397.66
 \end_layout
 
 \end_inset
@@ -3818,7 +3819,7 @@ SRA1
 \begin_inset Text
 
 \begin_layout Plain Layout
-91.25x
+91.3x
 \end_layout
 
 \end_inset
@@ -3838,7 +3839,7 @@ Euler-Maruyama
 \begin_inset Text
 
 \begin_layout Plain Layout
-5949.195151 
+5949.19
 \end_layout
 
 \end_inset
@@ -3875,7 +3876,7 @@ Drift-Implicit Stochastic
 \begin_inset Text
 
 \begin_layout Plain Layout
-229111.15122
+229111.15
 \end_layout
 
 \end_inset
@@ -4067,7 +4068,8 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename ../paper_figures/sde_stiffness_detection.pdf
+	filename D:/OneDrive/Current/SRKGenerator/assets/paper_figures/sde_stiffness_detection.png
+	lyxscale 25
 	scale 60
 
 \end_inset
@@ -4544,7 +4546,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.624539158
+2.62
 \end_layout
 
 \end_inset
@@ -4553,7 +4555,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-1x
+1.0x
 \end_layout
 
 \end_inset
@@ -4597,7 +4599,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.750385673
+2.75
 \end_layout
 
 \end_inset
@@ -4606,7 +4608,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.048x
+1.0x
 \end_layout
 
 \end_inset
@@ -4650,7 +4652,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-8.785915946
+8.78
 \end_layout
 
 \end_inset
@@ -4659,7 +4661,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-3.348x
+3.3x
 \end_layout
 
 \end_inset
@@ -4703,7 +4705,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-3.052668315
+3.05
 \end_layout
 
 \end_inset
@@ -4712,7 +4714,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.163x
+1.2x
 \end_layout
 
 \end_inset
@@ -4756,7 +4758,7 @@ SOSRI2
 \begin_inset Text
 
 \begin_layout Plain Layout
-8.694172692
+8.69
 \end_layout
 
 \end_inset
@@ -4765,7 +4767,7 @@ SOSRI2
 \begin_inset Text
 
 \begin_layout Plain Layout
-3.313x
+3.3x
 \end_layout
 
 \end_inset
@@ -4809,7 +4811,7 @@ SOSRI2
 \begin_inset Text
 
 \begin_layout Plain Layout
-5.564607661
+5.56
 \end_layout
 
 \end_inset
@@ -4818,7 +4820,7 @@ SOSRI2
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.210x
+2.2x
 \end_layout
 
 \end_inset
@@ -4862,7 +4864,7 @@ SRIW1
 \begin_inset Text
 
 \begin_layout Plain Layout
-15.168839222
+15.16
 \end_layout
 
 \end_inset
@@ -4871,7 +4873,7 @@ SRIW1
 \begin_inset Text
 
 \begin_layout Plain Layout
-5.780x
+5.8x
 \end_layout
 
 \end_inset
@@ -4909,7 +4911,7 @@ Euler-Maruyama
 \begin_inset Text
 
 \begin_layout Plain Layout
-169.96851466
+169.96
 \end_layout
 
 \end_inset
@@ -4918,7 +4920,7 @@ Euler-Maruyama
 \begin_inset Text
 
 \begin_layout Plain Layout
-64.76x
+64.8x
 \end_layout
 
 \end_inset
@@ -4956,7 +4958,7 @@ Runge-Kutta Milstein
 \begin_inset Text
 
 \begin_layout Plain Layout
-182.597809791
+182.59
 \end_layout
 
 \end_inset
@@ -4965,7 +4967,7 @@ Runge-Kutta Milstein
 \begin_inset Text
 
 \begin_layout Plain Layout
-69.57x
+69.6x
 \end_layout
 
 \end_inset
@@ -5003,7 +5005,7 @@ Fixed Time-step SRIW1
 \begin_inset Text
 
 \begin_layout Plain Layout
-424.301395463
+424.30
 \end_layout
 
 \end_inset
@@ -5058,7 +5060,7 @@ Drift-Implicit Stochastic
 \begin_inset Text
 
 \begin_layout Plain Layout
-8912.913548893
+8912.91
 \end_layout
 
 \end_inset
@@ -5316,7 +5318,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-22.472149
+22.47
 \end_layout
 
 \end_inset
@@ -5325,7 +5327,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-1x
+1.0x
 \end_layout
 
 \end_inset
@@ -5369,7 +5371,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-73.624740
+73.62
 \end_layout
 
 \end_inset
@@ -5378,7 +5380,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-3.276x
+3.3x
 \end_layout
 
 \end_inset
@@ -5422,7 +5424,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-89.198343
+89.19
 \end_layout
 
 \end_inset
@@ -5431,7 +5433,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-3.969x
+4.0x
 \end_layout
 
 \end_inset
@@ -5475,7 +5477,7 @@ SOSRI2
 \begin_inset Text
 
 \begin_layout Plain Layout
-76.128561
+76.12
 \end_layout
 
 \end_inset
@@ -5484,7 +5486,7 @@ SOSRI2
 \begin_inset Text
 
 \begin_layout Plain Layout
-3.388x
+3.4x
 \end_layout
 
 \end_inset
@@ -5528,7 +5530,7 @@ SOSRI2
 \begin_inset Text
 
 \begin_layout Plain Layout
-121.756225
+121.75
 \end_layout
 
 \end_inset
@@ -5537,7 +5539,7 @@ SOSRI2
 \begin_inset Text
 
 \begin_layout Plain Layout
-5.418x
+5.4x
 \end_layout
 
 \end_inset
@@ -5581,7 +5583,7 @@ SRIW1
 \begin_inset Text
 
 \begin_layout Plain Layout
-147.898779
+147.89
 \end_layout
 
 \end_inset
@@ -5590,7 +5592,7 @@ SRIW1
 \begin_inset Text
 
 \begin_layout Plain Layout
-6.581x
+6.6x
 \end_layout
 
 \end_inset
@@ -5636,7 +5638,7 @@ Drift-Implicit
 \begin_inset Text
 
 \begin_layout Plain Layout
-7378.555228
+7378.55
 \end_layout
 
 \end_inset
@@ -5691,7 +5693,7 @@ Drift-Implicit Stochastic
 \begin_inset Text
 
 \begin_layout Plain Layout
-8796.472603
+8796.47
 \end_layout
 
 \end_inset
@@ -5942,7 +5944,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-700.763721
+700.76
 \end_layout
 
 \end_inset
@@ -5951,7 +5953,7 @@ SOSRI
 \begin_inset Text
 
 \begin_layout Plain Layout
-1x
+1.0x
 \end_layout
 
 \end_inset
@@ -5995,7 +5997,7 @@ SOSRI2
 \begin_inset Text
 
 \begin_layout Plain Layout
-1016.6079645
+1016.61
 \end_layout
 
 \end_inset
@@ -6004,7 +6006,7 @@ SOSRI2
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.451x
+1.5x
 \end_layout
 
 \end_inset
@@ -6042,7 +6044,7 @@ Euler-Maruyama
 \begin_inset Text
 
 \begin_layout Plain Layout
-1758.849929
+1758.85
 \end_layout
 
 \end_inset
@@ -6051,7 +6053,7 @@ Euler-Maruyama
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.510x
+2.5x
 \end_layout
 
 \end_inset
@@ -6095,7 +6097,7 @@ SRIW1
 \begin_inset Text
 
 \begin_layout Plain Layout
-4205.517206
+4205.52
 \end_layout
 
 \end_inset
@@ -6104,7 +6106,7 @@ SRIW1
 \begin_inset Text
 
 \begin_layout Plain Layout
-6.001x
+6.0x
 \end_layout
 
 \end_inset
