@@ -5787,9 +5787,8 @@ name "tab:SRI-times-for-Oval2-long"
 \end_layout
 
 \begin_layout Subsubsection
-Retinoic Acid Stochastic Partial Differential Equation Model (Method of
- Lines Discretization of System of Stochastic Reaction-Diffusion Equations,
- 6x20x100 Semi-Stiff SDEs)
+Retinoic Acid Stochastic Partial Differential Equation Model (6x20x100 Semi-Stif
+f SDEs)
 \end_layout
 
 \begin_layout Standard
