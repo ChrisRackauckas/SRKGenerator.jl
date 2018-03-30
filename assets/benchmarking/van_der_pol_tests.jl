@@ -97,7 +97,7 @@ savefig("additive_van_der_pol.pdf")
 
 #### Estimates
 
-prob_quick = SDEProblem(VanDerPol2(μ=1e5),σ,[0;2.],(0.0,1.0))
+prob_quick = SDEProblem(van,σ,[0;2.],(0.0,1.0),(1e5,))
 @time sol6 =solve(prob_quick,EM();dt=5e-7) # Unstable
 @time sol6 =solve(prob_quick,EM();dt=1e-7) # Stable?
 
