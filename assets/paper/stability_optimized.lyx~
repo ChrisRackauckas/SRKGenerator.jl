@@ -188,7 +188,14 @@ where
  behaviors which are not found in deterministic models.
  For example, An ODE model of a chemical reaction network may stay at a
  constant steady state, but in the presence of randomness the trajectories
- may be switching between various steady states.
+ may be switching between various steady states 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "RN3805,RN3814,RN3358"
+
+\end_inset
+
+.
  In many cases, these unique features of stochastic models are pathwise-dependen
 t and are thus not a property of the evolution of the mean trajectory.
  However, these same effects cause random events of high numerical stiffness,
@@ -8977,7 +8984,14 @@ where
 \begin_inset Formula $x=40$
 \end_inset
 
- is the edge of retinoic acid production.
+ is the edge of retinoic acid production 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "RN3805"
+
+\end_inset
+
+.
  The space was chosen as 
 \begin_inset Formula $\left[-100,400\right]\times\left[0,100\right]$
 \end_inset

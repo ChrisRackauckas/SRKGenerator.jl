@@ -6311,6 +6311,47 @@ ion as a
 \end_layout
 
 \begin_layout Standard
+Additionally, we were not able to sufficiently improve the stability along
+ the noise axis with our explicit diagonal noise methods.
+ However, this is likely due to explicitness in the noise term.
+ Recent research has shown that step splitting which utilize a predicted
+ step in the diffusion calcuation can significantly improve the stability
+ of a method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "RN3815,RN3816"
+
+\end_inset
+
+.
+ Given this, we conjecture that a form of predictor-correction, such as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+X_{n+1}=X_{n}+\sum_{i=1}^{s}\alpha_{i}f\left(t_{n}+c_{i}^{(0)}h,H_{i}^{(0)}\right)+\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,1)}}{\sqrt{h}}+\beta_{i}^{(3)}\frac{I_{(1,0)}}{h}+\beta_{i}^{(4)}\frac{I_{(1,1,1)}}{h}\right)g\left(t_{n}+c_{i}^{(1)}h\right)\label{eq:update-1}
+\end{equation}
+
+\end_inset
+
+ with stages
+\begin_inset Formula 
+\begin{align}
+\overline{H_{i}^{(1)}} & =X_{n}+\sum_{j=1}^{s}A_{ij}^{(1)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(1)}g\left(t_{n}+c_{j}^{(1)}h,H_{i}^{(1)}\right)\sqrt{h}\label{eq:stages-1}\\
+H_{i}^{(0)} & =X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}g\left(t_{n}+c_{j}^{(1)}h,\overline{H_{i}^{(1)}}\right)\frac{I_{(1,0)}}{h}\\
+H_{i}^{(1)} & =X_{n}+\sum_{j=1}^{s}A_{ij}^{(1)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(1)}g\left(t_{n}+c_{j}^{(1)}h,\overline{H_{i}^{(1)}}\right)\sqrt{h}\nonumber 
+\end{align}
+
+\end_inset
+
+ could improve the noise stability of the method while keeping explicitness
+ and the same tableau.
+ However, proper convergence and stability analysis would require significant
+ effort.
+\end_layout
+
+\begin_layout Standard
 Our timings show that the current high order SRK methods are stability-bound
  and that when scientific studies are only looking for small amounts of
  accuracy in stochastic simulations, most of the computational effort is
