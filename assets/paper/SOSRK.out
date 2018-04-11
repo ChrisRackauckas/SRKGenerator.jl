@@ -1,0 +1,49 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.5}{Adaptive Strong Order 1.0/1.5 SRK Methods for Additive and Diagonal Noise SDEs}{}% 2
+\BOOKMARK [1][-]{section.11}{Optimized-Stability High Order SRK Methods with Additive Noise}{}% 3
+\BOOKMARK [2][-]{subsection.20}{Explicit Methods for Non-Stiff SDEs with Additive Noise}{section.11}% 4
+\BOOKMARK [3][-]{subsubsection.21}{Stability-Optimal 2-Stage Explicit SRA Methods}{subsection.20}% 5
+\BOOKMARK [3][-]{subsubsection.24}{Stability-Optimal 3-Stage Explicit SRA Methods}{subsection.20}% 6
+\BOOKMARK [2][-]{subsection.30}{Drift Implicit Methods for Stiff SDEs with Additive Noise}{section.11}% 7
+\BOOKMARK [3][-]{subsubsection.31}{An L-Stable 2-Stage \(Semi-\)Implicit SRA Method}{subsection.30}% 8
+\BOOKMARK [3][-]{subsubsection.43}{Extensions of ODE Implicit Runge-Kutta Methods to Implicit SRA Methods}{subsection.30}% 9
+\BOOKMARK [3][-]{subsubsection.47}{Note on Implementation and Stage Prediction}{subsection.30}% 10
+\BOOKMARK [3][-]{subsubsection.50}{Note on Mass Matrices}{subsection.30}% 11
+\BOOKMARK [1][-]{section.51}{Optimized-Stability Methods for Affine Noise via Transformation }{}% 12
+\BOOKMARK [1][-]{section.61}{Optimized-Stability Order 1.5 SRK Methods with Diagonal Noise}{}% 13
+\BOOKMARK [2][-]{subsection.62}{The Stability Equation for Order 1.5 SRK Methods with Diagonal Noise}{section.61}% 14
+\BOOKMARK [2][-]{subsection.70}{An Optimization Problem for Determination of Coefficients}{section.61}% 15
+\BOOKMARK [2][-]{subsection.73}{Resulting Approximately-Optimal Methods}{section.61}% 16
+\BOOKMARK [2][-]{subsection.76}{Approximately-Optimal Methods with Stability Detection and \040Switching Behaviors}{section.61}% 17
+\BOOKMARK [1][-]{section.87}{Numerical Results}{}% 18
+\BOOKMARK [2][-]{subsection.88}{Convergence Tests }{section.87}% 19
+\BOOKMARK [2][-]{subsection.91}{SOSRA Numerical Efficiency Experiments}{section.87}% 20
+\BOOKMARK [3][-]{subsubsection.92}{Additive Noise Lotka-Volterra \(2 Non-Stiff SDEs\)}{subsection.91}% 21
+\BOOKMARK [3][-]{subsubsection.95}{Addtive Noise Van Der Pol \(2 Stiff SDEs\)}{subsection.91}% 22
+\BOOKMARK [3][-]{subsubsection.100}{Additive Van Der Pol Stiffness Detection}{subsection.91}% 23
+\BOOKMARK [2][-]{subsection.103}{SOSRI Numerical Efficiency Experiments}{section.87}% 24
+\BOOKMARK [3][-]{subsubsection.104}{Multiplicative Noise Lotka-Volterra \(2 Non-Stiff SDEs\)}{subsection.103}% 25
+\BOOKMARK [3][-]{subsubsection.107}{Epithelial-Mesenchymal Transition \(EMT\) Model \(20 Pathwise Stiff SDEs\) }{subsection.103}% 26
+\BOOKMARK [3][-]{subsubsection.112}{Retinoic Acid Stochastic Partial Differential Equation Model \(6x20x100 Semi-Stiff SDEs\)}{subsection.103}% 27
+\BOOKMARK [1][-]{section.115}{Discussion}{}% 28
+\BOOKMARK [1][-]{appendix.120}{Appendix A. Appendix I: Test Equations}{}% 29
+\BOOKMARK [2][-]{subsection.121}{Additive Noise Test Equation}{appendix.120}% 30
+\BOOKMARK [2][-]{subsection.124}{Diagonal Noise Test Equation}{appendix.120}% 31
+\BOOKMARK [2][-]{subsection.127}{Split Additive Test Equation}{appendix.120}% 32
+\BOOKMARK [2][-]{subsection.129}{Additive Noise Lotka-Volterra}{appendix.120}% 33
+\BOOKMARK [2][-]{subsection.131}{Additive Noise Van Der Pol}{appendix.120}% 34
+\BOOKMARK [2][-]{subsection.134}{Multiplicative Noise Lotka-Volterra}{appendix.120}% 35
+\BOOKMARK [2][-]{subsection.136}{Epithelial-Mesenchymal Transition Model }{appendix.120}% 36
+\BOOKMARK [2][-]{subsection.139}{Retinoic Acid SPDE Model }{appendix.120}% 37
+\BOOKMARK [1][-]{appendix.142}{Appendix B. Appendix I: SKenCarp, SOSRA, and SOSRI Tableaus}{}% 38
+\BOOKMARK [2][-]{subsection.143}{SKenCarp Exact Values}{appendix.142}% 39
+\BOOKMARK [2][-]{subsection.144}{SOSRA }{appendix.142}% 40
+\BOOKMARK [2][-]{subsection.145}{SOSRA2 }{appendix.142}% 41
+\BOOKMARK [2][-]{subsection.146}{SOSRI }{appendix.142}% 42
+\BOOKMARK [2][-]{subsection.147}{SOSRI2 }{appendix.142}% 43
+\BOOKMARK [1][-]{appendix.148}{Appendix C. Appendix II: SRK Order Conditions }{}% 44
+\BOOKMARK [2][-]{subsection.149}{Order Conditions for Rößler-SRI Methods}{appendix.148}% 45
+\BOOKMARK [2][-]{subsection.174}{Order Conditions for Rößler-SRA Methods}{appendix.148}% 46
+\BOOKMARK [1][-]{appendix.183}{Appendix D. Appendix III: Derivation Details}{}% 47
+\BOOKMARK [1][-]{appendix.183}{Acknowledgments}{}% 48
+\BOOKMARK [1][-]{appendix.183}{References}{}% 49

@@ -1,0 +1,977 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500) (preloaded format=pdflatex 2018.1.3)  10 APR 2018 10:41
+entering extended mode
+**./SOSRK.tex
+(SOSRK.tex
+LaTeX2e <2017-04-15>
+Babel <3.15> and hyphenation patterns for 75 language(s) loaded.
+(siamart171218.cls
+Document Class: siamart171218 2017/12/18 v1.4.2 LaTeX document e-class
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty"
+Package: amsmath 2017/09/02 v2.17a AMS math features
+\@mathmargin=\skip41
+
+For additional information on amsmath, use the `?' option.
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amstext.sty"
+Package: amstext 2000/06/29 v2.01 AMS text
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty"
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks14
+\ex@=\dimen102
+))
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty"
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen103
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty"
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count79
+LaTeX Info: Redefining \frac on input line 213.
+\uproot@=\count80
+\leftroot@=\count81
+LaTeX Info: Redefining \overline on input line 375.
+\classnum@=\count82
+\DOTSCASE@=\count83
+LaTeX Info: Redefining \ldots on input line 472.
+LaTeX Info: Redefining \dots on input line 475.
+LaTeX Info: Redefining \cdots on input line 596.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen104
+LaTeX Font Info:    Redeclaring font encoding OML on input line 712.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
+\macc@depth=\count84
+\c@MaxMatrixCols=\count85
+\dotsspace@=\muskip10
+\c@parentequation=\count86
+\dspbrk@lvl=\count87
+\tag@help=\toks15
+\row@=\count88
+\column@=\count89
+\maxfields@=\count90
+\andhelp@=\toks16
+\eqnshift@=\dimen105
+\alignsep@=\dimen106
+\tagshift@=\dimen107
+\tagwidth@=\dimen108
+\totwidth@=\dimen109
+\lineht@=\dimen110
+\@envbody=\toks17
+\multlinegap=\skip42
+\multlinetaggap=\skip43
+\mathdisplay@stack=\toks18
+LaTeX Info: Redefining \[ on input line 2817.
+LaTeX Info: Redefining \] on input line 2818.
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\ntheorem\ntheorem.sty"
+Style `ntheorem', Version 1.33 <2011/08/15>
+Package: ntheorem 2011/08/15 1.33
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ifthen.sty"
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\theorem@style=\toks19
+\theorem@@style=\toks20
+\theorembodyfont=\toks21
+\theoremnumbering=\toks22
+\theorempreskipamount=\skip44
+\theorempostskipamount=\skip45
+\theoremframepreskipamount=\skip46
+\theoremframepostskipamount=\skip47
+\theoreminframepreskipamount=\skip48
+\theoreminframepostskipamount=\skip49
+\theorem@preskip=\toks23
+\theorem@postskip=\toks24
+\theorem@framepreskip=\toks25
+\theorem@framepostskip=\toks26
+\theorem@inframepreskip=\toks27
+\theorem@inframepostskip=\toks28
+\theoremindent=\dimen111
+\theorem@indent=\dimen112
+\theoremrightindent=\dimen113
+\theorem@rightindent=\dimen114
+\theoremheaderfont=\toks29
+\theoremseparator=\toks30
+\theoremprework=\toks31
+\theorempostwork=\toks32
+\theoremsymbol=\toks33
+\qedsymbol=\toks34
+\theoremkeyword=\toks35
+\qedsymbol=\toks36
+\thm@topsep=\skip50
+\thm@topsepadd=\skip51
+Package ntheorem Info: Option `thmmarks' loaded on input line 1175.
+\c@endNonectr=\count91
+\c@currNonectr=\count92
+\mysavskip=\skip52
+Package ntheorem Info: option `amsmath' handling for `thmmarks' loaded on input
+ line 1175.
+\thm@amstmpdepth=\dimen115
+\tagwidth=\dimen116
+)
+\fromfoliotocopyright=\skip53
+\c@section=\count93
+\c@subsection=\count94
+\c@subsubsection=\count95
+\c@paragraph=\count96
+\c@subparagraph=\count97
+\c@rmnum=\count98
+\c@muni=\count99
+\@sectionspace=\skip54
+\@negsectionspace=\skip55
+\c@figure=\count100
+\c@table=\count101
+\abovecaptionskip=\skip56
+\belowcaptionskip=\skip57
+\bibindent=\dimen117
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\xr-hyper.sty"
+Package: xr-hyper 2000/03/22 v6.00beta4 eXternal References (DPC)
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
+Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty"
+Package: hyperref 2017/03/14 v6.85a Hypertext links for LaTeX
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\hobsub-hyperref.sty"
+Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
+
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\hobsub-generic.sty"
+Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
+Package hobsub Info: Skipping package `ifpdf' (already loaded).
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+Package: pdftexcmds 2017/03/19 v0.25 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
+)
+Package: bitset 2016/05/16 v1.2 Handle bit-vector datatype (HO)
+Package: uniquecounter 2016/05/16 v1.3 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
+Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
+Package: xcolor-patch 2016/05/16 xcolor patch
+Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
+Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
+Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
+Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks37
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\auxhook.sty"
+Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty"
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+)
+\@linkdim=\dimen118
+\Hy@linkcounter=\count102
+\Hy@pagecounter=\count103
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def"
+File: pd1enc.def 2017/03/14 v6.85a Hyperref: PDFDocEncoding definition (HO)
+)
+\Hy@SavedSpaceFactor=\count104
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg"
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4498.
+Package hyperref Info: Link nesting OFF on input line 4503.
+Package hyperref Info: Hyper index ON on input line 4506.
+Package hyperref Info: Plain pages OFF on input line 4513.
+Package hyperref Info: Backreferencing OFF on input line 4518.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4751.
+\c@Hy@tempcnt=\count105
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\url\url.sty"
+\Urlmuskip=\muskip11
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 5104.
+\XeTeXLinkMargin=\dimen119
+\Fld@menulength=\count106
+\Field@Width=\dimen120
+\Fld@charsize=\dimen121
+Package hyperref Info: Hyper figures OFF on input line 6358.
+Package hyperref Info: Link nesting OFF on input line 6363.
+Package hyperref Info: Hyper index ON on input line 6366.
+Package hyperref Info: backreferencing OFF on input line 6373.
+Package hyperref Info: Link coloring OFF on input line 6378.
+Package hyperref Info: Link coloring with OCG OFF on input line 6383.
+Package hyperref Info: PDF/A mode OFF on input line 6388.
+LaTeX Info: Redefining \ref on input line 6428.
+LaTeX Info: Redefining \pageref on input line 6432.
+\Hy@abspage=\count107
+\c@Item=\count108
+\c@Hfootnote=\count109
+)
+
+Package hyperref Message: Driver (autodetected): hpdftex.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\hpdftex.def"
+File: hpdftex.def 2017/03/14 v6.85a Hyperref driver for pdfTeX
+\Fld@listcount=\count110
+\c@bookmark@seq@number=\count111
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty"
+Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip58
+)
+Package hyperref Info: Option `colorlinks' set `false' on input line 1286.
+Package hyperref Info: Option `frenchlinks' set `false' on input line 1286.
+Package hyperref Info: Option `naturalnames' set `false' on input line 1286.
+Package hyperref Info: Option `hypertexnames' set `false' on input line 1286.
+Package hyperref Info: Option `breaklinks' set `true' on input line 1286.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics-cfg\graphics.cfg"
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 99.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics-def\pdftex.def"
+File: pdftex.def 2017/12/07 v1.0i Graphics/color driver for pdftex
+))
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+\Gin@req@height=\dimen122
+\Gin@req@width=\dimen123
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\epstopdf.sty"
+Package: epstopdf 2016/05/15 v2.6 Conversion with epstopdf on the fly (HO)
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty"
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\grfext.sty"
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+38.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+))
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\xcolor\xcolor.sty"
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics-cfg\color.cfg"
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 1322.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\hypcap.sty"
+Package: hypcap 2016/05/16 v1.12 Adjusting the anchors of captions (HO)
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\algorithms\algorithm.sty"
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
+nment
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\float\float.sty"
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count112
+\float@exts=\toks38
+\float@box=\box28
+\@float@everytoks=\toks39
+\@floatcapt=\box29
+)
+\@float@every@algorithm=\toks40
+\c@algorithm=\count113
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\cleveref\cleveref.sty"
+Package: cleveref 2013/12/28 v0.19 Intelligent cross-referencing
+Package cleveref Info: `hyperref' support loaded on input line 2230.
+LaTeX Info: Redefining \cref on input line 2230.
+LaTeX Info: Redefining \Cref on input line 2230.
+LaTeX Info: Redefining \crefrange on input line 2230.
+LaTeX Info: Redefining \Crefrange on input line 2230.
+LaTeX Info: Redefining \cpageref on input line 2230.
+LaTeX Info: Redefining \Cpageref on input line 2230.
+LaTeX Info: Redefining \cpagerefrange on input line 2230.
+LaTeX Info: Redefining \Cpagerefrange on input line 2230.
+LaTeX Info: Redefining \labelcref on input line 2230.
+LaTeX Info: Redefining \labelcpageref on input line 2230.
+Package cleveref Info: `ntheorem' support loaded on input line 2887.
+Package cleveref Info: always capitalise cross-reference names on input line 74
+70.
+Package cleveref Info: include cross-reference names in hyperlinks on input lin
+e 7476.
+Package cleveref Info: always capitalise cross-reference names on input line 74
+93.
+Package cleveref Info: include cross-reference names in hyperlinks on input lin
+e 7493.
+)
+\c@currproofctr=\count114
+\c@endproofctr=\count115
+\c@proof=\count116
+\c@currtheoremctr=\count117
+\c@endtheoremctr=\count118
+\c@theorem=\count119
+\c@currlemmactr=\count120
+\c@endlemmactr=\count121
+\c@currcorollaryctr=\count122
+\c@endcorollaryctr=\count123
+\c@currpropositionctr=\count124
+\c@endpropositionctr=\count125
+\c@currdefinitionctr=\count126
+\c@enddefinitionctr=\count127
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lineno\lineno.sty"
+Package: lineno 2005/11/02 line numbers on paragraphs v4.41
+\linenopenalty=\count128
+\output=\toks41
+\linenoprevgraf=\count129
+\linenumbersep=\dimen124
+\linenumberwidth=\dimen125
+\c@linenumber=\count130
+\c@pagewiselinenumber=\count131
+\c@LN@truepage=\count132
+\c@internallinenumber=\count133
+\c@internallinenumbers=\count134
+\quotelinenumbersep=\dimen126
+\bframerule=\dimen127
+\bframesep=\dimen128
+\bframebox=\box30
+LaTeX Info: Redefining \\ on input line 3056.
+))
+(ex_shared.tex ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lipsum\lipsum.sty"
+Package: lipsum 2014/07/27 v1.3 150 paragraphs of Lorem Ipsum dummy text
+\c@lips@count=\count135
+) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty"
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\algorithms\algorithmic.sty"
+Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
+\c@ALC@unique=\count136
+\c@ALC@line=\count137
+\c@ALC@rem=\count138
+\c@ALC@depth=\count139
+\ALC@tlm=\skip59
+\algorithmicindent=\skip60
+)
+\c@currremarkctr=\count140
+\c@endremarkctr=\count141
+\c@currhypothesisctr=\count142
+\c@endhypothesisctr=\count143
+\c@currclaimctr=\count144
+\c@endclaimctr=\count145
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\tools\multicol.sty"
+Package: multicol 2017/04/11 v1.8q multicolumn formatting (FMi)
+\c@tracingmulticols=\count146
+\mult@box=\box31
+\multicol@leftmargin=\dimen129
+\c@unbalance=\count147
+\c@collectmore=\count148
+\doublecol@number=\count149
+\multicoltolerance=\count150
+\multicolpretolerance=\count151
+\full@width=\dimen130
+\page@free=\dimen131
+\premulticols=\dimen132
+\postmulticols=\dimen133
+\multicolsep=\skip61
+\multicolbaselineskip=\skip62
+\partial@page=\box32
+\last@line=\box33
+\maxbalancingoverflow=\dimen134
+\mult@rightbox=\box34
+\mult@grightbox=\box35
+\mult@gfirstbox=\box36
+\mult@firstbox=\box37
+\@tempa=\box38
+\@tempa=\box39
+\@tempa=\box40
+\@tempa=\box41
+\@tempa=\box42
+\@tempa=\box43
+\@tempa=\box44
+\@tempa=\box45
+\@tempa=\box46
+\@tempa=\box47
+\@tempa=\box48
+\@tempa=\box49
+\@tempa=\box50
+\@tempa=\box51
+\@tempa=\box52
+\@tempa=\box53
+\@tempa=\box54
+\c@columnbadness=\count152
+\c@finalcolumnbadness=\count153
+\last@try=\dimen135
+\multicolovershoot=\dimen136
+\multicolundershoot=\dimen137
+\mult@nat@firstbox=\box55
+\colbreak@box=\box56
+\mc@col@check@num=\count154
+) (SOSRK.aux)
+\openout1 = `SOSRK.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+\AtBeginShipoutBox=\box57
+Package hyperref Info: Link coloring ON on input line 40.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
+Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty"
+Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
+)
+\c@section@level=\count155
+)
+LaTeX Info: Redefining \ref on input line 40.
+LaTeX Info: Redefining \pageref on input line 40.
+LaTeX Info: Redefining \nameref on input line 40.
+
+(SOSRK.out) (SOSRK.out)
+\@outlinefile=\write3
+\openout3 = `SOSRK.out'.
+
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count156
+\scratchdimen=\dimen138
+\scratchbox=\box58
+\nofMPsegments=\count157
+\nofMParguments=\count158
+\everyMPshowfont=\toks42
+\MPscratchCnt=\count159
+\MPscratchDim=\dimen139
+\MPnumerator=\count160
+\makeMPintoPDFobject=\count161
+\everyMPtoPDFconversion=\toks43
+)
+LaTeX Font Info:    Try loading font information for U+msa on input line 43.
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 43.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [1
+
+{C:/Users/Chris/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+Package epstopdf Info: Source file: <../paper_figures/pathwise_stiffness.eps>
+(epstopdf)                    date: 2018-04-03 02:37:38
+(epstopdf)                    size: 100247 bytes
+(epstopdf)             Output file: <../paper_figures/pathwise_stiffness-eps-co
+nverted-to.pdf>
+(epstopdf)                    date: 2018-04-10 09:03:08
+(epstopdf)                    size: 55788 bytes
+(epstopdf)             Command: <epstopdf --outfile=../paper_figures/pathwise_s
+tiffness-eps-converted-to.pdf ../paper_figures/pathwise_stiffness.eps>
+(epstopdf)             \includegraphics on input line 143.
+Package epstopdf Info: Output file is already uptodate.
+<../paper_figures/pathwise_stiffness-eps-converted-to.pdf, id=227, 433.62pt x 2
+89.08pt>
+File: ../paper_figures/pathwise_stiffness-eps-converted-to.pdf Graphic file (ty
+pe pdf)
+<use ../paper_figures/pathwise_stiffness-eps-converted-to.pdf>
+Package pdftex.def Info: ../paper_figures/pathwise_stiffness-eps-converted-to.p
+df  used on input line 143.
+(pdftex.def)             Requested size: 216.80946pt x 144.53964pt.
+ [2 <../paper_figures/pathwise_stiffness-eps-converted-to.pdf>]
+Underfull \vbox (badness 2626) has occurred while \output is active []
+
+ [3]
+[4] [5] [6]
+Package epstopdf Info: Source file: <../paper_figures/SOSRA_stability.eps>
+(epstopdf)                    date: 2018-04-03 02:26:18
+(epstopdf)                    size: 253736 bytes
+(epstopdf)             Output file: <../paper_figures/SOSRA_stability-eps-conve
+rted-to.pdf>
+(epstopdf)                    date: 2018-04-10 09:05:36
+(epstopdf)                    size: 130748 bytes
+(epstopdf)             Command: <epstopdf --outfile=../paper_figures/SOSRA_stab
+ility-eps-converted-to.pdf ../paper_figures/SOSRA_stability.eps>
+(epstopdf)             \includegraphics on input line 425.
+Package epstopdf Info: Output file is already uptodate.
+<../paper_figures/SOSRA_stability-eps-converted-to.pdf, id=336, 528.97626pt x 6
+12.2875pt>
+File: ../paper_figures/SOSRA_stability-eps-converted-to.pdf Graphic file (type 
+pdf)
+<use ../paper_figures/SOSRA_stability-eps-converted-to.pdf>
+Package pdftex.def Info: ../paper_figures/SOSRA_stability-eps-converted-to.pdf 
+ used on input line 425.
+(pdftex.def)             Requested size: 264.48747pt x 306.143pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [7 <../paper_figures/SOSRA_stability-eps-converted-to.pdf>]
+
+LaTeX Font Warning: Command \small invalid in math mode on input line 441.
+
+LaTeX Font Info:    Calculating math sizes for size <> on input line 443.
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <> not available
+(Font)              size <5> substituted on input line 443.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <0.7> not available
+(Font)              size <5> substituted on input line 443.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <0.5> not available
+(Font)              size <5> substituted on input line 443.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <> not available
+(Font)              size <5> substituted on input line 443.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <0.7> not available
+(Font)              size <5> substituted on input line 443.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <0.5> not available
+(Font)              size <5> substituted on input line 443.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <> not available
+(Font)              size <5> substituted on input line 443.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <0.7> not available
+(Font)              size <5> substituted on input line 443.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <0.5> not available
+(Font)              size <5> substituted on input line 443.
+
+[8]
+Package epstopdf Info: Source file: <../paper_figures/ImplicitStability.eps>
+(epstopdf)                    date: 2018-04-10 08:41:31
+(epstopdf)                    size: 269814 bytes
+(epstopdf)             Output file: <../paper_figures/ImplicitStability-eps-con
+verted-to.pdf>
+(epstopdf)                    date: 2018-04-10 09:05:37
+(epstopdf)                    size: 112769 bytes
+(epstopdf)             Command: <epstopdf --outfile=../paper_figures/ImplicitSt
+ability-eps-converted-to.pdf ../paper_figures/ImplicitStability.eps>
+(epstopdf)             \includegraphics on input line 544.
+Package epstopdf Info: Output file is already uptodate.
+<../paper_figures/ImplicitStability-eps-converted-to.pdf, id=368, 528.97626pt x
+ 297.11pt>
+File: ../paper_figures/ImplicitStability-eps-converted-to.pdf Graphic file (typ
+e pdf)
+<use ../paper_figures/ImplicitStability-eps-converted-to.pdf>
+Package pdftex.def Info: ../paper_figures/ImplicitStability-eps-converted-to.pd
+f  used on input line 544.
+(pdftex.def)             Requested size: 264.48747pt x 148.55463pt.
+ [9 <../paper_figures/ImplicitStability-eps-converted-to.pdf>] [10] [11]
+[12] [13]
+Overfull \hbox (53.53807pt too wide) in alignment at lines 845--851
+ [][][] []
+ []
+
+[14] [15]
+Package epstopdf Info: Source file: <../paper_figures/DiagonalStability.eps>
+(epstopdf)                    date: 2018-04-10 08:41:32
+(epstopdf)                    size: 265736 bytes
+(epstopdf)             Output file: <../paper_figures/DiagonalStability-eps-con
+verted-to.pdf>
+(epstopdf)                    date: 2018-04-10 09:05:39
+(epstopdf)                    size: 141574 bytes
+(epstopdf)             Command: <epstopdf --outfile=../paper_figures/DiagonalSt
+ability-eps-converted-to.pdf ../paper_figures/DiagonalStability.eps>
+(epstopdf)             \includegraphics on input line 960.
+Package epstopdf Info: Output file is already uptodate.
+<../paper_figures/DiagonalStability-eps-converted-to.pdf, id=454, 796.9775pt x 
+616.3025pt>
+File: ../paper_figures/DiagonalStability-eps-converted-to.pdf Graphic file (typ
+e pdf)
+<use ../paper_figures/DiagonalStability-eps-converted-to.pdf>
+Package pdftex.def Info: ../paper_figures/DiagonalStability-eps-converted-to.pd
+f  used on input line 960.
+(pdftex.def)             Requested size: 366.61409pt x 283.5026pt.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\\' on input line 972.
+
+[16] [17 <../paper_figures/DiagonalStability-eps-converted-to.pdf>] [18]
+Package epstopdf Info: Source file: <../paper_figures/convergence.eps>
+(epstopdf)                    date: 2018-04-10 08:41:32
+(epstopdf)                    size: 233024 bytes
+(epstopdf)             Output file: <../paper_figures/convergence-eps-converted
+-to.pdf>
+(epstopdf)                    date: 2018-04-10 09:05:40
+(epstopdf)                    size: 122215 bytes
+(epstopdf)             Command: <epstopdf --outfile=../paper_figures/convergenc
+e-eps-converted-to.pdf ../paper_figures/convergence.eps>
+(epstopdf)             \includegraphics on input line 1093.
+Package epstopdf Info: Output file is already uptodate.
+<../paper_figures/convergence-eps-converted-to.pdf, id=503, 658.46pt x 578.16pt
+>
+File: ../paper_figures/convergence-eps-converted-to.pdf Graphic file (type pdf)
+
+<use ../paper_figures/convergence-eps-converted-to.pdf>
+Package pdftex.def Info: ../paper_figures/convergence-eps-converted-to.pdf  use
+d on input line 1093.
+(pdftex.def)             Requested size: 329.2292pt x 289.07928pt.
+
+[19 <../paper_figures/convergence-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <../paper_figures/SRA_efficiency.eps>
+(epstopdf)                    date: 2018-04-10 08:41:33
+(epstopdf)                    size: 417196 bytes
+(epstopdf)             Output file: <../paper_figures/SRA_efficiency-eps-conver
+ted-to.pdf>
+(epstopdf)                    date: 2018-04-10 09:05:41
+(epstopdf)                    size: 214206 bytes
+(epstopdf)             Command: <epstopdf --outfile=../paper_figures/SRA_effici
+ency-eps-converted-to.pdf ../paper_figures/SRA_efficiency.eps>
+(epstopdf)             \includegraphics on input line 1136.
+Package epstopdf Info: Output file is already uptodate.
+<../paper_figures/SRA_efficiency-eps-converted-to.pdf, id=532, 1084.05pt x 578.
+16pt>
+File: ../paper_figures/SRA_efficiency-eps-converted-to.pdf Graphic file (type p
+df)
+<use ../paper_figures/SRA_efficiency-eps-converted-to.pdf>
+Package pdftex.def Info: ../paper_figures/SRA_efficiency-eps-converted-to.pdf  
+used on input line 1136.
+(pdftex.def)             Requested size: 368.57213pt x 196.5718pt.
+ [20 <../paper_figures/SRA_efficiency-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <../paper_figures/additive_van_der_pol.eps>
+
+(epstopdf)                    date: 2018-04-03 02:32:51
+(epstopdf)                    size: 445248 bytes
+(epstopdf)             Output file: <../paper_figures/additive_van_der_pol-eps-
+converted-to.pdf>
+(epstopdf)                    date: 2018-04-10 09:05:42
+(epstopdf)                    size: 226909 bytes
+(epstopdf)             Command: <epstopdf --outfile=../paper_figures/additive_v
+an_der_pol-eps-converted-to.pdf ../paper_figures/additive_van_der_pol.eps>
+(epstopdf)             \includegraphics on input line 1254.
+Package epstopdf Info: Output file is already uptodate.
+<../paper_figures/additive_van_der_pol-eps-converted-to.pdf, id=565, 867.24pt x
+ 578.16pt>
+File: ../paper_figures/additive_van_der_pol-eps-converted-to.pdf Graphic file (
+type pdf)
+<use ../paper_figures/additive_van_der_pol-eps-converted-to.pdf>
+Package pdftex.def Info: ../paper_figures/additive_van_der_pol-eps-converted-to
+.pdf  used on input line 1254.
+(pdftex.def)             Requested size: 364.23833pt x 242.82555pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [21]
+Package epstopdf Info: Source file: <D:/OneDrive/Current/SRKGenerator/assets/pa
+per_figures/sde_stiffness_detection.eps>
+(epstopdf)                    date: 2018-04-10 08:41:34
+(epstopdf)                    size: 144439298 bytes
+(epstopdf)             Output file: <D:/OneDrive/Current/SRKGenerator/assets/pa
+per_figures/sde_stiffness_detection-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-04-10 09:07:20
+(epstopdf)                    size: 509772 bytes
+(epstopdf)             Command: <epstopdf --outfile=D:/OneDrive/Current/SRKGene
+rator/assets/paper_figures/sde_stiffness_detection-eps-converted-to.pdf D:/OneD
+rive/Current/SRKGenerator/assets/paper_figures/sde_stiffness_detection.eps>
+(epstopdf)             \includegraphics on input line 1285.
+Package epstopdf Info: Output file is already uptodate.
+<D:/OneDrive/Current/SRKGenerator/assets/paper_figures/sde_stiffness_detection-
+eps-converted-to.pdf, id=576, 668.4975pt x 290.08376pt>
+File: D:/OneDrive/Current/SRKGenerator/assets/paper_figures/sde_stiffness_detec
+tion-eps-converted-to.pdf Graphic file (type pdf)
+<use D:/OneDrive/Current/SRKGenerator/assets/paper_figures/sde_stiffness_detect
+ion-eps-converted-to.pdf>
+Package pdftex.def Info: D:/OneDrive/Current/SRKGenerator/assets/paper_figures/
+sde_stiffness_detection-eps-converted-to.pdf  used on input line 1285.
+(pdftex.def)             Requested size: 367.67476pt x 159.54655pt.
+
+[22 <../paper_figures/additive_van_der_pol-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <../paper_figures/SRI_efficiency.eps>
+(epstopdf)                    date: 2018-04-10 08:41:35
+(epstopdf)                    size: 409999 bytes
+(epstopdf)             Output file: <../paper_figures/SRI_efficiency-eps-conver
+ted-to.pdf>
+(epstopdf)                    date: 2018-04-10 09:07:21
+(epstopdf)                    size: 218116 bytes
+(epstopdf)             Command: <epstopdf --outfile=../paper_figures/SRI_effici
+ency-eps-converted-to.pdf ../paper_figures/SRI_efficiency.eps>
+(epstopdf)             \includegraphics on input line 1321.
+Package epstopdf Info: Output file is already uptodate.
+<../paper_figures/SRI_efficiency-eps-converted-to.pdf, id=596, 1100.11pt x 578.
+16pt>
+File: ../paper_figures/SRI_efficiency-eps-converted-to.pdf Graphic file (type p
+df)
+<use ../paper_figures/SRI_efficiency-eps-converted-to.pdf>
+Package pdftex.def Info: ../paper_figures/SRI_efficiency-eps-converted-to.pdf  
+used on input line 1321.
+(pdftex.def)             Requested size: 363.03743pt x 190.79338pt.
+ [23 <D:/OneDrive/Current/SRKGenerator/assets/paper_figures/sde_stiffness_detec
+tion-eps-converted-to.pdf>] [24 <../paper_figures/SRI_efficiency-eps-converted-
+to.pdf>]
+[25] [26]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [27]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [28]
+[29]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [30]
+[31]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [32]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [33]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [34]
+Missing character: There is no Ã in font cmbx10!
+Missing character: There is no ¶ in font cmbx10!
+Missing character: There is no Ã in font cmbx10!
+Missing character: There is no Ÿ in font cmbx10!
+
+[35]
+Missing character: There is no Ã in font cmbx10!
+Missing character: There is no ¶ in font cmbx10!
+Missing character: There is no Ã in font cmbx10!
+Missing character: There is no Ÿ in font cmbx10!
+
+Overfull \hbox (61.92255pt too wide) in alignment at lines 2192--2198
+ [][][] []
+ []
+
+
+Overfull \hbox (43.57103pt too wide) in alignment at lines 2199--2205
+ [][][] []
+ []
+
+
+Overfull \hbox (47.25839pt too wide) in alignment at lines 2209--2215
+ [][][] []
+ []
+
+[36] (SOSRK.bbl
+Underfull \hbox (badness 1142) in paragraph at lines 27--31
+\OT1/cmr/m/n/8 pp. 247--260, [][]$https : / / doi . org / http : / / dx . doi .
+ org / 10 . 1016 / 0168-[]9274(95 ) 00108-[]5$[][], [][]$http : / /
+ []
+
+[37]
+Missing character: There is no Ã in font cmcsc10!
+Missing character: There is no ¸ in font cmcsc10!
+
+Underfull \hbox (badness 7740) in paragraph at lines 91--95
+[]\OT1/cmr/m/sc/8 M. E. Hosea and L. F. Shampine\OT1/cmr/m/n/8 , \OT1/cmr/m/it/
+8 Anal-y-sis and im-ple-men-ta-tion of tr-bdf2\OT1/cmr/m/n/8 ,
+ []
+
+
+Underfull \hbox (badness 7064) in paragraph at lines 91--95
+\OT1/cmr/m/n/8 Ap-plied Nu-mer-i-cal Math-e-mat-ics, 20 (1996), pp. 21--37, [][
+]$https : / / doi . org / https :
+ []
+
+
+Underfull \hbox (badness 2229) in paragraph at lines 108--113
+\OT1/cmr/m/n/8 doi . org / https : / / doi . org / 10 . 1016 / S0168-[]9274(02 
+) 00138-[]1$[][], [][]$http : / / www . sciencedirect . com /
+ []
+
+
+Underfull \hbox (badness 2495) in paragraph at lines 132--137
+\OT1/cmr/m/n/8 pp. 261--274, [][]$https : / / doi . org / https : / / doi . org
+ / 10 . 1016 / j . cam . 2012 . 10 . 026$[][], [][]$http : / / www .
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [38]
+Missing character: There is no â in font cmti8!
+Missing character: There is no € in font cmti8!
+Missing character: There is no “ in font cmti8!
+
+Underfull \hbox (badness 3849) in paragraph at lines 154--159
+\OT1/cmr/m/n/8 / / doi . org / 10 . 1016 / j . cam . 2015 . 06 . 002$[][], [][]
+$http : / / www . sciencedirect . com / science / article / pii /
+ []
+
+
+Underfull \hbox (badness 4779) in paragraph at lines 224--229
+[]\OT1/cmr/m/sc/8 G. Soder-lind and L. Wang\OT1/cmr/m/n/8 , \OT1/cmr/m/it/8 Eva
+l-u-at-ing nu-mer-i-cal ode/dae meth-ods, al-go-rithms
+ []
+
+
+Underfull \hbox (badness 2512) in paragraph at lines 224--229
+\OT1/cmr/m/it/8 and soft-ware\OT1/cmr/m/n/8 , Jour-nal of Com-pu-ta-tional and 
+Ap-plied Math-e-mat-ics, 185 (2006),
+ []
+
+
+Underfull \hbox (badness 2495) in paragraph at lines 224--229
+\OT1/cmr/m/n/8 pp. 244--260, [][]$https : / / doi . org / https : / / doi . org
+ / 10 . 1016 / j . cam . 2005 . 03 . 009$[][], [][]$http : / / www .
+ []
+
+
+Underfull \hbox (badness 1112) in paragraph at lines 231--236
+[]\OT1/cmr/m/sc/8 C. Tsi-touras\OT1/cmr/m/n/8 , \OT1/cmr/m/it/8 Runge-kutta pai
+rs of or-der 5(4) sat-is-fy-ing only the first col-umn sim-
+ []
+
+
+Underfull \hbox (badness 4940) in paragraph at lines 231--236
+\OT1/cmr/m/it/8 pli-fy-ing as-sump-tion\OT1/cmr/m/n/8 , Com-put-ers & Math-e-ma
+t-ics with Ap-pli-ca-tions, 62 (2011),
+ []
+
+
+Underfull \hbox (badness 3838) in paragraph at lines 250--255
+[]\OT1/cmr/m/sc/8 P. Wang and Y. Li\OT1/cmr/m/n/8 , \OT1/cmr/m/it/8 Split-step 
+for-ward meth-ods for stochas-tic dif-fer-en-tial equa-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 250--255
+\OT1/cmr/m/it/8 tions\OT1/cmr/m/n/8 , Jour-nal of Com-pu-ta-tional and Ap-plied
+ Math-e-mat-ics, 233 (2010),
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 250--255
+\OT1/cmr/m/n/8 pp. 2641--2651, [][]$https : / / doi . org / https : / / doi . o
+rg / 10 . 1016 / j . cam . 2009 . 11 . 010$[][],
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [39])
+\tf@thm=\write4
+\openout4 = `SOSRK.thm'.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2245.
+
+[40]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2245.
+ (SOSRK.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2245.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2245.
+
+Package rerunfilecheck Info: File `SOSRK.out' has not changed.
+(rerunfilecheck)             Checksum: F2944512DD02097803D34F644F30F92A;4419.
+
+
+LaTeX Font Warning: Size substitutions with differences
+(Font)              up to 4.5pt have occurred.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2245.
+ ) 
+Here is how much of TeX's memory you used:
+ 9748 strings out of 493312
+ 152718 string characters out of 3136308
+ 386013 words of memory out of 3000000
+ 12917 multiletter control sequences out of 15000+200000
+ 13894 words of font info for 55 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 36i,14n,39p,1958b,475s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
+<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:
+/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:
+/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/
+Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Pr
+ogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmex7.pfb><C:/
+Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><C
+:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/
+Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Pro
+gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Progra
+m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program F
+iles (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program File
+s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Program Files (
+x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86
+)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Program Files (x86)/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files (x86)/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files (x86)/MiKTeX 2.9
+/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/typ
+e1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/
+public/amsfonts/cm/cmsy6.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/pub
+lic/amsfonts/cm/cmsy7.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public
+/amsfonts/cm/cmsy8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/am
+sfonts/cm/cmsy9.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfo
+nts/cm/cmti10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfont
+s/cm/cmti8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/s
+ymbols/msbm10.pfb>
+Output written on SOSRK.pdf (40 pages, 2372532 bytes).
+PDF statistics:
+ 1040 PDF objects out of 1200 (max. 8388607)
+ 267 named destinations out of 1000 (max. 500000)
+ 438 words of extra memory for PDF output out of 10000 (max. 10000000)
+

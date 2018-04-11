@@ -1,0 +1,61 @@
+% SIAM Shared Information Template
+% This is information that is shared between the main document and any
+% supplement. If no supplement is required, then this information can
+% be included directly in the main document.
+
+
+% Packages and macros go here
+\usepackage{lipsum}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{algorithmic}
+\ifpdf
+  \DeclareGraphicsExtensions{.eps,.pdf,.png,.jpg}
+\else
+  \DeclareGraphicsExtensions{.eps}
+\fi
+
+% Add a serial/Oxford comma by default.
+\newcommand{\creflastconjunction}{, and~}
+
+% Used for creating new theorem and remark environments
+\newsiamremark{remark}{Remark}
+\newsiamremark{hypothesis}{Hypothesis}
+\crefname{hypothesis}{Hypothesis}{Hypotheses}
+\newsiamthm{claim}{Claim}
+
+% Sets running headers as well as PDF title and authors
+\headers{Stability-Optimized High Order Methods for SDEs}{C. Rackauckas, and Q. Nie}
+
+% Title. If the supplement option is on, then "Supplementary Material"
+% is automatically inserted before the title.
+\title{Stability-Optimized High Order Methods and Stiffness Detection for
+	Pathwise Stiff Stochastic Differential Equations\thanks{Submitted to the editors DATE.
+\funding{This work was partially supported by NIH grants R01GM107264 and P50GM76516
+	and NSF grants DMS1562176 and DMS1161621. This material is based upon
+	work supported by the National Science Foundation Graduate Research
+	Fellowship under Grant No. DGE-1321846, the National Academies of
+	Science, Engineering, and Medicine via the Ford Foundation, and the
+	National Institutes of Health Award T32 EB009418. Its contents are
+	solely the responsibility of the authors and do not necessarily represent
+	the official views of the NIH.}}}
+
+% Authors: full names plus addresses.
+\author{Christopher Rackauckas\thanks{Department of Mathematics, University of California, Irvine, Irvine,
+		CA 92697, USA and Center for Complex Biological Systems, University
+		of California, Irvine, Irvine, CA 92697, USA (\email{contact@chrisrackauckas.com}, \url{www.chrisrackauckas.com}).}
+\and Qing Nie\thanks{Department of Mathematics, University of California, Irvine, Irvine,
+	CA 92697, USA and Center for Complex Biological Systems, University
+	of California, Irvine, Irvine, CA 92697, USA and Department of Developmental
+	and Cell Biology, University of California, Irvine, Irvine, CA 92697,
+	USA (\email{qnie@math.uci.edu}, \url{http://faculty.sites.uci.edu/qnie/}).}}
+
+\usepackage{amsopn}
+\DeclareMathOperator{\diag}{diag}
+
+
+%%% Local Variables: 
+%%% mode:latex
+%%% TeX-master: "ex_article"
+%%% End: 
