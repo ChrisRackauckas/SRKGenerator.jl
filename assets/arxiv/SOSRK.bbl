@@ -1,0 +1,263 @@
+\begin{thebibliography}{10}
+
+\bibitem{RN3800}
+{\sc A.~Abdulle and S.~Cirilli}, {\em S-rock: Chebyshev methods for stiff
+  stochastic differential equations}, SIAM Journal on Scientific Computing, 30
+  (2008), pp.~997--1014, \url{https://doi.org/10.1137/070679375},
+  \url{https://doi.org/10.1137/070679375}.
+
+\bibitem{RN3515}
+{\sc D.~I.~K. Ahmadia and A.~J.}, {\em Optimal stability polynomials for
+  numerical integration of initial value problems}, CAMCOS, 7 (2012),
+  pp.~247--271, \url{https://doi.org/10.2140/camcos.2012.7.247}.
+
+\bibitem{RN3798}
+{\sc E.~G. Birgin and J.~M. Martinez}, {\em Improving ultimate convergence of
+  an augmented lagrangian method}, Optimization Methods and Software, 23
+  (2008), pp.~177--195, \url{https://doi.org/10.1080/10556780701577730},
+  \url{https://doi.org/10.1080/10556780701577730}.
+
+\bibitem{RN3791}
+{\sc K.~Burrage and J.~C. Butcher}, {\em Non-linear stability of a general
+  class of differential equation methods}, BIT Numerical Mathematics, 20
+  (1980), pp.~185--203, \url{https://doi.org/10.1007/BF01933191},
+  \url{https://doi.org/10.1007/BF01933191}.
+
+\bibitem{RN3516}
+{\sc J.~C. Butcher}, {\em A history of runge-kutta methods}, Applied Numerical
+  Mathematics, 20 (1996), pp.~247--260,
+  \url{https://doi.org/http://dx.doi.org/10.1016/0168-9274(95)00108-5},
+  \url{http://www.sciencedirect.com/science/article/pii/0168927495001085}.
+
+\bibitem{RN3519}
+{\sc J.~C. Butcher}, {\em Numerical methods for ordinary differential equations
+  in the 20th century}, Journal of Computational and Applied Mathematics, 125
+  (2000), pp.~1--29,
+  \url{https://doi.org/http://doi.org/10.1016/S0377-0427(00)00455-6},
+  \url{http://www.sciencedirect.com/science/article/pii/S0377042700004556}.
+
+\bibitem{RN3797}
+{\sc A.~Conn, N.~Gould, and P.~Toint}, {\em A globally convergent augmented
+  lagrangian algorithm for optimization with general constraints and simple
+  bounds}, SIAM Journal on Numerical Analysis, 28 (1991), pp.~545--572,
+  \url{https://doi.org/10.1137/0728030}, \url{https://doi.org/10.1137/0728030}.
+
+\bibitem{RN3513}
+{\sc J.~R. Dormand and P.~J. Prince}, {\em A family of embedded runge-kutta
+  formulae}, Journal of Computational and Applied Mathematics, 6 (1980),
+  pp.~19--26,
+  \url{https://doi.org/http://dx.doi.org/10.1016/0771-050X(80)90013-3},
+  \url{http://www.sciencedirect.com/science/article/pii/0771050X80900133}.
+
+\bibitem{RN3795}
+{\sc I.~Dunning, J.~Huchette, and M.~Lubin}, {\em Jump: A modeling language for
+  mathematical optimization}, SIAM Review, 59 (2017), pp.~295--320,
+  \url{https://doi.org/10.1137/15M1020575},
+  \url{https://doi.org/10.1137/15M1020575}.
+
+\bibitem{RN3802}
+{\sc H.~Gilsing and T.~Shardlow}, {\em Sdelab: A package for solving stochastic
+  differential equations in matlab}, Journal of Computational and Applied
+  Mathematics, 205 (2007), pp.~1002--1018,
+  \url{https://doi.org/https://doi.org/10.1016/j.cam.2006.05.037},
+  \url{http://www.sciencedirect.com/science/article/pii/S0377042706004195}.
+
+\bibitem{RN3353}
+{\sc E.~Hairer, S.~P. Nørsett, and G.~Wanner}, {\em Solving ordinary
+  differential equations I : nonstiff problems}, Springer series in
+  computational mathematics,, Springer, Heidelberg ; London, 2nd rev.~ed.,
+  2009.
+
+\bibitem{RN3790}
+{\sc E.~Hairer and G.~Wanner}, {\em Solving Ordinary Differential Equations II
+  - Stiff and Differential-Algebraic Problems}, Springer, 1991.
+
+\bibitem{RN3794}
+{\sc E.~Hairer and G.~Wanner}, {\em Stiff differential equations solved by
+  radau methods}, Journal of Computational and Applied Mathematics, 111 (1999),
+  pp.~93--111,
+  \url{https://doi.org/https://doi.org/10.1016/S0377-0427(99)00134-X},
+  \url{http://www.sciencedirect.com/science/article/pii/S037704279900134X}.
+
+\bibitem{RN3358}
+{\sc T.~Hong, K.~Watanabe, C.~H. Ta, A.~Villarreal-Ponce, Q.~Nie, and X.~Dai},
+  {\em An ovol2-zeb1 mutual inhibitory circuit governs bidirectional and
+  multi-step transition between epithelial and mesenchymal states}, PLoS Comput
+  Biol, 11 (2015), p.~e1004569,
+  \url{https://doi.org/10.1371/journal.pcbi.1004569},
+  \url{http://dx.doi.org/10.1371%2Fjournal.pcbi.1004569}.
+
+\bibitem{RN3793}
+{\sc M.~E. Hosea and L.~F. Shampine}, {\em Analysis and implementation of
+  tr-bdf2}, Applied Numerical Mathematics, 20 (1996), pp.~21--37,
+  \url{https://doi.org/https://doi.org/10.1016/0168-9274(95)00115-8},
+  \url{http://www.sciencedirect.com/science/article/pii/0168927495001158}.
+
+\bibitem{RN3804}
+{\sc A.~Janicki, A.~Izydorczyk, and P.~Gradalski}, {\em Computer Simulation of
+  Stochastic Models with SDE-Solver Software Package}, Springer Berlin
+  Heidelberg, Berlin, Heidelberg, 2003, pp.~361--370,
+  \url{https://doi.org/10.1007/3-540-44860-8_37},
+  \url{https://doi.org/10.1007/3-540-44860-8_37}.
+
+\bibitem{RN3788}
+{\sc S.~G. Johnson}, {\em The nlopt nonlinear-optimization package},
+  \url{http://ab-initio.mit.edu/nlopt}.
+
+\bibitem{RN3792}
+{\sc C.~A. Kennedy and M.~H. Carpenter}, {\em Additive runge-kutta schemes for
+  convection-diffusion-reaction equations}, Applied Numerical Mathematics, 44
+  (2003), pp.~139--181,
+  \url{https://doi.org/https://doi.org/10.1016/S0168-9274(02)00138-1},
+  \url{http://www.sciencedirect.com/science/article/pii/S0168927402001381}.
+
+\bibitem{RN3815}
+{\sc P.~Kloeden and A.~Neuenkirch}, {\em Convergence of numerical methods for
+  stochastic differential equations in mathematical finance}, 2012,
+  \url{https://doi.org/10.1142/9789814436434_0002}.
+
+\bibitem{RN3169}
+{\sc P.~E. Kloeden and E.~Platen}, {\em Numerical Solution of Stochastic
+  Differential Equations}, Springer Berlin Heidelberg, 2011,
+  \url{https://books.google.com/books?id=BCvtssom1CMC}.
+
+\bibitem{RN3801}
+{\sc Y.~Komori and K.~Burrage}, {\em Weak second order s-rock methods for
+  stratonovich stochastic differential equations}, Journal of Computational and
+  Applied Mathematics, 236 (2012), pp.~2895--2908,
+  \url{https://doi.org/https://doi.org/10.1016/j.cam.2012.01.033},
+  \url{http://www.sciencedirect.com/science/article/pii/S0377042712000441}.
+
+\bibitem{RN3799}
+{\sc Y.~Komori and K.~Burrage}, {\em Strong first order s-rock methods for
+  stochastic differential equations}, Journal of Computational and Applied
+  Mathematics, 242 (2013), pp.~261--274,
+  \url{https://doi.org/https://doi.org/10.1016/j.cam.2012.10.026},
+  \url{http://www.sciencedirect.com/science/article/pii/S0377042712004669}.
+
+\bibitem{RN3512}
+{\sc F.~S. Lawrence}, {\em Some practical runge-kutta formulas}, Math. Comput.,
+  46 (1986), pp.~135--150, \url{https://doi.org/10.2307/2008219}.
+
+\bibitem{RN3514}
+{\sc J.~Lawson}, {\em An order five runge-kutta process with extended region of
+  stability}, SIAM Journal on Numerical Analysis, 3 (1966), pp.~593--597,
+  \url{https://doi.org/10.1137/0703051},
+  \url{http://dx.doi.org/10.1137/0703051}.
+
+\bibitem{RN3811}
+{\sc T.~Li, A.~Abdulle, and W.~E}, {\em Effectiveness of implicit methods for
+  stiff stochastic differential equations}, Commun. Comput. Phys, 3 (2008),
+  pp.~295--307.
+
+\bibitem{RN3806}
+{\sc X.~Mao}, {\em The truncated euler–maruyama method for stochastic
+  differential equations}, Journal of Computational and Applied Mathematics,
+  290 (2015), pp.~370--384,
+  \url{https://doi.org/https://doi.org/10.1016/j.cam.2015.06.002},
+  \url{http://www.sciencedirect.com/science/article/pii/S0377042715003210}.
+
+\bibitem{RN3525}
+{\sc J.~K. Moller and H.~Madsen}, {\em From state dependent diffusion to
+  constant diffusion in stochastic differential equations by the lamperti
+  transform}, report, Technical University of Denmark, DTU Informatics,
+  Building 321, 2010.
+
+\bibitem{RN3789}
+{\sc M.~J.~D. Powell}, {\em A direct search optimization method that models the
+  objective and constraint functions by linear interpolation}, in Advances in
+  Optimization and Numerical Analysis, Proceedings of the 6th Workshop on
+  Optimization and Numerical Analysis, Oaxaca, Mexico, S.~Gomez and J.-P.
+  Hennart, eds., vol.~275, Kluwer Academic Publishers, pp.~51--67,
+  \url{https://doi.org/citeulike-article-id:6904064},
+  \url{http://www.ams.org/mathscinet-getitem?mr=95d:90075}.
+
+\bibitem{RN3787}
+{\sc C.~Rackauckas and Q.~Nie}, {\em Adaptive methods for stochastic
+  differential equations via natural embeddings and rejection sampling with
+  memory}, Discrete and Continuous Dynamical Systems - Series B, 22 (2016),
+  pp.~2731--2761, \url{https://doi.org/10.3934/dcdsb.2017133},
+  \url{http://aimsciences.org//article/id/5354a27a-e5be-4c40-9d7a-e918853b56b7}.
+
+\bibitem{RN3784}
+{\sc C.~Rackauckas and Q.~Nie}, {\em Differentialequations.jl - a performant
+  and feature-rich ecosystem for solving differential equations in julia},
+  Journal of Open Research Software, 5 (2017), p.~15,
+  \url{https://doi.org/http://doi.org/10.5334/jors.151}.
+
+\bibitem{RN3805}
+{\sc C.~Rackauckas and Q.~Nie}, {\em Mean-independent noise control of cell
+  fates via intermediate states}, iScience, Accepted (2018).
+
+\bibitem{RN2707}
+{\sc A.~Rossler}, {\em Runge kutta methods for the strong approximation of
+  solutions of stochastic differential equations}, SIAM Journal on Numerical
+  Analysis, 48 (2010), pp.~922--952, \url{https://doi.org/10.1137/09076636x}.
+
+\bibitem{RN3796}
+{\sc T.~P. Runarsson and Y.~Xin}, {\em Search biases in constrained
+  evolutionary optimization}, IEEE Transactions on Systems, Man, and
+  Cybernetics, Part C (Applications and Reviews), 35 (2005), pp.~233--243,
+  \url{https://doi.org/10.1109/TSMCC.2004.841906}.
+
+\bibitem{RN3803}
+{\sc T.~Schaffter}, {\em From genes to organisms: Bioinformatics System Models
+  and Software}, thesis, 2014.
+
+\bibitem{RN3527}
+{\sc L.~F. Shampine}, {\em Stiffness and nonstiff differential equation
+  solvers, ii: Detecting stiffness with runge-kutta methods}, ACM Trans. Math.
+  Softw., 3 (1977), pp.~44--53, \url{https://doi.org/10.1145/355719.355722}.
+
+\bibitem{RN3526}
+{\sc L.~F. Shampine and K.~L. Hiebert}, {\em Detecting stiffness with the
+  fehlberg (4, 5) formulas}, Computers \& Mathematics with Applications, 3
+  (1977), pp.~41--46,
+  \url{https://doi.org/http://dx.doi.org/10.1016/0898-1221(77)90112-2},
+  \url{http://www.sciencedirect.com/science/article/pii/0898122177901122}.
+
+\bibitem{RN3518}
+{\sc W.~H.~E. Sharp, D.~J. Higham, B.~Owren, and P.~W.}, {\em A survey of the
+  explicit runge-kutta method},  (1995).
+
+\bibitem{RN3807}
+{\sc G.~Soderlind and L.~Wang}, {\em Evaluating numerical ode/dae methods,
+  algorithms and software}, Journal of Computational and Applied Mathematics,
+  185 (2006), pp.~244--260,
+  \url{https://doi.org/https://doi.org/10.1016/j.cam.2005.03.009},
+  \url{http://www.sciencedirect.com/science/article/pii/S0377042705001135}.
+
+\bibitem{RN3523}
+{\sc C.~Tsitouras}, {\em Runge-kutta pairs of order 5(4) satisfying only the
+  first column simplifying assumption}, Computers \& Mathematics with
+  Applications, 62 (2011), pp.~770--775,
+  \url{https://doi.org/http://doi.org/10.1016/j.camwa.2011.06.002},
+  \url{http://www.sciencedirect.com/science/article/pii/S0898122111004706}.
+
+\bibitem{RN3517}
+{\sc P.~J. van~der Houwen}, {\em Explicit runge-kutta formulas with increased
+  stability boundaries}, Numerische Mathematik, 20 (1972), pp.~149--164,
+  \url{https://doi.org/10.1007/BF01404404},
+  \url{http://dx.doi.org/10.1007/BF01404404}.
+
+\bibitem{RN3814}
+{\sc B.~Wang and Q.~Qi}, {\em Modeling the lake eutrophication stochastic
+  ecosystem and the research of its stability}, Mathematical Biosciences,
+  \url{https://doi.org/https://doi.org/10.1016/j.mbs.2018.03.019},
+  \url{https://www.sciencedirect.com/science/article/pii/S0025556418301780}.
+
+\bibitem{RN3816}
+{\sc P.~Wang and Y.~Li}, {\em Split-step forward methods for stochastic
+  differential equations}, Journal of Computational and Applied Mathematics,
+  233 (2010), pp.~2641--2651,
+  \url{https://doi.org/https://doi.org/10.1016/j.cam.2009.11.010},
+  \url{http://www.sciencedirect.com/science/article/pii/S0377042709007419}.
+
+\bibitem{RN3175}
+{\sc M.~Wiktorsson}, {\em Joint characteristic function and simultaneous
+  simulation of iterated ito integrals for multiple independent brownian
+  motions}, The Annals of Applied Probability,  (2001), pp.~470--487,
+  \url{https://doi.org/10.1214/aoap/1015345301},
+  \url{http://projecteuclid.org/euclid.aoap/1015345301}.
+
+\end{thebibliography}

@@ -1,44 +1,38 @@
-% SIAM Article Template
-\documentclass[review,onefignum,onetabnum]{siamart171218}
+\documentclass{article}
 
-% Information that is shared between the article and the supplement
-% (title and author information, macros, packages, etc.) goes into
-% ex_shared.tex. If there is no supplement, this file can be included
-% directly.
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{color}
+\usepackage[margin=1.0in]{geometry}
 
-\input{ex_shared}
+% Title. If the supplement option is on, then "Supplementary Material"
+% is automatically inserted before the title.
+\title{Stability-Optimized High Order Methods and Stiffness Detection for
+	Pathwise Stiff Stochastic Differential Equations\thanks{
+			This work was partially supported by NIH grants R01GM107264 and P50GM76516
+			and NSF grants DMS1562176 and DMS1161621. This material is based upon
+			work supported by the National Science Foundation Graduate Research
+			Fellowship under Grant No. DGE-1321846, the National Academies of
+			Science, Engineering, and Medicine via the Ford Foundation, and the
+			National Institutes of Health Award T32 EB009418. Its contents are
+			solely the responsibility of the authors and do not necessarily represent
+			the official views of the NIH.}}
 
-% Optional PDF information
-\ifpdf
-\hypersetup{
-  pdftitle={Stability-Optimized High Order Methods and Stiffness Detection for
-  	Pathwise Stiff Stochastic Differential Equations},
-  pdfauthor={C. Rackauckas, and Q. Nie}
-}
-\fi
-
-\usepackage{multicol} 
-
-% The next statement enables references to information in the
-% supplement. See the xr-hyperref package for details.
-
-%\externaldocument{ex_supplement}
-
-% FundRef data to be entered by SIAM
-%<funding-group>
-%<award-group>
-%<funding-source>
-%<named-content content-type="funder-name"> 
-%</named-content> 
-%<named-content content-type="funder-identifier"> 
-%</named-content>
-%</funding-source>
-%<award-id> </award-id>
-%</award-group>
-%</funding-group>
+% Authors: full names plus addresses.
+\author{Christopher Rackauckas\thanks{Department of Mathematics, University of California, Irvine, Irvine,
+		CA 92697, USA and Center for Complex Biological Systems, University
+		of California, Irvine, Irvine, CA 92697, USA (contact@chrisrackauckas.com).}
+	\and Qing Nie\thanks{Department of Mathematics, University of California, Irvine, Irvine,
+		CA 92697, USA and Center for Complex Biological Systems, University
+		of California, Irvine, Irvine, CA 92697, USA and Department of Developmental
+		and Cell Biology, University of California, Irvine, Irvine, CA 92697,
+		USA (qnie@math.uci.edu).}}
 
 \begin{document}
-
+	
 \maketitle
 
 \begin{abstract}
@@ -68,23 +62,13 @@
 	of these test equations.
 \end{abstract}
 
-% REQUIRED
-\begin{keywords}
-  stochastic differential equations, stiffness, L-stable, IMEX, efficiency
-\end{keywords}
-
-% REQUIRED
-\begin{AMS}
-  60H10, 65C30, 68P05
-\end{AMS}
-
 \section{Introduction}
 
 Stochastic differential equations (SDEs) are dynamic equations of
 the form
-\[
+\begin{equation}
 dX_{t}=f(t,X_{t})dt+g(t,X_{t})dW_{t},
-\]
+\end{equation}
 where $X_{t}$ is a $d$-dimensional vector, $f:\mathbb{R}^{d}\rightarrow\mathbb{R}^{d}$
 is the drift coefficient, and $g:\mathbb{R}^{d}\rightarrow\mathbb{R}^{d\times m}$
 is the diffusion coefficient which describes the amount and mixtures
@@ -98,7 +82,7 @@ In many cases, these unique features of stochastic models are pathwise-dependent
 and are thus not a property of the evolution of the mean trajectory.
 However, these same effects cause random events of high numerical
 stiffness, which we denote as pathwise stiffness, which can cause
-difficulties for numerical integration methods. 
+difficulties for numerical integration methods.
 
 A minimal example of pathwise stiffness is demonstrated in the equation
 \begin{equation}
@@ -140,7 +124,7 @@ class of SDEs.
 
 \begin{figure}
 	\begin{centering}
-		\includegraphics[scale=0.5]{../paper_figures/pathwise_stiffness}
+		\includegraphics[scale=0.5]{paper_figures/pathwise_stiffness}
 		\par\end{centering}
 	\caption{\textbf{Example of a Pathwise Stiff Solution}. Depicted is a sample
 		trajectory of Equation \ref{eq:pathwise_stiff} solved using the SOSRI
@@ -163,7 +147,7 @@ were determined by what was necessary for stability and was far below
 the error necessary for the application. The purpose of this investigation
 is to develop numerical methods with the ability to better handle
 pathwise stiffness and allow for efficient solving of large Monte
-Carlo experiments. 
+Carlo experiments.
 
 We approach this problem through four means. First, we develop adaptive
 stability-optimized SRK methods with enlarged stability regions. This
@@ -211,7 +195,7 @@ found as the basis of many SDE solver packages \cite{RN3803,RN3802,RN3804}.
 \section{Adaptive Strong Order 1.0/1.5 SRK Methods for Additive and Diagonal
 	Noise SDEs}
 
-The class of methods we wish to study are the adaptive strong order 
+The class of methods we wish to study are the adaptive strong order
 1.5 SRK methods for diagonal noise \cite{RN2707,RN3787}. Diagonal
 noise is the case where the diffusion term $g$ is diagonal matrix
 $\left(\sigma_{i}X_{t}^{i}\right)$ and includes phenomenological
@@ -227,7 +211,7 @@ X_{n+1} & =X_{n}+\sum_{i=1}^{s}\alpha_{i}f\left(t_{n}+c_{i}^{(0)}h,H_{i}^{(0)}\r
 with stages
 \begin{align}
 H_{i}^{(0)} & =X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}g\left(t_{n}+c_{j}^{(1)}h,H_{j}^{(1)}\right)\frac{I_{(1,0)}}{h}\label{eq:stages}\\
-H_{i}^{(1)} & =X_{n}+\sum_{j=1}^{s}A_{ij}^{(1)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(1)}g\left(t_{n}+c_{j}^{(1)}h,H_{j}^{(1)}\right)\sqrt{h}\nonumber 
+H_{i}^{(1)} & =X_{n}+\sum_{j=1}^{s}A_{ij}^{(1)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(1)}g\left(t_{n}+c_{j}^{(1)}h,H_{j}^{(1)}\right)\sqrt{h}\nonumber
 \end{align}
 where the $I_{j}$ are the Wiktorsson approximations to the iterated
 stochastic integrals \cite{RN3175}. In the case of additive noise,
@@ -245,7 +229,7 @@ The tuple of coefficients $\left(A^{(j)},B^{(j)},\beta^{(j)},\alpha\right)$
 thus fully determines the SRK method. These coefficients must satisfy
 the constraint equations described in Appendix \ref{subsec:Order-Conditions-for-SRI}
 in order to receive strong order 1.5. These methods are appended with
-error estimates 
+error estimates
 
 \begin{eqnarray*}
 	E_{D} & = & \left|\Delta t\sum_{i\in I_{1}}(-1)^{\sigma(i)}f\left(t_{n}+c_{i}^{(0)}\Delta t,H_{i}^{(0)}\right)\right|\mbox{or }E_{D}=\Delta t\sum_{i\in I_{1}}\left|f\left(t_{n}+c_{i}^{(0)}\Delta t,H_{i}^{(0)}\right)\right|\\
@@ -265,7 +249,7 @@ is adaptive.
 We use a previous definition of a discrete approximation as numerically
 stable if for any finite time interval $\left[t_{0},T\right]$, there
 exists a positive constant $\Delta_{0}$ such that for each $\epsilon>0$
-and each $\delta\in\left(0,\Delta_{0}\right)$ 
+and each $\delta\in\left(0,\Delta_{0}\right)$
 \begin{equation}
 \lim_{\left|X_{0}^{\delta}-\bar{X}_{0}^{\delta}\right|\rightarrow0}\sup_{t_{0}\leq t\leq T}P\left(\left|X_{t}^{\delta}-\bar{X}_{t}^{\delta}\right|\geq\epsilon\right)=0\label{eq:add_stab}
 \end{equation}
@@ -277,14 +261,14 @@ additive noise, we consider the complex-valued linear test equations
 dX_{t}=\mu X_{t}dt+dW_{t}\label{eq:add_test}
 \end{equation}
 where $\mu$ is a complex number. In this framework, a scheme which
-can be written in the form 
+can be written in the form
 \begin{equation}
 X_{n+1}^{h}=X_{n}^{h}G\left(\mu h\right)+Z_{n}^{\delta}\label{eq:add_test_2}
 \end{equation}
 with a constant step size $\delta\equiv h$ and $Z_{n}^{\delta}$
 are random variables which do not depend on the $Y_{n}^{\delta}$,
 then the region of absolute stability is the set where for $z=\mu h$,
-$\left|G(z)\right|<1$. 
+$\left|G(z)\right|<1$.
 
 The additive SRK method can be written as
 \begin{equation}
@@ -321,7 +305,7 @@ look to maximize stability while satisfying the stochastic order constraints.
 
 For explicit \\
 methods, $A^{(0)}$ and $B^{(0)}$ are lower diagonal
-and we receive the simplified stability function 
+and we receive the simplified stability function
 \begin{equation}
 G(z)=1+A_{21}z^{2}\alpha_{2}+z\left(\alpha_{1}+\alpha_{2}\right)\label{eq:SRA_stab_2}
 \end{equation}
@@ -393,7 +377,7 @@ for additive noise SDEs as the set of coefficients which achieves
 
 \begin{align}
 \max_{A^{(i)},B^{(i)},\beta^{(i)},\alpha} & f(z)\label{eq:SRA_maximize}\\
-\text{subject to: } & \text{Order Constraints}\nonumber 
+\text{subject to: } & \text{Order Constraints}\nonumber
 \end{align}
 In all cases we impose $0<c_{i}^{(0)},c_{i}^{(1)}<1$. We use the
 order constraints to simplify the problem to a nonlinear optimization
@@ -422,7 +406,7 @@ real part.
 \begin{center}
 	\begin{figure}
 		\begin{centering}
-			\includegraphics[scale=0.5]{../paper_figures/SOSRA_stability}
+			\includegraphics[scale=0.5]{paper_figures/SOSRA_stability}
 			\par\end{centering}
 		\caption{\textbf{SOSRA Stability Regions}. The stability regions ($\left|G(z)\right|<1$)
 			are plotted in the $(x,y)$-plane for $z=x+iy$. \textbf{(A)} SRA1.
@@ -441,7 +425,7 @@ noise SRK method is determined by
 \small
 G(z)=\frac{z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{12}z(\alpha_{1}-A_{21})+A_{21}\ensuremath{\alpha_{2}}z-A_{22}(\alpha_{1}z+1)+\alpha_{1}+\alpha_{2})+1}{A_{11}z(A_{22}z-1)-z(A_{12}A_{21}z+A_{22})+1}\label{eq:SRA_stab2_implicit}
 \end{equation}
-which is $A$-stable if 
+which is $A$-stable if
 \begin{align}
 A_{11}z(A_{22}z-1)-z(A_{12}A_{21}z+A_{22})+1&>z(A_{11}(A_{22}z-\alpha_{2}z-1)+A_{12}z(\alpha_{1}-A_{21})\\
 &+A_{21}\ensuremath{\alpha_{2}}z-A_{22}(\alpha_{1}z+1)+\alpha_{1}+\alpha_{2})+1.\label{eq:SRA_stab2_ineq}
@@ -461,7 +445,7 @@ the $A^{(0)}$ and $\alpha$:
 \begin{align}
 \left(A_{11}+A_{12}\right)\alpha_{1}+\left(A_{21}+A_{22}\right)\alpha_{2} & =\frac{1}{2}\label{eq:SRA_stab2_conds}\\
 \alpha_{1}+\alpha_{2} & =1\nonumber \\
-0<\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2} & <1\nonumber 
+0<\left(A_{22}-A_{12}\right)\alpha_{1}+\left(A_{11}-A_{21}\right)\alpha_{2} & <1\nonumber
 \end{align}
 However, A-stability is not sufficient for most ODE integrators to
 properly handle stiff equations and thus extra properties generally
@@ -491,7 +475,7 @@ where $f$ and $g$ are approximated respectively, we wish to impose
 c_{1}^{(0)} & =0\label{eq:SRA_ccond}\\
 c_{2}^{(0)} & =1\nonumber \\
 c_{1}^{(1)} & =0\nonumber \\
-c_{2}^{(1)} & =1\nonumber 
+c_{2}^{(1)} & =1\nonumber
 \end{align}
 so that the error estimator covers the entire interval of integration.
 Since $c^{(0)}=A^{(0)}e$, this leads to the condition $A_{21}+A_{22}=1$.
@@ -529,7 +513,7 @@ A^{(0)} & =\left(\begin{array}{cc}
 \end{array}\right),\,\,\,c^{(1)}=\left(\begin{array}{c}
 0\\
 1
-\end{array}\right)\nonumber 
+\end{array}\right)\nonumber
 \end{align}
 which we denote LSRA. If we attempt to look for a 2-stage SDIRK-like
 method to reduce the complexity of the implicit equation, i.e. $A_{12}^{(0)}=0$,
@@ -541,7 +525,7 @@ SDIRK method in that case.
 \begin{center}
 	\begin{figure}
 		\begin{centering}
-			\includegraphics[scale=0.5]{../paper_figures/ImplicitStability}
+			\includegraphics[scale=0.5]{paper_figures/ImplicitStability}
 			\par\end{centering}
 		\caption{\textbf{Implicit SRA Stability Regions}. The stability regions ($\left|G(z)\right|<1$)
 			are plotted in the $(x,y)$-plane for $z=x+iy$. \textbf{(A)} LSRA.
@@ -562,7 +546,7 @@ for ODE integrators, existence is dependent on finding $\beta^{(1)}$,
 $\beta^{(2)}$, $c^{(1)}$, and $B^{(0)}$ that satisfy the full order
 constraints. In this case, an adaptive error estimator can be added
 by using the same estimator as the ODE method (which we call $E_{D}$)
-but adding the absolute size of the stochastic portions 
+but adding the absolute size of the stochastic portions
 \begin{equation}
 E_{N}=\left|\sum_{i=1}^{s}\left(\beta_{i}^{(1)}I_{(1)}+\beta_{i}^{(2)}\frac{I_{(1,0)}}{h}\right)\right|\label{eq:EN}
 \end{equation}
@@ -573,7 +557,7 @@ E=\delta E_{D}+E_{N}.\label{eq:E}
 This can be shown similarly to the construction in \cite{RN3787}.
 Given the large literature on implicit RK methods for ODEs, this presents
 a large pool of possibly good methods and heuristically one may believe
-that these would do very well in the case of small noise. 
+that these would do very well in the case of small noise.
 
 However, we note that there does not always exist such an extension.
 Using the constraint-satisfaction algorithm FindInstance in Mathematica,
@@ -583,7 +567,7 @@ values satisfying the constraints. In addition, we could not find
 values for an extension of the 5th order Radau IIA method \cite{RN3794,RN3790}
 which satisfies the constraints. In fact, our computational search
 could not find any extension of a 3-stage L-stable implicit RK method
-which satisfies the constraints. 
+which satisfies the constraints.
 
 But, the 4-stage 3rd order ODE method due to Kennedy and Carpenter
 \cite{RN3792} can be extended to the following:
@@ -621,7 +605,7 @@ A^{(0)} & =\left(\begin{array}{cccc}
 0\\
 0\\
 1
-\end{array}\right)\nonumber 
+\end{array}\right)\nonumber
 \end{align}
 
 {\scriptsize
@@ -677,7 +661,7 @@ using the closest derivative estimate. The other method that was tested
 is what we denote the stochastic minimal residual estimate given by
 $H_{j}^{(0)}=\alpha_{i}$ or $z_{i}=0$. This method takes into account
 the stochastic bursts at a given step and thus demonstrated much better
-stability. 
+stability.
 
 \subsubsection{Note on Mass Matrices}
 
@@ -730,7 +714,7 @@ with
 X_{t}=\psi^{-1}\left(t,Z_{t}\right).\label{eq:LampertiInv}
 \end{equation}
 This is easily verified using Ito's Lemma. In the case of mixed multiplicative
-and additive noise (affine noise), the vector equation: 
+and additive noise (affine noise), the vector equation:
 \begin{equation}
 dX_{t}=f(t,X_{t})dt+\left(\sigma_{M}X_{t}+\sigma_{A}\right)dW_{t}\label{eq:LampertiAffine}
 \end{equation}
@@ -741,12 +725,12 @@ then $X_{t}=\frac{\exp\left(\sigma_{M}Z_{t}\right)-\sigma_{A}}{\sigma_{M}}$
 and
 \begin{align}
 dZ_{t} & =\tilde{f}(t,X_{t})dt+dW_{t}\label{eq:LampertiAffineSol}\\
-\tilde{f}(t,X_{t}) & =\frac{f(t,X_{t})}{\sigma_{M}X_{t}+\sigma_{A}}-\frac{1}{2}\sigma_{M}\nonumber 
+\tilde{f}(t,X_{t}) & =\frac{f(t,X_{t})}{\sigma_{M}X_{t}+\sigma_{A}}-\frac{1}{2}\sigma_{M}\nonumber
 \end{align}
 provided $\sigma_{M}X_{t}$ is guaranteed to be sufficiently different
 from $\sigma_{A}$ to not cause definitional issues. It is common
 in biological models like chemical reaction networks that $X_{t}\geq0$,
-in which case this is well-defined for any $\sigma_{A}>0$ when $\sigma_{M}>0$. 
+in which case this is well-defined for any $\sigma_{A}>0$ when $\sigma_{M}>0$.
 
 For numerical problem solving environments (PSEs), one can make use
 of this transformation in two ways. Source transformations could transform
@@ -831,13 +815,13 @@ with stages
 
 \begin{eqnarray}
 H^{(0)} & = & X_{n}+\mu\Delta tA^{(0)}H^{(0)}+\sigma\frac{I_{(1,0)}}{h}B^{(0)}H^{(1)},\label{eq:matrix_stages}\\
-H^{(1)} & = & X_{n}+\mu\Delta tA^{(1)}H^{(0)}+\sigma\sqrt{\Delta t}B^{(1)}H^{(1)}\nonumber 
+H^{(1)} & = & X_{n}+\mu\Delta tA^{(1)}H^{(0)}+\sigma\sqrt{\Delta t}B^{(1)}H^{(1)}\nonumber
 \end{eqnarray}
 where $\hat{X_{n}}$ is the size $s$ constant vector of $X_{n}$.
 
 \begin{eqnarray}
 H^{(0)} & = & \left(I-hA^{(0)}\right)^{-1}\left(\hat{X_{n}}+\sigma\frac{I_{(1,0)}}{h}B^{(0)}H^{(1)}\right),\label{matrx_stages_solve}\\
-H^{(1)} & = & \left(I-\sigma\sqrt{h}B^{(1)}\right)^{-1}\left(\hat{X_{n}}+\mu hA^{(1)}H^{(0)}\right)\nonumber 
+H^{(1)} & = & \left(I-\sigma\sqrt{h}B^{(1)}\right)^{-1}\left(\hat{X_{n}}+\mu hA^{(1)}H^{(0)}\right)\nonumber
 \end{eqnarray}
 By the derivation in the appendix, we receive the equation
 
@@ -847,13 +831,13 @@ By the derivation in the appendix, we receive the equation
 	&  & +\sigma I_{(1)}\left(\beta^{(1)}\cdot\left[\left(I-\sigma\sqrt{h}B^{(1)}-\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{h}B^{(0)}\right)^{-1}\left(I+\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\right)\right]\right)\nonumber \\
 	&  & +\sigma\frac{I_{(1,1)}}{\sqrt{h}}\left(\beta^{(2)}\cdot\left[\left(I-\sigma\sqrt{h}B^{(1)}-\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{h}B^{(0)}\right)^{-1}\left(I+\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\right)\right]\right)\nonumber \\
 	&  & +\sigma\frac{I_{(1,0)}}{h}\left(\beta^{(3)}\cdot\left[\left(I-\sigma\sqrt{h}B^{(1)}-\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{h}B^{(0)}\right)^{-1}\left(I+\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\right)\right]\right)\nonumber \\
-	&  & +\sigma\frac{I_{(1,1,1)}}{h}\left(\beta^{(4)}\cdot\left[\left(I-\sigma\sqrt{h}B^{(1)}-\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{h}B^{(0)}\right)^{-1}\left(I+\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\right)\right]\right)\}^{2}\nonumber 
+	&  & +\sigma\frac{I_{(1,1,1)}}{h}\left(\beta^{(4)}\cdot\left[\left(I-\sigma\sqrt{h}B^{(1)}-\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\sigma\frac{I_{(1,0)}}{h}B^{(0)}\right)^{-1}\left(I+\mu hA^{(1)}\left(I-\mu hA^{(0)}\right)^{-1}\right)\right]\right)\}^{2}\nonumber
 	\end{eqnarray}
 }We apply the substitutions from the Appendix and let
 
 \begin{align}
 z & =\mu h,\label{eq:axis}\\
-w & =\sigma\sqrt{h}.\nonumber 
+w & =\sigma\sqrt{h}.\nonumber
 \end{align}
 In this space, $z$ is the stability variable for the drift term and
 $w$ is the stability in the diffusion term. Under this scaling $\left(h,\sqrt{h}\right)$,
@@ -882,14 +866,14 @@ as the set of coefficients which achieves
 
 \begin{align}
 \max_{A^{(i)},B^{(i)},\beta^{(i)},\alpha} & f(z,w)\label{eq:opt}\\
-\text{subject to: } & \text{Order Constraints}\nonumber 
+\text{subject to: } & \text{Order Constraints}\nonumber
 \end{align}
 However, like with the SRK methods for additive noise, we impose
 a few extra constraints to add robustness to the error estimator.
 In all cases we impose $0<c_{i}^{(0)},c_{i}^{(1)}<1$ . Additionally
 we can prescribe $c_{4}^{(0)}=c_{4}^{(1)}=1$ which we call the End-C
 Constraint. Lastly, we can prescribe the ordering constraint $c_{1}^{(j)}<c_{2}^{(j)}<c_{3}^{(j)}<c_{4}^{(j)}$
-which we denote as the Inequality-C Constraint. 
+which we denote as the Inequality-C Constraint.
 
 The resulting problem is a nonlinear programming problem with 44 variables
 and 42-48 constraint equations. The objective function is the two-dimensional
@@ -957,7 +941,7 @@ there might be a diffusion-stability barrier for explicit methods.
 \begin{center}
 	\begin{figure}
 		\begin{centering}
-			\includegraphics[scale=0.46]{../paper_figures/DiagonalStability}
+			\includegraphics[scale=0.46]{paper_figures/DiagonalStability}
 			\par\end{centering}
 		\caption{\textbf{SOSRI Stability Regions}. The stability regions $\left(S(z,w)\leq1\right)$for
 			the previous and SOSRI methods are plotted in the $(z,w)$-plane.
@@ -982,7 +966,7 @@ causing the integration to be heavily drift-stability dominated. Since
 these switches are random, the ability to adapt between these two
 behaviors could be key to achieving optimal performance. Given the
 trade-off, we investigated how our methods allow for switching between
-methods which optimize for the different situations. 
+methods which optimize for the different situations.
 
 The basis for our method is an extension of a method proposed for
 deterministic differential equations \cite{RN3527,RN3526,RN3790}.
@@ -1014,7 +998,7 @@ $z$ is in the stability region for the method, $\frac{h\left|\lambda_{D}\right|}
 when the steps are outside the stability region. Because the drift
 and mixed stability methods do not track the noise axis directly,
 we instead modify $w_{min}$ to be $\frac{2}{3}$ of the maximum of
-the stability region in the noise axis. 
+the stability region in the noise axis.
 
 Hairer noted that, for ODEs, if a RK method has $c_{i}=c_{j}=1$,
 then it follows that
@@ -1023,7 +1007,7 @@ then it follows that
 \end{equation}
 where $k_{i}=f(t+c_{i}h,g_{i})$ is an estimate of the eigenvalues
 for the Jacobian of $f$. Given the construction of SOSRI2, a natural
-extension is 
+extension is
 
 \begin{align}
 \left|\lambda_{D}\right|&\approx\frac{\Vert f\left(t_{n}+c_{4}^{(0)}h,H_{4}^{(0)}\right)-f\left(t_{n}+c_{3}^{(0)}h,H_{3}^{(0)}\right)\Vert}{\Vert H_{4}^{(0)}-H_{3}^{(0)}\Vert},\\
@@ -1033,7 +1017,7 @@ Given that these values are all part of the actual step calculations,
 this stiffness estimate essentially is free. By comparing these values
 to the stability plot in Figure \ref{fig:SOSRA-Stability-Regions.},
 we use the following heuristic to decide if SOSRI2 is stability-bound
-in its steps: 
+in its steps:
 \begin{enumerate}
 	\item If $10>\left|\lambda_{D}\right|>2.5$, then we check if $h\left|\lambda_{N}\right|>\omega$.
 	\item If $\left|\lambda_{D}\right|<2.5$, then we check if $h\left|\lambda_{N}\right|/2>\omega$.
@@ -1090,7 +1074,7 @@ high order.
 \begin{center}
 	\begin{figure}
 		\begin{centering}
-			\includegraphics[scale=0.5]{../paper_figures/convergence}
+			\includegraphics[scale=0.5]{paper_figures/convergence}
 			\par\end{centering}
 		\caption{\textbf{Additive Noise Convergence Tests.} The error is averaged over
 			1000 trajectories. Shown are the strong $l_{2}$ error along the time
@@ -1133,7 +1117,7 @@ of magnitude less error than the tolerance suggests.
 \begin{center}
 	\begin{figure}
 		\begin{centering}
-			\includegraphics[scale=0.34]{../paper_figures/SRA_efficiency}
+			\includegraphics[scale=0.34]{paper_figures/SRA_efficiency}
 			\par\end{centering}
 		\caption{\textbf{SOSRA Efficiency Tests.} The error was taken as the average
 			of 10,000 trajectories for Equation \ref{eq:ex3} and 100 trajectories
@@ -1213,24 +1197,24 @@ than SOSRA.
 	\begin{table}
 		\begin{centering}
 			\begin{tabular}{|c|c|c|}
-				\hline 
+				\hline
 				Algorithm & Run-time (seconds) & Relative Time (vs SKenCarp)\tabularnewline
-				\hline 
-				\hline 
+				\hline
+				\hline
 				SKenCarp & 37.23 & 1.0x\tabularnewline
-				\hline 
+				\hline
 				SOSRA & 315.58 & 8.5x\tabularnewline
-				\hline 
+				\hline
 				SOSRA2 & 394.82 & 10.6x\tabularnewline
-				\hline 
+				\hline
 				SRA3 & 1385.66 & 37.2x\tabularnewline
-				\hline 
+				\hline
 				SRA1 & 3397.66 & 91.3x\tabularnewline
-				\hline 
+				\hline
 				Euler-Maruyama & 5949.19 & 159.8x\tabularnewline
-				\hline 
+				\hline
 				DISTM $\left(\theta=\frac{1}{2}\right)$ & 229111.15 & 6153x\tabularnewline
-				\hline 
+				\hline
 			\end{tabular}
 			\par\end{centering}
 		\caption{\textbf{SRA Run times on Van der Pol with additive noise.} The additive
@@ -1243,7 +1227,7 @@ than SOSRA.
 			Stochastic $\theta$-methods. Note that the total time of the drift-implicit
 			stochastic $\theta$-method and the Euler-Maruyama method were determined
 			by extrapolating the time from a single stable trajectory on $t\in[0,1]$
-			due to time constraints. DISTM is the Drift-Implicit Stochastic 
+			due to time constraints. DISTM is the Drift-Implicit Stochastic
 			$\theta$-Method\label{tab:SRA-Runtimes-on-Van}}
 	\end{table}
 	\par\end{center}
@@ -1251,7 +1235,7 @@ than SOSRA.
 \begin{center}
 	\begin{figure}
 		\begin{centering}
-			\includegraphics[scale=0.42]{../paper_figures/additive_van_der_pol}
+			\includegraphics[scale=0.42]{paper_figures/additive_van_der_pol}
 			\par\end{centering}
 		\caption{\textbf{Representative trajectories for solutions to the Van der Pol
 				equations with additive noise.} Each of these trajectories are solved
@@ -1282,7 +1266,7 @@ which is more suitable for implicit methods.
 \begin{center}
 	\begin{figure}
 		\begin{centering}
-			\includegraphics[scale=0.55]{D:/OneDrive/Current/SRKGenerator/assets/paper_figures/sde_stiffness_detection}
+			\includegraphics[scale=0.55]{paper_figures/sde_stiffness_detection}
 			\par\end{centering}
 		\caption{\textbf{Stiffness detection in the Van der Pol equations with additive
 				noise Equation \ref{eq:van_der_pol_add}.} Two representative trajectories
@@ -1318,7 +1302,7 @@ that these results also show the conservativeness of the error estimators.
 \begin{center}
 	\begin{figure}
 		\begin{centering}
-			\includegraphics[scale=0.33]{../paper_figures/SRI_efficiency}
+			\includegraphics[scale=0.33]{paper_figures/SRI_efficiency}
 			\par\end{centering}
 		\caption{\textbf{SOSRI efficiency on non-stiff test equations.} The error was
 			taken as the average of 10,000 trajectories for the Equation \ref{eq:ex1}
@@ -1383,32 +1367,32 @@ than 60x faster than any of the tested fixed time step methods.
 		\begin{centering}
 			{\footnotesize
 			\begin{tabular}{|c|c|c|c|c|}
-				\hline 
+				\hline
 				Algorithm & Abstol & Reltol & Run-time (seconds) & Relative Time (vs SOSRI)\tabularnewline
-				\hline 
-				\hline 
+				\hline
+				\hline
 				SOSRI & $2^{-7}$ & $2^{-4}$ & 2.62 & 1.0x\tabularnewline
-				\hline 
+				\hline
 				SOSRI & $2^{-7}$ & $2^{-6}$ & 2.75 & 1.0x\tabularnewline
-				\hline 
+				\hline
 				SOSRI & $2^{-12}$ & $2^{-15}$ & 8.78 & 3.3x\tabularnewline
-				\hline 
+				\hline
 				SOSRI & $2^{-13}$ & $2^{-7}$ & 3.05 & 1.2x\tabularnewline
-				\hline 
+				\hline
 				SOSRI2 & $2^{-12}$ & $2^{-15}$ & 8.69 & 3.3x\tabularnewline
-				\hline 
+				\hline
 				SOSRI2 & $2^{-13}$ & $2^{-11}$ & 5.56 & 2.2x\tabularnewline
-				\hline 
+				\hline
 				SRIW1 & $2^{-13}$ & $2^{-7}$ & 15.16 & 5.8x\tabularnewline
-				\hline 
+				\hline
 				Euler-Maruyama &  &  & 169.96 & 64.8x\tabularnewline
-				\hline 
+				\hline
 				Runge-Kutta Milstein &  &  & 182.59 & 69.6x\tabularnewline
-				\hline 
+				\hline
 				Fixed Time-step SRIW1 &  &  & 424.30 & 161.7x\tabularnewline
-				\hline 
+				\hline
 				DISTM $\left(\theta=\frac{1}{2}\right)$ &  &  & 8912.91 & 3396x\tabularnewline
-				\hline 
+				\hline
 			\end{tabular}
 			}%
 			\par\end{centering}
@@ -1417,7 +1401,7 @@ than 60x faster than any of the tested fixed time step methods.
 			completion and the elapsed time was recorded. The fixed time step
 			methods had their $\Delta t$ determined as the largest $\Delta t$
 			in increments of powers of 2 that produced no unstable trajectories,
-			as shown in \cite{RN3787}. DISTM is the Drift-Implicit Stochastic 
+			as shown in \cite{RN3787}. DISTM is the Drift-Implicit Stochastic
 			$\theta$-Method\label{tab:SRI-times-for-Oval2} }
 	\end{table}
 	\par\end{center}
@@ -1447,32 +1431,32 @@ would require around $5\times10^{12}$ time steps (with Runge-Kutta
 Milstein being similar) to solve to $t=500$. Thus, given it takes
 on our setup extrapolating the time given 170 seconds for $2^{20}$
 steps, this projects to around $1.6\times10^{8}$ seconds, or approximately
-5 years. 
+5 years.
 \begin{center}
 	\begin{table}
 		\begin{centering}
 			{\footnotesize
 			\begin{tabular}{|c|c|c|c|c|}
-				\hline 
+				\hline
 				Algorithm & Abstol & Reltol & Run-time (seconds) & Relative Time (vs SOSRI)\tabularnewline
-				\hline 
-				\hline 
+				\hline
+				\hline
 				SOSRI & $10^{-2}$ & $10^{-2}$ & 22.47 & 1.0x\tabularnewline
-				\hline 
+				\hline
 				SOSRI & $10^{-4}$ & $10^{-4}$ & 73.62 & 3.3x\tabularnewline
-				\hline 
+				\hline
 				SOSRI & $10^{-5}$ & $10^{-3}$ & 89.19 & 4.0x\tabularnewline
-				\hline 
+				\hline
 				SOSRI2 & $10^{-4}$ & $10^{-4}$ & 76.12 & 3.4x\tabularnewline
-				\hline 
+				\hline
 				SOSRI2 & $10^{-5}$ & $10^{-3}$ & 121.75 & 5.4x\tabularnewline
-				\hline 
+				\hline
 				SRIW1 & $10^{-5}$ & $10^{-3}$ & 147.89 & 6.6x\tabularnewline
-				\hline 
+				\hline
 				DIRKM $\left(\theta=\frac{1}{2}\right)$  &  &  & 7378.55 & 328.3x\tabularnewline
-				\hline 
+				\hline
 				DIEM $\left(\theta=\frac{1}{2}\right)$ &  &  & 8796.47 & 391.4x\tabularnewline
-				\hline 
+				\hline
 			\end{tabular}
 			}%
 			\par\end{centering}
@@ -1480,9 +1464,9 @@ steps, this projects to around $1.6\times10^{8}$ seconds, or approximately
 			The equations were solved 10 times with the given tolerances to completion
 			and the elapsed time was recorded. The fixed timestep methods had
 			their $\Delta t$ chosen by incrementing by $10^{-5}$ until 10 consecutive
-			trajectories were stable. Drift-Implicit Euler Maruyama (DIEM) had 
+			trajectories were stable. Drift-Implicit Euler Maruyama (DIEM) had
 			$\Delta t=\frac{1}{60000}$ and Drift-Implicit Runge-Kutta Milstein (DIRKM)
-			had $\Delta t=\frac{1}{50000}$. 
+			had $\Delta t=\frac{1}{50000}$.
 			\label{tab:SRI-times-for-Oval2-long}}
 	\end{table}
 	\par\end{center}
@@ -1524,18 +1508,18 @@ investigation.
 		\begin{centering}
 			{\footnotesize
 			\begin{tabular}{|c|c|c|c|c|}
-				\hline 
+				\hline
 				Algorithm & Abstol & Reltol & Run-time (seconds) & Relative Time (vs SOSRI)\tabularnewline
-				\hline 
-				\hline 
+				\hline
+				\hline
 				SOSRI & $10^{-1}$ & $10^{-2}$ & 700.76 & 1.0x\tabularnewline
-				\hline 
+				\hline
 				SOSRI2 & $10^{-3}$ & $10^{-3}$ & 1016.61 & 1.5x\tabularnewline
-				\hline 
+				\hline
 				Euler-Maruyama &  &  & 1758.85 & 2.5x\tabularnewline
-				\hline 
+				\hline
 				SRIW1 & $10^{-5}$ & $10^{-3}$ & 4205.52 & 6.0x\tabularnewline
-				\hline 
+				\hline
 			\end{tabular}
 			}%
 			\par\end{centering}
@@ -1639,7 +1623,7 @@ with stages
 \begin{align}
 \overline{H_{i}^{(1)}} & =X_{n}+\sum_{j=1}^{s}A_{ij}^{(1)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(1)}g\left(t_{n}+c_{j}^{(1)}h,H_{i}^{(1)}\right)\sqrt{h}\label{eq:stages-1}\\
 H_{i}^{(0)} & =X_{n}+\sum_{j=1}^{s}A_{ij}^{(0)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(0)}g\left(t_{n}+c_{j}^{(1)}h,\overline{H_{i}^{(1)}}\right)\frac{I_{(1,0)}}{h}\\
-H_{i}^{(1)} & =X_{n}+\sum_{j=1}^{s}A_{ij}^{(1)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(1)}g\left(t_{n}+c_{j}^{(1)}h,\overline{H_{i}^{(1)}}\right)\sqrt{h}\nonumber 
+H_{i}^{(1)} & =X_{n}+\sum_{j=1}^{s}A_{ij}^{(1)}f\left(t_{n}+c_{j}^{(0)}h,H_{j}^{(0)}\right)h+\sum_{j=1}^{s}B_{ij}^{(1)}g\left(t_{n}+c_{j}^{(1)}h,\overline{H_{i}^{(1)}}\right)\sqrt{h}\nonumber
 \end{align}
 could improve the noise stability of the method while keeping explicitness
 and the same tableau. However, proper convergence and stability analysis
@@ -1757,7 +1741,7 @@ following system of SDEs which correspond to a chemical reaction network
 modeled via mass-action kinetics with Hill functions for the feedbacks.
 This model was introduced in \cite{RN3358}.
 
-{\footnotesize{}\allowdisplaybreaks 
+{\footnotesize{}\allowdisplaybreaks
 	\begin{eqnarray*}
 		A & = & \left(\left(\left[TGF\right]+\left[TGF0\right](t)\right)/J0_{snail}\right)^{n0_{snail}}+\left(\left[OVOL2\right]/J1_{snail}\right)^{n1_{snail}}\\
 		\frac{d\left[snail1\right]_{t}}{dt} & = & k0_{snail}+k_{snail}\frac{\left(\left(\left[TGF\right]+\left[TGF0\right](t)\right)/J0_{snail}\right)^{n0_{snail}}}{\left(1+A\right)\left(1+\left[SNAIL\right]/J2_{snail}\right)}\\
@@ -1804,52 +1788,52 @@ The parameter values are given in Table \ref{tab:params}.
 \begin{table}
 	\centering{}{\footnotesize{} }%
 	\begin{tabular}{|c|c|c|c|c|c|c|c|}
-		\hline 
+		\hline
 		{\footnotesize{}Parameter } & {\footnotesize{}Value } & {\footnotesize{}Parameter } & {\footnotesize{}Value } & {\footnotesize{}Parameter } & {\footnotesize{}Value } & {\footnotesize{}Parameter } & {\footnotesize{}Value}\tabularnewline
-		\hline 
-		\hline 
+		\hline
+		\hline
 		{\footnotesize{}$J1_{200}$ } & {\footnotesize{}3 } & {\footnotesize{}$J1_{E}$ } & {\footnotesize{}0.1 } & {\footnotesize{}$K_{2}$ } & {\footnotesize{}1 } & {\footnotesize{}$k0_{O}$ } & {\footnotesize{}0.35}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$J2_{200}$ } & {\footnotesize{}0.2 } & {\footnotesize{}$J2_{E}$ } & {\footnotesize{}0.3 } & {\footnotesize{}$K_{3}$ } & {\footnotesize{}1 } & {\footnotesize{}$kO_{200}$ } & {\footnotesize{}0.0002}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$J1_{34}$ } & {\footnotesize{}0.15 } & {\footnotesize{}$J1_{V}$ } & {\footnotesize{}0.4 } & {\footnotesize{}$K_{4}$ } & {\footnotesize{}1 } & {\footnotesize{}$kO_{34}$ } & {\footnotesize{}0.001}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$J2_{34}$ } & {\footnotesize{}0.35 } & {\footnotesize{}$J2_{V}$ } & {\footnotesize{}0.4 } & {\footnotesize{}$K_{5}$ } & {\footnotesize{}1 } & {\footnotesize{}$kd_{snail}$ } & {\footnotesize{}0.09}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$J_{O}$ } & {\footnotesize{}0.9 } & {\footnotesize{}$J3_{V}$ } & {\footnotesize{}2 } & {\footnotesize{}$K_{TR}$ } & {\footnotesize{}20 } & {\footnotesize{}$kd_{tgf}$ } & {\footnotesize{}0.1}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$J0_{snail}$ } & {\footnotesize{}0.6 } & {\footnotesize{}$J1_{zeb}$ } & {\footnotesize{}3.5 } & {\footnotesize{}$K_{SR}$ } & {\footnotesize{}100 } & {\footnotesize{}$kd_{zeb}$ } & {\footnotesize{}0.1}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$J1_{snail}$ } & {\footnotesize{}0.5 } & {\footnotesize{}$J2_{zeb}$ } & {\footnotesize{}0.9 } & {\footnotesize{}$TGF0$ } & {\footnotesize{}0 } & {\footnotesize{}$kd_{TGF}$ } & {\footnotesize{}0.9}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$J2_{snail}$ } & {\footnotesize{}1.8 } & {\footnotesize{}$K_{1}$ } & {\footnotesize{}1 } & {\footnotesize{}$Tk$ } & {\footnotesize{}1000 } & {\footnotesize{}$kd_{ZEB}$ } & {\footnotesize{}1.66}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$k0_{snail}$ } & {\footnotesize{}0.0005 } & {\footnotesize{}$k0_{zeb}$ } & {\footnotesize{}0.003 } & {\footnotesize{}$\lambda_{1}$ } & {\footnotesize{}0.5 } & {\footnotesize{}$k0_{TGF}$ } & {\footnotesize{}1.1}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$n1_{200}$ } & {\footnotesize{}3 } & {\footnotesize{}$n1_{snail}$ } & {\footnotesize{}2 } & {\footnotesize{}$\lambda_{2}$ } & {\footnotesize{}0.5 } & {\footnotesize{}$k0_{E}$ } & {\footnotesize{}5}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$n2_{200}$ } & {\footnotesize{}2 } & {\footnotesize{}$n1_{E}$ } & {\footnotesize{}2 } & {\footnotesize{}$\lambda_{3}$ } & {\footnotesize{}0.5 } & {\footnotesize{}$k0_{V}$ } & {\footnotesize{}5}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$n1_{34}$ } & {\footnotesize{}2 } & {\footnotesize{}$n2_{E}$ } & {\footnotesize{}2 } & {\footnotesize{}$\lambda_{4}$ } & {\footnotesize{}0.5 } & {\footnotesize{}$k_{E1}$ } & {\footnotesize{}15}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$n2_{34}$ } & {\footnotesize{}2 } & {\footnotesize{}$n1_{V}$ } & {\footnotesize{}2 } & {\footnotesize{}$\lambda_{5}$ } & {\footnotesize{}0.5 } & {\footnotesize{}$k_{E2}$ } & {\footnotesize{}5}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$n_{O}$ } & {\footnotesize{}2 } & {\footnotesize{}$n2_{V}$ } & {\footnotesize{}2 } & {\footnotesize{}$\lambda_{SR}$ } & {\footnotesize{}0.5 } & {\footnotesize{}$k_{V1}$ } & {\footnotesize{}2}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$n0_{snail}$ } & {\footnotesize{}2 } & {\footnotesize{}$n2_{zeb}$ } & {\footnotesize{}6 } & {\footnotesize{}$\lambda_{TR}$ } & {\footnotesize{}0.5 } & {\footnotesize{}$k_{V2}$ } & {\footnotesize{}5}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$k_{O}$ } & {\footnotesize{}1.2 } & {\footnotesize{}$k_{200}$ } & {\footnotesize{}0.02 } & {\footnotesize{}$k_{34}$ } & {\footnotesize{}0.01 } & {\footnotesize{}$k_{tgf}$ } & {\footnotesize{}0.05}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$k_{zeb}$ } & {\footnotesize{}0.06 } & {\footnotesize{}$k_{TGF}$ } & {\footnotesize{}1.5 } & {\footnotesize{}$k_{SNAIL}$ } & {\footnotesize{}16 } & {\footnotesize{}$k_{ZEB}$ } & {\footnotesize{}16}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$kd_{ZR_{1}}$ } & {\footnotesize{}0.5 } & {\footnotesize{}$kd_{ZR_{2}}$ } & {\footnotesize{}0.5 } & {\footnotesize{}$kd_{ZR_{3}}$ } & {\footnotesize{}0.5 } & {\footnotesize{}$kd_{ZR_{4}}$ } & {\footnotesize{}0.5}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$kd_{ZR_{5}}$ } & {\footnotesize{}0.5 } & {\footnotesize{}$kd_{O}$ } & {\footnotesize{}1.0 } & {\footnotesize{}$kd_{200}$ } & {\footnotesize{}0.035 } & {\footnotesize{}$kd_{34}$ } & {\footnotesize{}0.035}\tabularnewline
-		\hline 
+		\hline
 		{\footnotesize{}$kd_{SR}$ } & {\footnotesize{}0.9 } & {\footnotesize{}$kd_{E}$ } & {\footnotesize{}0.05 } & {\footnotesize{}$kd_{V}$ } & {\footnotesize{}0.05 } & $k_{Op}$ & 10\tabularnewline
-		\hline 
+		\hline
 		&  &  &  &  &  & $kd_{Op}$ & 10\tabularnewline
-		\hline 
+		\hline
 	\end{tabular} \caption{Table of Parameter Values for the EMT Model.\label{tab:params}}
 \end{table}
 
@@ -1877,22 +1861,22 @@ change the results. The parameter values are given in Table \ref{tab:params2}.
 \begin{table}
 	\centering{}{\footnotesize{} }%
 	\begin{tabular}{|c|c|c|c|c|c|}
-		\hline 
+		\hline
 		{\footnotesize{}Parameter } & {\footnotesize{}Value } & {\footnotesize{}Parameter } & {\footnotesize{}Value } & {\footnotesize{}Parameter } & {\footnotesize{}Value }\tabularnewline
-		\hline 
-		\hline 
+		\hline
+		\hline
 		$\sigma_{RA_{in}}$,$\sigma_{RA-RAR}$,$\sigma_{RA_{out}}$ & 0.1 & $\omega$ & 100 & $u$ & 0.01\tabularnewline
-		\hline 
+		\hline
 		b & 0.17 & $\gamma$ & 3.0 & $d$ & 0.1\tabularnewline
-		\hline 
+		\hline
 		$\alpha$ & 10000  & $\delta$ & 0.0013  & $e$ & 1\tabularnewline
-		\hline 
+		\hline
 		$\beta_{0}$ & 1 & $\eta$ & 0.0001  & $a$ & 1\tabularnewline
-		\hline 
+		\hline
 		$c$ & 0.1 & $r$ & 0.0001  & $\zeta$ & 0.02\tabularnewline
-		\hline 
+		\hline
 		$\nu$ & 0.85 & $\lambda$ & 0.85 & $D$ & 250.46\tabularnewline
-		\hline 
+		\hline
 	\end{tabular} \caption{Table of Parameter Values for the EMT Model.\label{tab:params2}}
 \end{table}
 
@@ -1917,188 +1901,188 @@ All entries not listed are zero.
 \subsection{SOSRA \label{subsec:SOSRA}}
 \begin{center}
 	\begin{tabular}{|c|c||c|c|}
-		\hline 
+		\hline
 		Coefficient & Value & Coefficient & Value\tabularnewline
-		\hline 
-		\hline 
+		\hline
+		\hline
 		$\alpha_{1}$ & 0.2889874966892885 & $\beta_{3}^{(1)}$ & 0.27753845684143835\tabularnewline
-		\hline 
+		\hline
 		$\alpha_{2}$ & 0.6859880440839937 & $\beta_{1}^{(2)}$ & 0.4237535769069274\tabularnewline
-		\hline 
+		\hline
 		$\alpha_{3}$ & 0.025024459226717772 & $\beta_{2}^{(2)}$ & 0.6010381474428539\tabularnewline
-		\hline 
+		\hline
 		$c_{1}^{(0)}$ & 0 & $\beta_{3}^{(2)}$ & -1.0247917243497813\tabularnewline
-		\hline 
+		\hline
 		$c_{2}^{(0)}$ & 0.6923962376159507 & $A_{2,1}^{(0)}$ & 0.6923962376159507\tabularnewline
-		\hline 
+		\hline
 		$c_{3}^{(0)}$ & 1 & $A_{3,1}^{(0)}$ & -3.1609142252828395\tabularnewline
-		\hline 
+		\hline
 		$c_{1}^{(1)}$ & 0 & $A_{3,2}^{(0)}$ & 4.1609142252828395\tabularnewline
-		\hline 
+		\hline
 		$c_{2}^{(1)}$ & 0.041248171110700504 & $B_{2,1}^{(0)}$ & 1.3371632704399763\tabularnewline
-		\hline 
+		\hline
 		$c_{3}^{(1)}$ & 1 & $B_{3,1}^{(0)}$ & 1.442371048468624\tabularnewline
-		\hline 
+		\hline
 		$\beta_{1}^{(1)}$ & -16.792534242221663 & $B_{3,2}^{(0)}$ & 1.8632741501139225\tabularnewline
-		\hline 
+		\hline
 		$\beta_{2}^{(1)}$ & 17.514995785380226 &  & \tabularnewline
-		\hline 
+		\hline
 	\end{tabular}
 	\par\end{center}
 
 \subsection{SOSRA2 \label{subsec:SOSRA2}}
 \begin{center}
 	\begin{tabular}{|c|c||c|c|}
-		\hline 
+		\hline
 		Coefficient & Value & Coefficient & Value\tabularnewline
-		\hline 
-		\hline 
+		\hline
+		\hline
 		$\alpha_{1}$ & 0.4999999999999998 & $\beta_{3}^{(1)}$ & 0.07561967854316998\tabularnewline
-		\hline 
+		\hline
 		$\alpha_{2}$ & -0.9683897375354181 & $\beta_{1}^{(2)}$ & 1\tabularnewline
-		\hline 
+		\hline
 		$\alpha_{3}$ & 1.4683897375354185 & $\beta_{2}^{(2)}$ & -0.8169981105823436\tabularnewline
-		\hline 
+		\hline
 		$c_{1}^{(0)}$ & 0 & $\beta_{3}^{(2)}$ & -0.18300188941765633\tabularnewline
-		\hline 
+		\hline
 		$c_{2}^{(0)}$ & 1 & $A_{2,1}^{(0)}$ & 1\tabularnewline
-		\hline 
+		\hline
 		$c_{3}^{(0)}$ & 1 & $A_{3,1}^{(0)}$ & 0.9511849235504364\tabularnewline
-		\hline 
+		\hline
 		$c_{1}^{(1)}$ & 0 & $A_{3,2}^{(0)}$ & 0.04881507644956362\tabularnewline
-		\hline 
+		\hline
 		$c_{2}^{(1)}$ & 1 & $B_{2,1}^{(0)}$ & 0.7686101171003622\tabularnewline
-		\hline 
+		\hline
 		$c_{3}^{(1)}$ & 1 & $B_{3,1}^{(0)}$ & 0.43886792994934987\tabularnewline
-		\hline 
+		\hline
 		$\beta_{1}^{(1)}$ & 0 & $B_{3,2}^{(0)}$ & 0.7490415909204886\tabularnewline
-		\hline 
+		\hline
 		$\beta_{2}^{(1)}$ & 0.92438032145683 &  & \tabularnewline
-		\hline 
+		\hline
 	\end{tabular}
 	\par\end{center}
 
 \subsection{SOSRI \label{subsec:SOSRI}}
 \begin{center}
 	\begin{tabular}{|c|c||c|c|}
-		\hline 
+		\hline
 		Coefficient & Value & Coefficient & Value\tabularnewline
-		\hline 
-		\hline 
+		\hline
+		\hline
 		$A_{2,1}^{(0)}$ & -0.04199224421316468 & $\alpha_{3}$ & 0.4736296532772559\tabularnewline
-		\hline 
+		\hline
 		$A_{3,1}^{(0)}$ & 2.842612915017106 & $\alpha_{4}$ & 0.026404498125060714\tabularnewline
-		\hline 
+		\hline
 		$A_{3,2}^{(0)}$ & -2.0527723684000727 & $c_{2}^{(0)}$ & -0.04199224421316468\tabularnewline
-		\hline 
+		\hline
 		$A_{4,1}^{(0)}$ & 4.338237071435815 & $c_{3}^{(0)}$ & 0.7898405466170333\tabularnewline
-		\hline 
+		\hline
 		$A_{4,2}^{(0)}$ & -2.8895936137439793 & $c_{4}^{(0)}$ & 3.7504010171562823\tabularnewline
-		\hline 
+		\hline
 		$A_{4,3}^{(0)}$ & 2.3017575594644466 & $c_{1}^{(1)}$ & 0\tabularnewline
-		\hline 
+		\hline
 		$A_{2,1}^{(1)}$ & 0.26204282091330466 & $c_{2}^{(1)}$ & 0.26204282091330466\tabularnewline
-		\hline 
+		\hline
 		$A_{3,1}^{(1)}$ & 0.20903646383505375 & $c_{3}^{(1)}$ & 0.05879875232001766\tabularnewline
-		\hline 
+		\hline
 		$A_{3,2}^{(1)}$ & -0.1502377115150361 & $c_{4}^{(1)}$ & 0.758661169101175\tabularnewline
-		\hline 
+		\hline
 		$A_{4,1}^{(1)}$ & 0.05836595312746999 & $\beta_{1}^{(1)}$ & -1.8453464565104432\tabularnewline
-		\hline 
+		\hline
 		$A_{4,2}^{(1)}$ & 0.6149440396332373 & $\beta_{2}^{(1)}$ & 2.688764531100726\tabularnewline
-		\hline 
+		\hline
 		$A_{4,3}^{(1)}$ & 0.08535117634046772 & $\beta_{3}^{(1)}$ & -0.2523866501071323\tabularnewline
-		\hline 
+		\hline
 		$B_{2,1}^{(0)}$ & -0.21641093549612528 & $\beta_{4}^{(1)}$ & 0.40896857551684956\tabularnewline
-		\hline 
+		\hline
 		$B_{3,1}^{(0)}$ & 1.5336352863679572 & $\beta_{1}^{(2)}$ & 0.4969658141589478\tabularnewline
-		\hline 
+		\hline
 		$B_{3,2}^{(0)}$ & 0.26066223492647056 & $\beta_{2}^{(2)}$ & -0.5771202869753592\tabularnewline
-		\hline 
+		\hline
 		$B_{4,1}^{(0)}$ & -1.0536037558179159 & $\beta_{3}^{(2)}$ & -0.12919702470322217\tabularnewline
-		\hline 
+		\hline
 		$B_{4,2}^{(0)}$ & 1.7015284721089472 & $\beta_{4}^{(2)}$ & 0.2093514975196336\tabularnewline
-		\hline 
+		\hline
 		$B_{4,3}^{(0)}$ & -0.20725685784180017 & $\beta_{1}^{(3)}$ & 2.8453464565104425\tabularnewline
-		\hline 
+		\hline
 		$B_{2,1}^{(1)}$ & -0.5119011827621657 & $\beta_{2}^{(3)}$ & -2.688764531100725\tabularnewline
-		\hline 
+		\hline
 		$B_{3,1}^{(1)}$ & 2.67767339866713 & $\beta_{3}^{(3)}$ & 0.2523866501071322\tabularnewline
-		\hline 
+		\hline
 		$B_{3,2}^{(1)}$ & -4.9395031322250995 & $\beta_{4}^{(3)}$ & -0.40896857551684945\tabularnewline
-		\hline 
+		\hline
 		$B_{4,1}^{(1)}$ & 0.15580956238299215 & $\beta_{1}^{(4)}$ & 0.11522663875443433\tabularnewline
-		\hline 
+		\hline
 		$B_{4,2}^{(1)}$ & 3.2361551006624674 & $\beta_{2}^{(4)}$ & -0.57877086147738\tabularnewline
-		\hline 
+		\hline
 		$B_{4,3}^{(1)}$ & -1.4223118283355949 & $\beta_{3}^{(4)}$ & 0.2857851028163886\tabularnewline
-		\hline 
+		\hline
 		$\alpha_{1}$ & 1.140099274172029 & $\beta_{4}^{(4)}$ & 0.17775911990655704\tabularnewline
-		\hline 
+		\hline
 		$\alpha_{2}$ & -0.6401334255743456 &  & \tabularnewline
-		\hline 
+		\hline
 	\end{tabular}
 	\par\end{center}
 
 \subsection{SOSRI2 \label{subsec:SOSRI2}}
 \begin{center}
 	\begin{tabular}{|c|c||c|c|}
-		\hline 
+		\hline
 		Coefficient & Value & Coefficient & Value\tabularnewline
-		\hline 
-		\hline 
+		\hline
+		\hline
 		$A_{2,1}^{(0)}$ & 0.13804532298278663 & $\alpha_{3}$ & 0.686995463807979\tabularnewline
-		\hline 
+		\hline
 		$A_{3,1}^{(0)}$ & 0.5818361298250374 & $\alpha_{4}$ & -0.2911544680711602\tabularnewline
-		\hline 
+		\hline
 		$A_{3,2}^{(0)}$ & 0.4181638701749618 & $c_{2}^{(0)}$ & 0.13804532298278663\tabularnewline
-		\hline 
+		\hline
 		$A_{4,1}^{(0)}$ & 0.4670018408674211 & $c_{3}^{(0)}$ & 1\tabularnewline
-		\hline 
+		\hline
 		$A_{4,2}^{(0)}$ & 0.8046204792187386 & $c_{4}^{(0)}$ & 1\tabularnewline
-		\hline 
+		\hline
 		$A_{4,3}^{(0)}$ & -0.27162232008616016 & $c_{1}^{(1)}$ & 0\tabularnewline
-		\hline 
+		\hline
 		$A_{2,1}^{(1)}$ & 0.45605532163856893 & $c_{2}^{(1)}$ & 0.45605532163856893\tabularnewline
-		\hline 
+		\hline
 		$A_{3,1}^{(1)}$ & 0.7555807846451692 & $c_{3}^{(1)}$ & 1\tabularnewline
-		\hline 
+		\hline
 		$A_{3,2}^{(1)}$ & 0.24441921535482677 & $c_{4}^{(1)}$ & 1\tabularnewline
-		\hline 
+		\hline
 		$A_{4,1}^{(1)}$ & 0.6981181143266059 & $\beta_{1}^{(1)}$ & -0.45315689727309133\tabularnewline
-		\hline 
+		\hline
 		$A_{4,2}^{(1)}$ & 0.3453277086024727 & $\beta_{2}^{(1)}$ & 0.8330937231303951\tabularnewline
-		\hline 
+		\hline
 		$A_{4,3}^{(1)}$ & -0.04344582292908241 & $\beta_{3}^{(1)}$ & 0.3792843195533544\tabularnewline
-		\hline 
+		\hline
 		$B_{2,1}^{(0)}$ & 0.08852381537667678 & $\beta_{4}^{(1)}$ & 0.24077885458934192\tabularnewline
-		\hline 
+		\hline
 		$B_{3,1}^{(0)}$ & 1.0317752458971061 & $\beta_{1}^{(2)}$ & -0.4994383733810986\tabularnewline
-		\hline 
+		\hline
 		$B_{3,2}^{(0)}$ & 0.4563552922077882 & $\beta_{2}^{(2)}$ & 0.9181786186154077\tabularnewline
-		\hline 
+		\hline
 		$B_{4,1}^{(0)}$ & 1.73078280444124 & $\beta_{3}^{(2)}$ & -0.25613778661003145\tabularnewline
-		\hline 
+		\hline
 		$B_{4,2}^{(0)}$ & -0.46089678470929774 & $\beta_{4}^{(2)}$ & -0.16260245862427797\tabularnewline
-		\hline 
+		\hline
 		$B_{4,3}^{(0)}$ & -0.9637509618944188 & $\beta_{1}^{(3)}$ & 1.4531568972730915\tabularnewline
-		\hline 
+		\hline
 		$B_{2,1}^{(1)}$ & 0.6753186815412179 & $\beta_{2}^{(3)}$ & -0.8330937231303933\tabularnewline
-		\hline 
+		\hline
 		$B_{3,1}^{(1)}$ & -0.07452812525785148 & $\beta_{3}^{(3)}$ & -0.3792843195533583\tabularnewline
-		\hline 
+		\hline
 		$B_{3,2}^{(1)}$ & -0.49783736486149366 & $\beta_{4}^{(3)}$ & -0.24077885458934023\tabularnewline
-		\hline 
+		\hline
 		$B_{4,1}^{(1)}$ & -0.5591906709928903 & $\beta_{1}^{(4)}$ & -0.4976090683622265\tabularnewline
-		\hline 
+		\hline
 		$B_{4,2}^{(1)}$ & 0.022696571806569924 & $\beta_{2}^{(4)}$ & 0.9148155835648892\tabularnewline
-		\hline 
+		\hline
 		$B_{4,3}^{(1)}$ & -0.8984927888368557 & $\beta_{3}^{(4)}$ & -1.4102107084476505\tabularnewline
-		\hline 
+		\hline
 		$\alpha_{1}$ & -0.15036858140642623 & $\beta_{4}^{(4)}$ & 0.9930041932449877\tabularnewline
-		\hline 
+		\hline
 		$\alpha_{2}$ & 0.7545275856696072 &  & \tabularnewline
-		\hline 
+		\hline
 	\end{tabular}
 	\par\end{center}
 
@@ -2155,7 +2139,7 @@ order conditions to achieve order .5:
 	\]
 \end{enumerate}
 where $f,g\in C^{1,2}(\mathcal{I}\times\mathbb{R}^{d},\mathbb{R}^{d})$,
-$c^{(i)}=A^{(i)}e$, $e=(1,1,1,1)^{T}$ \cite{RN2707}. 
+$c^{(i)}=A^{(i)}e$, $e=(1,1,1,1)^{T}$ \cite{RN2707}.
 
 \subsection{Order Conditions for Rößler-SRA Methods\label{subsec:Order-Conditions-for-SRA}}
 
